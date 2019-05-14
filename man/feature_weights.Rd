@@ -20,7 +20,7 @@ Compute feature-wise concordance weights
 \examples{
 n = 100
 p = 10
-x1 = matrix(rnorm(100 * 10, mean = 0, sd = 1), nrow = n, ncol = p)
-x2 = matrix(rnorm(100 * 10, mean = 1, sd = 1), nrow = n, ncol = p)
+x1 = matrix(rnorm(n * n, mean = 0, sd = 1), nrow = n, ncol = p)
+x2 = matrix(rnorm(n * p, mean = 1, sd = 1), nrow = n, ncol = p)
 feature_weights(x1, x2)
 }

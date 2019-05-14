@@ -3,6 +3,7 @@
 #' @param x1 A data matrix
 #' @param x2 A data matrix
 #' @return A vector
+#' @export
 #' @examples
 #' n = 100
 #' p = 10
