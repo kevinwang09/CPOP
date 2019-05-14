@@ -1,0 +1,14 @@
+---
+title: "An introduction to the top package"
+author:
+- name: Kevin Y.X. Wang
+  affiliation: School of Mathematics and Statistics, The University of Sydney, Australia
+output:
+  BiocStyle::html_document:
+    toc_float: true
+package: BiocStyle
+vignette: >
+  %\VignetteIndexEntry{top}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
