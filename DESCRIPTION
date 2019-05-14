@@ -8,7 +8,7 @@ Authors@R: c(
     person(given = "Jean", family = "Yang", email = "jean.yang@sydney.edu.au", role = c("aut")),
     person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut"))
     )
-Description: TOP
+Description: TOP aims to top methods. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -17,6 +17,7 @@ Depends: R (>= 3.6.0)
 Imports:
   glmnet
 Suggests: 
+    BiocStyle,
     knitr,
     rmarkdown
 VignetteBuilder: knitr

@@ -9,9 +9,9 @@
 #' p = 10
 #' x1 = matrix(rnorm(n * n, mean = 0, sd = 1), nrow = n, ncol = p)
 #' x2 = matrix(rnorm(n * p, mean = 1, sd = 1), nrow = n, ncol = p)
-#' feature_weights(x1, x2)
+#' compute_weights(x1, x2)
 
-feature_weights = function(x1, x2){
+compute_weights = function(x1, x2){
 
   stopifnot({
     identical(ncol(x1), ncol(x2))
