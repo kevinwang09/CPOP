@@ -5,6 +5,14 @@ cache: packages
 
 dist: trusty
 
+r: bioc-release
+  before_cache:
+  - Rscript -e 'remotes::install_cran("pkgdown")'
+  deploy:
+    provider: script
+    script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+    skip_cleanup: true
+
 os:
   - linux
   - osx
@@ -13,13 +21,3 @@ script:
   - R -e 'install.packages("BiocManager")'
   - R -e 'BiocManager::install(version = "3.9")'
 
-matrix:
-  include:
-  - r: bioc-release
-    # env: VDIFFR_RUN_TESTS=true
-    before_cache:
-    - Rscript -e 'remotes::install_cran("pkgdown")'
-    deploy:
-      provider: script
-      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-      skip_cleanup: true
