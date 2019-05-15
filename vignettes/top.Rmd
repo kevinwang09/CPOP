@@ -58,7 +58,7 @@ lasso1 = glmnet::cv.glmnet(
 lasso1_pred_x2 = glmnet::predict.cv.glmnet(lasso1, newx = x2, s = "lambda.min", type = "class")
 
 
-caret::confusionMatrix(table(y2, lasso1_pred_x2))
+# caret::confusionMatrix(table(y2, lasso1_pred_x2))
 ```
 
 # Evaluation of the ordinary method
@@ -70,7 +70,6 @@ topMethod = glmnet::cv.glmnet(
 
 topMethod_pred_x2 = glmnet::predict.cv.glmnet(topMethod, newx = z2[,top2_result], s = "lambda.min", type = "class")
 
-
-caret::confusionMatrix(table(y2, topMethod_pred_x2))
+# caret::confusionMatrix(table(y2, topMethod_pred_x2))
 ```
 

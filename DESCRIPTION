@@ -25,6 +25,5 @@ Imports:
 Suggests: 
   BiocStyle,
   knitr,
-  rmarkdown,
-  caret
+  rmarkdown
 VignetteBuilder: knitr
