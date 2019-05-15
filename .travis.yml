@@ -16,5 +16,5 @@ script:
 
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
+  script: Rscript -e 'pkgdown::deploy_site_github(tarball = ".")'
   skip_cleanup: true
