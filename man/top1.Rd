@@ -4,10 +4,26 @@
 \alias{top1}
 \title{Step 1 of the TOP method}
 \usage{
-top1(x)
+top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
 }
 \arguments{
-\item{x}{A data matrix}
+\item{z1}{A data matrix}
+
+\item{z2}{A data matrix}
+
+\item{y1}{A vector}
+
+\item{y2}{A vector}
+
+\item{w}{A vector}
+
+\item{nIter}{Number of iterations}
+
+\item{alpha}{Lasso alpha}
+
+\item{s}{CV-Lasso lambda}
+
+\item{...}{Extra parameter settings for cv.glmnet}
 }
 \value{
 A vector
@@ -16,5 +32,20 @@ A vector
 Step 1 of the TOP method
 }
 \examples{
-top1(1:5)
+set.seed(1)
+n = 1000
+p = 10
+x1 = matrix(rnorm(n * n, mean = 0, sd = 1), nrow = n, ncol = p)
+x2 = matrix(rnorm(n * p, mean = 1, sd = 1), nrow = n, ncol = p)
+colnames(x1) = colnames(x2) = paste0("X", 1:p)
+k = 2
+beta = c(rep(1, k), rep(0, p - k))
+expit = function(x) 1/(1+exp(-x))
+y1 = rbinom(n, 1, prob = expit(x1 \%*\% beta))
+y2 = rbinom(n, 1, prob = expit(x2 \%*\% beta))
+z1 = pairwise_col_diff(x1)
+z2 = pairwise_col_diff(x2)
+w = compute_weights(z1, z2)
+nIter = 20
+top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 }

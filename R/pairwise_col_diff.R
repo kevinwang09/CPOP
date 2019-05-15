@@ -8,12 +8,11 @@
 #' @importFrom purrr map2
 #' @export
 #' @examples
-#' n = 4
-#' p = 4
+#' n = 10
+#' p = 10
 #' x = matrix(rep(1:p, n), nrow = n, ncol = p, byrow = TRUE)
 #' colnames(x) = paste0("X", 1:p)
 #' pairwise_col_diff(x)
-
 pairwise_col_diff = function(x){
   all_pair = utils::combn(colnames(x), 2) %>% t %>%
     magrittr::set_colnames(c("Gene1", "Gene2"))
@@ -33,6 +32,6 @@ form_pairs = function(all_pair, data, all_pair_names){
     .y = all_pair[,"Gene2"],
     .f = ~ data[,.x] - data[,.y])
   names(diff_mat) = all_pair_names
-  res = diff_mat %>% do.call(cbind, .)
+  res = do.call(cbind, diff_mat)
   return(res)
 }

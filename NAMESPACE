@@ -3,6 +3,8 @@
 export(compute_weights)
 export(pairwise_col_diff)
 export(top1)
+importFrom(glmnet,coef.cv.glmnet)
+importFrom(glmnet,cv.glmnet)
 importFrom(magrittr,"%>%")
 importFrom(magrittr,set_colnames)
 importFrom(purrr,map)

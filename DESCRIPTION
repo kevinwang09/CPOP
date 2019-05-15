@@ -17,9 +17,10 @@ Depends: R (>= 3.6.0)
 Imports:
   glmnet,
   magrittr, 
-  purrr
+  purrr,
+  visNetwork
 Suggests: 
-    BiocStyle,
-    knitr,
-    rmarkdown
+  BiocStyle,
+  knitr,
+  rmarkdown
 VignetteBuilder: knitr
