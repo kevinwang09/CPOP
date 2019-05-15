@@ -70,8 +70,13 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
 
     top2_features = top2_features[as.matrix(signCoef1 == signCoef2)]
 
-    confTable = table(as.matrix(signCoef1), as.matrix(signCoef2))
-    if(ncol(confTable) == 0 | nrow(confTable) == 0 | confTable[1,2] + confTable[2,1] == 0){break}
+    confTable = table(
+      factor(as.matrix(signCoef1), levels = c(-1, 0, 1)),
+      factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
+    confTable_diag0 = confTable
+    diag(confTable_diag0) = 0
+
+    if(sum(confTable_diag0) == 0){break}
   }
 
   return(top2_features)
@@ -138,8 +143,13 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
 
     top2_features = top2_features[as.matrix(signCoef1 == signCoef2)]
 
-    confTable = table(as.matrix(signCoef1), as.matrix(signCoef2))
-    if(ncol(confTable) == 0 | nrow(confTable) == 0 | confTable[1,2] + confTable[2,1] == 0){break}
+    confTable = table(
+      factor(as.matrix(signCoef1), levels = c(-1, 0, 1)),
+      factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
+    confTable_diag0 = confTable
+    diag(confTable_diag0) = 0
+
+    if(sum(confTable_diag0) == 0){break}
   } ## End j-loop
   return(top2_features)
 }
