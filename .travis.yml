@@ -15,7 +15,7 @@ script:
 
 matrix:
   include:
-  - r: bioc-devel
+  - r: bioc-release
     # env: VDIFFR_RUN_TESTS=true
     before_cache:
     - Rscript -e 'remotes::install_cran("pkgdown")'
