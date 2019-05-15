@@ -12,10 +12,9 @@ os:
 script:
   - R -e 'install.packages("BiocManager")'
   - R -e 'BiocManager::install(version = "3.9")'
+  - R -e 'install.packages("pkgdown")'
 
-
-#before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-#  deploy:
-#    provider: script
-#    script: Rscript -e 'pkgdown::deploy_site_github()'
-#    skip_cleanup: true
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::deploy_site_github()'
+  skip_cleanup: true
