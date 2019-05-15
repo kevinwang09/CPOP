@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • top</title>
+<title>Plot ratio network — plot_ratio_network • top</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Plot ratio network — plot_ratio_network" />
+
+<meta property="og:description" content="Plot ratio network" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -92,60 +95,63 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Plot ratio network</h1>
+    
+    <div class="hidden name"><code>plot_ratio_network.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Plot ratio network</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="compute_weights.html">compute_weights()</a></code> </p>
-        </td>
-        <td><p>Compute feature-wise concordance weights</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pairwise_col_diff.html">pairwise_col_diff()</a></code> </p>
-        </td>
-        <td><p>Compare pairwise diff</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_ratio_network.html">plot_ratio_network()</a></code> </p>
-        </td>
-        <td><p>Plot ratio network</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="top1.html">top1()</a></code> </p>
-        </td>
-        <td><p>Step 1 of the TOP method</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>plot_ratio_network</span>(<span class='no'>x</span>, <span class='kw'>nodesData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>The output of top1 or top2</p></td>
+    </tr>
+    <tr>
+      <th>nodesData</th>
+      <td><p>Logical</p></td>
+    </tr>
     </table>
-  </div>
+    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"X1--X2"</span>,<span class='st'>"X1--X3"</span>,<span class='st'>"X1--X4"</span>,<span class='st'>"X1--X5"</span>,<span class='st'>"X1--X6"</span>,<span class='st'>"X1--X7"</span>,<span class='st'>"X1--X8"</span>,
+<span class='st'>"X1--X9"</span>,<span class='st'>"X1--X10"</span>,<span class='st'>"X2--X3"</span>,<span class='st'>"X2--X4"</span>,<span class='st'>"X2--X5"</span>,<span class='st'>"X2--X6"</span>,<span class='st'>"X2--X7"</span>,
+<span class='st'>"X2--X8"</span>,<span class='st'>"X2--X9"</span>,<span class='st'>"X2--X10"</span>,<span class='st'>"X3--X4"</span>,<span class='st'>"X3--X7"</span>,<span class='st'>"X3--X8"</span>,<span class='st'>"X3--X9"</span>,
+<span class='st'>"X4--X5"</span>,<span class='st'>"X4--X7"</span>,<span class='st'>"X4--X9"</span>,<span class='st'>"X5--X10"</span>,<span class='st'>"X7--X8"</span>,<span class='st'>"X7--X9"</span>,<span class='st'>"X8--X9"</span>)
+<span class='fu'>plot_ratio_network</span>(<span class='no'>x</span>, <span class='kw'>nodesData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>plot_ratio_network</span>(<span class='no'>x</span>, <span class='kw'>nodesData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 5
+#&gt;    id    nNeighbours  size font.size label
+#&gt;    &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+#&gt;  1 X1              9    90        45 X1   
+#&gt;  2 X10             3    30        15 X10  
+#&gt;  3 X2              9    90        45 X2   
+#&gt;  4 X3              6    60        30 X3   
+#&gt;  5 X4              6    60        30 X4   
+#&gt;  6 X5              4    40        20 X5   
+#&gt;  7 X6              2    20        10 X6   
+#&gt;  8 X7              6    60        30 X7   
+#&gt;  9 X8              5    50        25 X8   
+#&gt; 10 X9              6    60        30 X9   </div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
