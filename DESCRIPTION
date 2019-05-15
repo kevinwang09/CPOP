@@ -15,10 +15,13 @@ LazyData: true
 RoxygenNote: 6.1.1
 Depends: R (>= 3.6.0)
 Imports:
-  glmnet,
-  magrittr, 
-  purrr,
-  visNetwork
+    glmnet,
+    magrittr,
+    purrr,
+    visNetwork,
+    tibble,
+    tidyr,
+    dplyr
 Suggests: 
   BiocStyle,
   knitr,
