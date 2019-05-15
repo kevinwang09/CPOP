@@ -14,6 +14,9 @@ script:
   - R -e 'BiocManager::install(version = "3.9")'
   - R -e 'install.packages("pkgdown")'
 
+before_deploy:
+  - R CMD build .
+
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github()'
