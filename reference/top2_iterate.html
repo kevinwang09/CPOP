@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">top</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -165,33 +165,9 @@
 <span class='no'>expit</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>1</span>/(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(-<span class='no'>x</span>))
 <span class='no'>y1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x1</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
 <span class='no'>y2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x2</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
-<span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
-<span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
-<span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
-<span class='no'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>
-<span class='no'>top1_result</span> <span class='kw'>=</span> <span class='fu'><a href='top1.html'>top1</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; [1] 45
-#&gt; [1] 33
-#&gt; [1] 23
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17
-#&gt; [1] 17</div><div class='input'><span class='no'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>
-<span class='no'>top2_result</span> <span class='kw'>=</span> <span class='fu'>top2_iterate</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>top1_result</span> <span class='kw'>=</span> <span class='no'>top1_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; [1] 28
-#&gt; [1] 22
-#&gt; [1] 20</div></pre>
+<span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in purrr::map(.x = seq_len(p - 1), .f = ~x[, .x] - x[, -c(seq_len(.x)),     drop = FALSE]): object 'p' not found</span></div><div class='input'><span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in purrr::map(.x = seq_len(p - 1), .f = ~x[, .x] - x[, -c(seq_len(.x)),     drop = FALSE]): object 'p' not found</span></div><div class='input'><span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ncol(x1): object 'z1' not found</span></div><div class='input'><span class='no'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>
+<span class='no'>top1_result</span> <span class='kw'>=</span> <span class='fu'><a href='top1.html'>top1</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'z1' not found</span></div><div class='input'><span class='no'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>
+<span class='no'>top2_result</span> <span class='kw'>=</span> <span class='fu'>top2_iterate</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>top1_result</span> <span class='kw'>=</span> <span class='no'>top1_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; <span class='error'>Error in top2_iterate(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min",     nIter = 20): object 'top1_result' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -208,7 +184,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang, Garth Tarr, Jean Yang, Samuel Mueller.</p>
+  <p>Developed by Kevin Wang, Garth Tarr, Samuel Mueller, Jean Yang.</p>
 </div>
 
 <div class="pkgdown">
