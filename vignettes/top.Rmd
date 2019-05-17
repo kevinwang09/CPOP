@@ -12,8 +12,8 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-
+  
+  
 ```{r}
 library(top)
 ```
@@ -26,7 +26,7 @@ library(top)
 <!-- p = 10 -->
 <!-- x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
 <!-- # x2 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- x2 = x1 + matrix(rnorm(n * p, mean = 1, sd = 1), nrow = n, ncol = p) -->
+<!-- x2 = x1 + 0.1 -->
 <!-- colnames(x1) = colnames(x2) = paste0("X", 1:p) -->
 <!-- k = 2 -->
 <!-- beta1 = c(rep(1, k), rep(0, p - k)) -->
@@ -57,8 +57,8 @@ library(top)
 <!-- # Evaluation of the ordinary method -->
 <!-- ```{r} -->
 <!-- lasso1 = glmnet::cv.glmnet( -->
-<!--   x = x1,  -->
-<!--   y = y1,  -->
+<!--   x = x1, -->
+<!--   y = y1, -->
 <!--   family = "binomial") -->
 <!-- lasso1_pred_x2 = glmnet::predict.cv.glmnet(lasso1, newx = x2, s = "lambda.min", type = "class") -->
 
@@ -69,8 +69,8 @@ library(top)
 <!-- # Evaluation of the ordinary method -->
 <!-- ```{r} -->
 <!-- topMethod = glmnet::cv.glmnet( -->
-<!--   x = z1[,top2_result],  -->
-<!--   y = y1,  -->
+<!--   x = z1[,top2_result], -->
+<!--   y = y1, -->
 <!--   family = "binomial") -->
 
 <!-- topMethod_pred_x2 = glmnet::predict.cv.glmnet(topMethod, newx = z2[,top2_result], s = "lambda.min", type = "class") -->
@@ -79,4 +79,71 @@ library(top)
 <!-- caret::confusionMatrix(table(y2, lasso1_pred_x2)) -->
 <!-- caret::confusionMatrix(table(y2, topMethod_pred_x2)) -->
 <!-- ``` -->
+
+
+
+```{r}
+set.seed(1)
+n = 1000
+p = 100
+
+library(Matrix)
+library(mvtnorm)
+library(dplyr)
+
+
+sigma1 = (matrix(rnorm(p * p, mean = 1, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor()
+sigma2 = (matrix(rnorm(p * p, mean = 5, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor()
+# x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
+# x2 = x1 + 0.2
+x1 = mvtnorm::rmvnorm(n = n, sigma = sigma1)
+x2 = mvtnorm::rmvnorm(n = n, sigma = sigma2)
+
+sigma1[1:5, 1:5]
+sigma2[1:5, 1:5]
+
+colnames(x1) = colnames(x2) = paste0("X", 1:p)
+k = 2
+beta = c(rep(0.4, k), rep(0, p - k))
+
+expit = function(x) 1/(1+exp(-x))
+y1 = rbinom(n, 1, prob = expit(x1 %*% beta))
+y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
+
+table(y1)
+table(y2)
+
+# z1 = pairwise_col_diff(x1)
+# z2 = pairwise_col_diff(x2)
+w = compute_weights(x1, x2)
+nIter = 20
+
+top1_result = top1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+s = "lambda.min"
+
+top2_result = top2(x1, x2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
+
+top3_result = top3(x1, x2, y1, y2, top2_result = top2_result, intercept = FALSE)
+
+plot(predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
+     predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
+abline(a = 0, b = 1)
+```
+
+```{r}
+lasso1 = glmnet::cv.glmnet(
+  x = x1,
+  y = y1,
+  family = "binomial", alpha = 0)
+
+lasso2 = glmnet::cv.glmnet(
+  x = x2,
+  y = y2,
+  family = "binomial", alpha = 0)
+
+
+plot(predict(lasso1, newx = x1, s = "lambda.min"),
+     predict(lasso2, newx = x1, s = "lambda.min"))
+abline(a = 0, b = 1)
+```
 

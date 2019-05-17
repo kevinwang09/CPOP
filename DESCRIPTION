@@ -1,7 +1,7 @@
 Package: top
 Type: Package
 Title: TOP
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre")),
     person(given = "Garth", family = "Tarr", email = "garth.tarr@sydney.edu.au", role = c("aut")),
@@ -22,7 +22,9 @@ Imports:
     tibble,
     tidyr,
     dplyr,
-    proxy
+    proxy,
+    Matrix,
+    mvtnorm
 Suggests: 
   BiocStyle,
   knitr,

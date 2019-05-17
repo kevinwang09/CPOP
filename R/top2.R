@@ -1,5 +1,5 @@
-#' @title Step 2 of the TOP method iterate
-#' @description Step 2 of the TOP method
+#' @title Step 2 of the TOP method iteratively bounded
+#' @description Step 2 of the TOP method iteratively bounded
 #' @param top1_result top1 result
 #' @param z1 A data matrix
 #' @param z2 A data matrix
@@ -16,8 +16,8 @@
 #' set.seed(1)
 #' n = 1000
 #' p = 10
-#' x1 = matrix(rnorm(n * n, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = matrix(rnorm(n * p, mean = 1, sd = 1), nrow = n, ncol = p)
+#' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
+#' x2 = x1 + 0.1
 #' colnames(x1) = colnames(x2) = paste0("X", 1:p)
 #' k = 2
 #' beta = c(rep(1, k), rep(0, p - k))
@@ -38,12 +38,13 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
     print(length(top2_features))
 
     z1_reduced = z1[,top2_features]
+    z2_reduced = z1[,top2_features]
 
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
       family = "binomial",
-      alpha = 0)
+      alpha = 0, ...)
 
     coef1 = coef(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
@@ -58,12 +59,12 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
 
 
     ridge2 = glmnet::cv.glmnet(
-      x = z2[,top2_features],
+      x = z2_reduced,
       y = y2,
       family = "binomial",
       lower.limits = lower.limits,
       upper.limits = upper.limits,
-      alpha = 0)
+      alpha = 0, ...)
 
     coef2 = coef(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
@@ -75,7 +76,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
       factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
     confTable_diag0 = confTable
     diag(confTable_diag0) = 0
-
+    print(confTable_diag0)
     if(sum(confTable_diag0) == 0){break}
   }
 
@@ -122,21 +123,22 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
     print(length(top2_features))
 
     z1_reduced = z1[,top2_features]
+    z2_reduced = z2[,top2_features]
 
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
       family = "binomial",
-      alpha = 0)
+      alpha = 0, ...)
 
     coef1 = coef(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
 
     ridge2 = glmnet::cv.glmnet(
-      x = z2[,top2_features],
+      x = z2_reduced,
       y = y2,
       family = "binomial",
-      alpha = 0)
+      alpha = 0, ...)
 
     coef2 = coef(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
@@ -148,8 +150,9 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
       factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
     confTable_diag0 = confTable
     diag(confTable_diag0) = 0
-
+    print(confTable_diag0)
     if(sum(confTable_diag0) == 0){break}
+
   } ## End j-loop
   return(top2_features)
 }
