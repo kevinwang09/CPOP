@@ -3,10 +3,7 @@ Type: Package
 Title: TOP
 Version: 0.0.5
 Authors@R: c(
-    person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre")),
-    person(given = "Garth", family = "Tarr", email = "garth.tarr@sydney.edu.au", role = c("aut")),
-    person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut")),
-    person(given = "Jean", family = "Yang", email = "jean.yang@sydney.edu.au", role = c("aut"))
+    person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre"))
     )
 Description: TOP aims to top methods. 
 License: GPL-3
