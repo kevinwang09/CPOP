@@ -15,7 +15,7 @@
 
 
 pairwise_col_diff = function(x){
-
+  p = ncol(x)
   list_mat = purrr::map(.x = seq_len(p-1),
                    .f = ~ x[,.x] - x[,-c(seq_len(.x)), drop = FALSE]
   )
