@@ -41,6 +41,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
       y = y1,
       family = "binomial",
       penalty.factor = w[remaining_features],
+      alpha = alpha,
       ...)
 
     en2 = glmnet::cv.glmnet(
@@ -48,6 +49,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
       y = y2,
       family = "binomial",
       penalty.factor = w[remaining_features],
+      alpha = alpha,
       ...)
 
     remaining_features = setdiff(

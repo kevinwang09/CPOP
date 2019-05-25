@@ -1,7 +1,7 @@
 Package: top
 Type: Package
 Title: TOP
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre"))
     )
