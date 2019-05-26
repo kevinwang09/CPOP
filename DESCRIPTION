@@ -21,7 +21,8 @@ Imports:
     dplyr,
     proxy,
     Matrix,
-    mvtnorm
+    mvtnorm,
+    scater
 Suggests: 
   BiocStyle,
   knitr,
