@@ -147,3 +147,8 @@ plot(predict(lasso1, newx = x1, s = "lambda.min"),
 abline(a = 0, b = 1)
 ```
 
+```{r}
+library(M3Drop)
+sessionInfo()
+```
+
