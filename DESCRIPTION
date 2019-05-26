@@ -22,7 +22,7 @@ Imports:
     proxy,
     Matrix,
     mvtnorm,
-    scater
+    M3Drop
 Suggests: 
   BiocStyle,
   knitr,

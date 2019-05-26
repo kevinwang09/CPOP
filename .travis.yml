@@ -9,7 +9,7 @@ os:
   - linux
 
 env:
-  - R_BIOC_VERSION: 3.9
+  - R_BIOC_VERSION: "3.9"
 
 script:
   - R -e 'install.packages("pkgdown")'
