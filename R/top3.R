@@ -48,6 +48,6 @@ top3 = function(z1, z2, y1, y2, top2_result, intercept = FALSE, ...){
       family = "binomial",
       alpha = 0, ...)
 
-  result = list(en1 = en1, en2 = en2)
+  result = list(en1 = en1, en2 = en2, feature = top2_result)
   return(result)
 }

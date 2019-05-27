@@ -31,10 +31,11 @@
 #' nIter = 20
 #' top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...){
+  p = ncol(z1)
   remaining_features = colnames(z1)
 
   for(i in 1:nIter){
-    print(length(remaining_features))
+
 
     en1 = glmnet::cv.glmnet(
       x = z1[,remaining_features],
@@ -57,7 +58,8 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
         rownames(get_lasso_coef(en1, s = s)),
         rownames(get_lasso_coef(en2, s = s)))
     )
-  } ## End j-loop
+    message("Step ", sprintf("%02d", i), ": Number of selected features: ", p - length(remaining_features), " out of ", p)
+  } ## End i-loop
 
   common_features = setdiff(colnames(z1), remaining_features)
   return(common_features)

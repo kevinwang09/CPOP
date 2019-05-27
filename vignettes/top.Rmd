@@ -148,7 +148,6 @@ abline(a = 0, b = 1)
 ```
 
 ```{r}
-library(M3Drop)
 sessionInfo()
 ```
 

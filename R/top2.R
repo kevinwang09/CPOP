@@ -32,11 +32,10 @@
 #' s = "lambda.min"
 #' top2_result = top2_iterate(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20)
 top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
+  p = length(top1_result)
   top2_features = top1_result
 
   for(j in 1:nIter){
-    print(length(top2_features))
-
     z1_reduced = z1[,top2_features]
     z2_reduced = z1[,top2_features]
 
@@ -76,6 +75,8 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
       factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
     confTable_diag0 = confTable
     diag(confTable_diag0) = 0
+    message("Step ", sprintf("%02d", j), ": Number of leftover features: ", length(top2_features), " out of ", p)
+    message("The sign matrix between the two data:")
     print(confTable_diag0)
     if(sum(confTable_diag0) == 0){break}
   }
@@ -117,11 +118,10 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
 #' s = "lambda.min"
 #' top2_result = top2(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20)
 top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
+  p = length(top1_result)
   top2_features = top1_result
 
   for(j in 1:nIter){
-    print(length(top2_features))
-
     z1_reduced = z1[,top2_features]
     z2_reduced = z2[,top2_features]
 
@@ -150,6 +150,8 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
       factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
     confTable_diag0 = confTable
     diag(confTable_diag0) = 0
+    message("Step ", sprintf("%02d", j), ": Number of leftover features: ", length(top2_features), " out of ", p)
+    message("The sign matrix between the two data:")
     print(confTable_diag0)
     if(sum(confTable_diag0) == 0){break}
 
