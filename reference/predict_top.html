@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Step 2 of the TOP method — top2 • top</title>
+<title>Prediction function for TOP — predict_top • top</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Step 2 of the TOP method — top2" />
+<meta property="og:title" content="Prediction function for TOP — predict_top" />
 
-<meta property="og:description" content="Step 2 of the TOP method" />
+<meta property="og:description" content="Prediction function for TOP" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,53 +97,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Step 2 of the TOP method</h1>
+    <h1>Prediction function for TOP</h1>
     
-    <div class="hidden name"><code>top2.Rd</code></div>
+    <div class="hidden name"><code>predict_top.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Step 2 of the TOP method</p>
+    <p>Prediction function for TOP</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>top2</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>top1_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>predict_top</span>(<span class='no'>top_result</span>, <span class='no'>newz</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>z1</th>
-      <td><p>A data matrix</p></td>
+      <th>top_result</th>
+      <td><p>top_model result</p></td>
     </tr>
     <tr>
-      <th>z2</th>
-      <td><p>A data matrix</p></td>
-    </tr>
-    <tr>
-      <th>y1</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
-      <th>y2</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
-      <th>top1_result</th>
-      <td><p>top1 result</p></td>
+      <th>newz</th>
+      <td><p>New data</p></td>
     </tr>
     <tr>
       <th>s</th>
       <td><p>CV-Lasso lambda</p></td>
     </tr>
     <tr>
-      <th>nIter</th>
-      <td><p>Number of iterations</p></td>
+      <th>model_number</th>
+      <td><p>1 or 2 or "both"</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Extra parameter settings for cv.glmnet</p></td>
+      <th>tibble</th>
+      <td><p>Logical</p></td>
     </tr>
     </table>
     
@@ -156,8 +145,8 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
 <span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
-<span class='no'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
-<span class='no'>x2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>x2</span> <span class='kw'>=</span> <span class='no'>x1</span> + <span class='fl'>0.1</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x1</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x2</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
 <span class='no'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>
 <span class='no'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='no'>k</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='no'>p</span> - <span class='no'>k</span>))
@@ -168,24 +157,37 @@
 <span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
 <span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
 <span class='no'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>
-<span class='no'>top1_result</span> <span class='kw'>=</span> <span class='fu'><a href='top1.html'>top1</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 12 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 22 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 28 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 28 out of 45</span></div><div class='input'><span class='no'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>
-<span class='no'>top2_result</span> <span class='kw'>=</span> <span class='fu'>top2</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>top1_result</span> <span class='kw'>=</span> <span class='no'>top1_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 22 out of 28</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+<span class='no'>top_result</span> <span class='kw'>=</span> <span class='fu'><a href='top_model.html'>top_model</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 29 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
-#&gt;   -1  0 0 2
+#&gt;   -1  0 0 3
 #&gt;   0   0 0 0
-#&gt;   1   4 0 0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 21 out of 28</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 0
-#&gt;   0   0 0 0
-#&gt;   1   1 0 0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 19 out of 28</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;   1   3 0 0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 26 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 1
 #&gt;   0   0 0 0
-#&gt;   1   1 0 0</div><div class='output co'>#&gt; <span class='message'>Step 04: Number of leftover features: 19 out of 28</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;   1   2 0 0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 25 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 1
+#&gt;   0   0 0 0
+#&gt;   1   0 0 0</div><div class='output co'>#&gt; <span class='message'>Step 04: Number of leftover features: 25 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   0 0 0</div></pre>
+#&gt;   1   0 0 0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>predict_top</span>(<span class='no'>top_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z1</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt;      top_model1
+#&gt; [1,]  1.7429984
+#&gt; [2,]  1.2452962
+#&gt; [3,] -0.8041994
+#&gt; [4,]  0.7123460
+#&gt; [5,]  0.7463988
+#&gt; [6,] -2.1574273</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>predict_top</span>(<span class='no'>top_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z1</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 3
+#&gt;   samples top_model1 top_model2
+#&gt;   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1 1            1.74       1.64 
+#&gt; 2 2            1.25       1.47 
+#&gt; 3 3           -0.804     -0.698
+#&gt; 4 4            0.712      0.859
+#&gt; 5 5            0.746      0.938
+#&gt; 6 6           -2.16      -1.89 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
