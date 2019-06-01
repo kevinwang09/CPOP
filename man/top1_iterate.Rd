@@ -5,7 +5,7 @@
 \title{Step 1 of the TOP method, iteratred}
 \usage{
 top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1),
-  n_features = 40, s = "lambda.min", ...)
+  n_features = 50, s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -39,7 +39,7 @@ set.seed(1)
 n = 1000
 p = 10
 x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-x2 = x1 + 0.1
+x2 = x1 + matrix(rnorm(n * p, mean = 0, sd = 0.1), nrow = n, ncol = p)
 colnames(x1) = colnames(x2) = paste0("X", 1:p)
 k = 2
 beta = c(rep(1, k), rep(0, p - k))
@@ -49,6 +49,6 @@ y2 = rbinom(n, 1, prob = expit(x2 \%*\% beta))
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-nIter = 20
-top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), s = "lambda.min")
+alpha = c(1, 0.1, 0)
+top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
 }

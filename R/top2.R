@@ -45,7 +45,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
       family = "binomial",
       alpha = 0, ...)
 
-    coef1 = coef(ridge1, s = s)[-1, , drop = FALSE]
+    coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
     lower.limits = rep(-Inf, ncol(z1_reduced))
     upper.limits = rep(Inf, ncol(z1_reduced))
@@ -65,7 +65,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
       upper.limits = upper.limits,
       alpha = 0, ...)
 
-    coef2 = coef(ridge2, s = s)[-1, , drop = FALSE]
+    coef2 = glmnet::coef.cv.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
     top2_features = top2_features[as.matrix(signCoef1 == signCoef2)]
@@ -131,7 +131,7 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
       family = "binomial",
       alpha = 0, ...)
 
-    coef1 = coef(ridge1, s = s)[-1, , drop = FALSE]
+    coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
 
     ridge2 = glmnet::cv.glmnet(
@@ -140,7 +140,7 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
       family = "binomial",
       alpha = 0, ...)
 
-    coef2 = coef(ridge2, s = s)[-1, , drop = FALSE]
+    coef2 = glmnet::coef.cv.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
     top2_features = top2_features[as.matrix(signCoef1 == signCoef2)]

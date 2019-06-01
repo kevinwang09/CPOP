@@ -4,8 +4,8 @@
 \alias{top_model}
 \title{All three steps of TOP modelling}
 \usage{
-top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min",
-  ...)
+top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, nIter = 20,
+  alpha = 1, s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -17,6 +17,8 @@ top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min",
 \item{y2}{A vector}
 
 \item{w}{A vector}
+
+\item{top1_iterate}{Should we use top1_iterate?}
 
 \item{nIter}{Number of iterations}
 

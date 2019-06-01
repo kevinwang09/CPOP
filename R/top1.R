@@ -29,13 +29,21 @@
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' nIter = 20
-#' top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+#' alpha = 0.1
+#' s = "lambda.min"
+#' top1(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
 top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
+  selected_features = c()
 
   for(i in 1:nIter){
+    message("Step ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
 
+    if(length(selected_features) == ncol(z1)) {
+      message("All features are selected")
+      break
+    }
 
     en1 = glmnet::cv.glmnet(
       x = z1[,remaining_features],
@@ -53,16 +61,17 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
       alpha = alpha,
       ...)
 
-    remaining_features = setdiff(
-      remaining_features, base::intersect(
-        rownames(get_lasso_coef(en1, s = s)),
-        rownames(get_lasso_coef(en2, s = s)))
-    )
-    message("Step ", sprintf("%02d", i), ": Number of selected features: ", p - length(remaining_features), " out of ", p)
+    selected_features = c(selected_features,
+                          base::intersect(
+                            rownames(get_lasso_coef(en1, s = s)),
+                            rownames(get_lasso_coef(en2, s = s)))) %>% unique
+    selected_features = selected_features[selected_features != "(Intercept)"]
+
+    remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
-  common_features = setdiff(colnames(z1), remaining_features)
-  return(common_features)
+  # selected_features = setdiff(colnames(z1), remaining_features)
+  return(selected_features)
 }
 
 
@@ -94,7 +103,7 @@ get_lasso_coef = function(lassoObj, s){
 #' n = 1000
 #' p = 10
 #' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = x1 + 0.1
+#' x2 = x1 + matrix(rnorm(n * p, mean = 0, sd = 0.1), nrow = n, ncol = p)
 #' colnames(x1) = colnames(x2) = paste0("X", 1:p)
 #' k = 2
 #' beta = c(rep(1, k), rep(0, p - k))
@@ -104,21 +113,35 @@ get_lasso_coef = function(lassoObj, s){
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' nIter = 20
-#' top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), s = "lambda.min")
-top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_features = 40, s = "lambda.min", ...){
+#' alpha = c(1, 0.1, 0)
+#' top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
+top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_features = 50, s = "lambda.min", ...){
+
+  # remaining_features = colnames(z1)
+  all_selected_features = c()
+
   for(this_alpha in alpha){
     message("Fitting TOP model using alpha = ", this_alpha, "\n")
+    updated_w = w
+    updated_w[all_selected_features] = 0
+    print(table(sign(updated_w)))
 
-    this_top1_features = top1(z1, z2, y1, y2, w, nIter = 20, alpha = this_alpha, s = "lambda.min")
+    this_top1_features = top1(z1,
+                              z2,
+                              y1, y2,
+                              w = updated_w, nIter = 20, alpha = this_alpha, s = "lambda.min")
 
-    if(length(this_top1_features) >= n_features) {
+
+    if(length(all_selected_features) >= n_features) {
       message(n_features, " features was reached. ")
-      message("A total of ", length(this_top1_features), " features were selected. /n")
+      message("A total of ", length(all_selected_features), " features were selected. \n")
       break
-      }
-    else{
+    } else{
+      all_selected_features = unique(c(all_selected_features, this_top1_features))
+      # remaining_features = setdiff(colnames(z1), all_selected_features)
       message(n_features, " features was not reached. \n")
     }
   }
+
+
 }

@@ -5,6 +5,7 @@
 #' @param y1 A vector
 #' @param y2 A vector
 #' @param w A vector
+#' @param top1_iterate Should we use top1_iterate?
 #' @param nIter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
@@ -30,9 +31,17 @@
 #' w = compute_weights(z1, z2)
 #' nIter = 20
 #' top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
-top_model = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...){
-  top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w, nIter = 20, alpha = alpha, s = s, ...)
-  top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = 20)
-  top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
+top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, nIter = 20, alpha = 1, s = "lambda.min", ...){
+
+  if(top1_iterate){
+    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w, nIter = nIter, alpha = alpha, s = s, ...)
+    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
+  } else {
+    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w, nIter = nIter, alpha = alpha, s = s, ...)
+    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
+  }
+
   return(top3_result)
 }

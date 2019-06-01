@@ -47,5 +47,7 @@ z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 nIter = 20
-top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+alpha = 0.1
+s = "lambda.min"
+top1(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
 }

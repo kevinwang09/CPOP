@@ -45,7 +45,8 @@ w = compute_weights(z1, z2)
 nIter = 20
 top1_result = top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 s = "lambda.min"
-top2_result = top2(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
+top2_result = top2(z1, z2, y1, y2,
+top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
 top3_result = top3(z1, z2, y1, y2, top2_result = top2_result, intercept = FALSE)
 plot(predict(top3_result$en1, newx = z1[,top2_result], s = "lambda.min"),
 predict(top3_result$en2, newx = z1[,top2_result], s = "lambda.min"))
