@@ -132,13 +132,14 @@ top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_feat
                               y1, y2,
                               w = updated_w, nIter = 20, alpha = this_alpha, s = "lambda.min")
 
+    all_selected_features = unique(c(all_selected_features, this_top1_features))
 
     if(length(all_selected_features) >= n_features) {
       message(n_features, " features was reached. ")
       message("A total of ", length(all_selected_features), " features were selected. \n")
       break
     } else{
-      all_selected_features = unique(c(all_selected_features, this_top1_features))
+
       # remaining_features = setdiff(colnames(z1), all_selected_features)
       message(n_features, " features was not reached. \n")
     }

@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' set.seed(1)
-#' n = 1000
+#' n = 100
 #' p = 10
 #' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
 #' x2 = x1 + 0.1
@@ -32,7 +32,7 @@
 #' w = compute_weights(z1, z2)
 #' top_model_result = top_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' alpha = c(1, 0.1, 0)
+#' alpha = c(1, 0.1)
 #' top_model_result = top_model(z1, z2, y1, y2, w = w,
 #' top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
 top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50, nIter = 20, alpha = 1, s = "lambda.min", ...){
