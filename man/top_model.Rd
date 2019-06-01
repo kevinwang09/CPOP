@@ -4,8 +4,8 @@
 \alias{top_model}
 \title{All three steps of TOP modelling}
 \usage{
-top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, nIter = 20,
-  alpha = 1, s = "lambda.min", ...)
+top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
+  nIter = 20, alpha = 1, s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -19,6 +19,8 @@ top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, nIter = 20,
 \item{w}{A vector}
 
 \item{top1_iterate}{Should we use top1_iterate?}
+
+\item{n_features}{n_features desired}
 
 \item{nIter}{Number of iterations}
 
@@ -49,6 +51,9 @@ y2 = rbinom(n, 1, prob = expit(x2 \%*\% beta))
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-nIter = 20
-top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+top_model_result = top_model(z1, z2, y1, y2, w = w,
+alpha = 1, n_features = 40, s = "lambda.min")
+alpha = c(1, 0.1, 0)
+top_model_result = top_model(z1, z2, y1, y2, w = w,
+top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
 }

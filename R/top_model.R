@@ -6,6 +6,7 @@
 #' @param y2 A vector
 #' @param w A vector
 #' @param top1_iterate Should we use top1_iterate?
+#' @param n_features n_features desired
 #' @param nIter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
@@ -29,16 +30,19 @@
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' nIter = 20
-#' top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
-top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, nIter = 20, alpha = 1, s = "lambda.min", ...){
+#' top_model_result = top_model(z1, z2, y1, y2, w = w,
+#' alpha = 1, n_features = 40, s = "lambda.min")
+#' alpha = c(1, 0.1, 0)
+#' top_model_result = top_model(z1, z2, y1, y2, w = w,
+#' top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
+top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50, nIter = 20, alpha = 1, s = "lambda.min", ...){
 
   if(top1_iterate){
-    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w, nIter = nIter, alpha = alpha, s = s, ...)
+    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, n_features = n_features,nIter = nIter, alpha = alpha, s = s, ...)
     top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
     top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
   } else {
-    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w, nIter = nIter, alpha = alpha, s = s, ...)
+    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, nIter = nIter, alpha = alpha, s = s, ...)
     top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
     top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
   }

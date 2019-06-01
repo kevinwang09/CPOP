@@ -113,8 +113,9 @@ get_lasso_coef = function(lassoObj, s){
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' alpha = c(1, 0.1, 0)
-#' top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
+#' alpha = c(1, 0.1, 0.01)
+#' top1_result = top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
+#' top1_result
 top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_features = 50, s = "lambda.min", ...){
 
   # remaining_features = colnames(z1)
@@ -143,5 +144,5 @@ top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_feat
     }
   }
 
-
+  return(all_selected_features)
 }
