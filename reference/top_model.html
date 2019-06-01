@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">top</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
       </span>
     </div>
 
@@ -108,8 +108,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>top_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>top1_iterate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>top_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>top1_iterate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +139,10 @@
       <td><p>Should we use top1_iterate?</p></td>
     </tr>
     <tr>
+      <th>n_features</th>
+      <td><p>n_features desired</p></td>
+    </tr>
+    <tr>
       <th>nIter</th>
       <td><p>Number of iterations</p></td>
     </tr>
@@ -164,7 +168,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
 <span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>15</span>
 <span class='no'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
 <span class='no'>x2</span> <span class='kw'>=</span> <span class='no'>x1</span> + <span class='fl'>0.1</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x1</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x2</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
@@ -176,468 +180,46 @@
 <span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
 <span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
 <span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
-<span class='no'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>
-<span class='fu'>top_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 35 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 29 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+<span class='no'>top_model_result</span> <span class='kw'>=</span> <span class='fu'>top_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 0 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 36 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 49 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 64 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 77 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 87 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 59 out of 87</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1  0  1
+#&gt;   -1  0  0 17
+#&gt;   0   0  0  0
+#&gt;   1  11  0  0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 44 out of 87</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1  0  1
+#&gt;   -1  0  0 10
+#&gt;   0   0  0  0
+#&gt;   1   5  0  0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 41 out of 87</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
-#&gt;   -1  0 0 3
+#&gt;   -1  0 0 2
 #&gt;   0   0 0 0
-#&gt;   1   3 0 0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 26 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 1
-#&gt;   0   0 0 0
-#&gt;   1   2 0 0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 25 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 1
-#&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='output co'>#&gt; <span class='message'>Step 04: Number of leftover features: 25 out of 35</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;   1   1 0 0</div><div class='output co'>#&gt; <span class='message'>Step 04: Number of leftover features: 41 out of 87</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='output co'>#&gt; $en1
-#&gt; $lambda
-#&gt;   [1] 144.24621777 131.43178135 119.75574415 109.11697391  99.42332269
-#&gt;   [6]  90.59082873  82.54298920  75.21009754  68.52863977  62.44074429
-#&gt;  [11]  56.89368067  51.83940289  47.23413321  43.03798300  39.21460722
-#&gt;  [16]  35.73088959  32.55665584  29.66441227  27.02910765  24.62791622
-#&gt;  [21]  22.44004002  20.44652872  18.63011546  16.97506735  15.46704915
-#&gt;  [26]  14.09299914  12.84101594  11.70025547  10.66083702   9.71375765
-#&gt;  [31]   8.85081419   8.06453225   7.34810143   6.69531636   6.10052290
-#&gt;  [36]   5.55856926   5.06476129   4.61482186   4.20485380   3.83130618
-#&gt;  [41]   3.49094350   3.18081770   2.89824262   2.64077074   2.40617194
-#&gt;  [46]   2.19241426   1.99764622   1.82018083   1.65848099   1.51114611
-#&gt;  [51]   1.37690005   1.25458005   1.14312661   1.04157439   0.94904380
-#&gt;  [56]   0.86473336   0.78791283   0.71791683   0.65413908   0.59602716
-#&gt;  [61]   0.54307775   0.49483222   0.45087269   0.41081840   0.37432243
-#&gt;  [66]   0.34106866   0.31076906   0.28316119   0.25800593   0.23508540
-#&gt;  [71]   0.21420106   0.19517203   0.17783348   0.16203524   0.14764048
-#&gt;  [76]   0.13452451   0.12257372   0.11168461   0.10176286   0.09272252
-#&gt;  [81]   0.08448531   0.07697987   0.07014119   0.06391004   0.05823245
-#&gt;  [86]   0.05305924   0.04834560   0.04405071   0.04013737   0.03657167
-#&gt;  [91]   0.03332275   0.03036245   0.02766513   0.02520744   0.02296808
-#&gt;  [96]   0.02092766   0.01906850   0.01737451   0.01583100   0.01442462
-#&gt; 
-#&gt; $cvm
-#&gt;   [1] 1.385952 1.383205 1.382710 1.382276 1.381801 1.381281 1.380714 1.380093
-#&gt;   [9] 1.379415 1.378674 1.377865 1.376983 1.376021 1.374973 1.373831 1.372588
-#&gt;  [17] 1.371237 1.369769 1.368175 1.366448 1.364590 1.362596 1.360418 1.358067
-#&gt;  [25] 1.355536 1.352816 1.349896 1.346769 1.343428 1.339865 1.336076 1.332055
-#&gt;  [33] 1.327802 1.323315 1.318596 1.313650 1.308484 1.303107 1.297532 1.291773
-#&gt;  [41] 1.285850 1.279782 1.273594 1.267309 1.260957 1.254565 1.248163 1.241781
-#&gt;  [49] 1.235449 1.229197 1.223053 1.217044 1.211196 1.205532 1.200073 1.194837
-#&gt;  [57] 1.189839 1.185092 1.180605 1.176385 1.172437 1.168762 1.165357 1.162221
-#&gt;  [65] 1.159346 1.156726 1.154351 1.152211 1.150294 1.148588 1.147079 1.145754
-#&gt;  [73] 1.144599 1.143599 1.142742 1.142013 1.141401 1.140892 1.140475 1.140140
-#&gt;  [81] 1.139875 1.139671 1.139521 1.139415 1.139347 1.139310 1.139301 1.139313
-#&gt;  [89] 1.139341 1.139383 1.139435 1.139495 1.139560 1.139628 1.139697 1.139768
-#&gt;  [97] 1.139837 1.139906 1.139972 1.139982
-#&gt; 
-#&gt; $cvsd
-#&gt;   [1] 0.0006396569 0.0005842473 0.0005621759 0.0005676878 0.0005743519
-#&gt;   [6] 0.0005823667 0.0005919650 0.0006034092 0.0006169914 0.0006330334
-#&gt;  [11] 0.0006518856 0.0006739243 0.0006995497 0.0007291818 0.0007632571
-#&gt;  [16] 0.0008022254 0.0008465466 0.0008966891 0.0009531286 0.0010163472
-#&gt;  [21] 0.0010879151 0.0011635921 0.0012494992 0.0013443749 0.0014484783
-#&gt;  [26] 0.0015623246 0.0016864308 0.0018213126 0.0019674788 0.0021254256
-#&gt;  [31] 0.0022956292 0.0024785373 0.0026745599 0.0028840598 0.0031073419
-#&gt;  [36] 0.0033446431 0.0035961228 0.0038618530 0.0041418111 0.0044358729
-#&gt;  [41] 0.0047438086 0.0050652801 0.0053998390 0.0057469391 0.0061059273
-#&gt;  [46] 0.0064760600 0.0068565100 0.0072463771 0.0076446998 0.0080504675
-#&gt;  [51] 0.0084626320 0.0088801199 0.0093018427 0.0097267067 0.0101536222
-#&gt;  [56] 0.0105815100 0.0110093089 0.0114359802 0.0118605128 0.0122819269
-#&gt;  [61] 0.0126992777 0.0131116582 0.0135182017 0.0139180841 0.0143105254
-#&gt;  [66] 0.0146947913 0.0150701944 0.0154360996 0.0157916092 0.0161364722
-#&gt;  [71] 0.0164703643 0.0167927539 0.0171032936 0.0174017024 0.0176877667
-#&gt;  [76] 0.0179613427 0.0182223578 0.0184708091 0.0187067607 0.0189303392
-#&gt;  [81] 0.0191417291 0.0193411671 0.0195289373 0.0197053655 0.0198708427
-#&gt;  [86] 0.0200259893 0.0201713072 0.0203065179 0.0204322056 0.0205490343
-#&gt;  [91] 0.0206580113 0.0207589443 0.0208521616 0.0209382384 0.0210176901
-#&gt;  [96] 0.0210909769 0.0211585236 0.0212207287 0.0212779688 0.0212951463
-#&gt; 
-#&gt; $cvup
-#&gt;   [1] 1.386592 1.383790 1.383272 1.382843 1.382375 1.381864 1.381305 1.380696
-#&gt;   [9] 1.380032 1.379307 1.378517 1.377657 1.376721 1.375702 1.374594 1.373391
-#&gt;  [17] 1.372084 1.370666 1.369129 1.367464 1.365677 1.363760 1.361667 1.359412
-#&gt;  [25] 1.356985 1.354378 1.351582 1.348591 1.345395 1.341991 1.338371 1.334534
-#&gt;  [33] 1.330476 1.326199 1.321704 1.316995 1.312080 1.306969 1.301673 1.296209
-#&gt;  [41] 1.290593 1.284847 1.278993 1.273056 1.267063 1.261041 1.255020 1.249028
-#&gt;  [49] 1.243094 1.237248 1.231516 1.225925 1.220498 1.215259 1.210227 1.205418
-#&gt;  [57] 1.200848 1.196527 1.192465 1.188667 1.185136 1.181873 1.178875 1.176139
-#&gt;  [65] 1.173657 1.171421 1.169422 1.167647 1.166085 1.164724 1.163550 1.162547
-#&gt;  [73] 1.161702 1.161001 1.160430 1.159975 1.159623 1.159363 1.159182 1.159070
-#&gt;  [81] 1.159016 1.159012 1.159049 1.159120 1.159218 1.159336 1.159472 1.159619
-#&gt;  [89] 1.159773 1.159932 1.160093 1.160254 1.160412 1.160566 1.160715 1.160859
-#&gt;  [97] 1.160996 1.161126 1.161250 1.161277
-#&gt; 
-#&gt; $cvlo
-#&gt;   [1] 1.385313 1.382621 1.382147 1.381708 1.381226 1.380699 1.380122 1.379489
-#&gt;   [9] 1.378798 1.378041 1.377214 1.376309 1.375322 1.374244 1.373068 1.371786
-#&gt;  [17] 1.370391 1.368872 1.367222 1.365431 1.363502 1.361432 1.359168 1.356723
-#&gt;  [25] 1.354088 1.351253 1.348210 1.344948 1.341460 1.337740 1.333780 1.329577
-#&gt;  [33] 1.325127 1.320431 1.315489 1.310306 1.304888 1.299245 1.293390 1.287337
-#&gt;  [41] 1.281106 1.274717 1.268194 1.261563 1.254851 1.248089 1.241307 1.234535
-#&gt;  [49] 1.227805 1.221147 1.214590 1.208164 1.201895 1.195806 1.189920 1.184255
-#&gt;  [57] 1.178829 1.173656 1.168744 1.164103 1.159738 1.155650 1.151839 1.148303
-#&gt;  [65] 1.145036 1.142031 1.139281 1.136775 1.134502 1.132452 1.130609 1.128962
-#&gt;  [73] 1.127496 1.126198 1.125054 1.124052 1.123179 1.122421 1.121768 1.121209
-#&gt;  [81] 1.120733 1.120330 1.119992 1.119710 1.119476 1.119284 1.119129 1.119006
-#&gt;  [89] 1.118909 1.118834 1.118776 1.118736 1.118707 1.118689 1.118680 1.118677
-#&gt;  [97] 1.118679 1.118685 1.118694 1.118686
-#&gt; 
-#&gt; $nzero
-#&gt;  s0  s1  s2  s3  s4  s5  s6  s7  s8  s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s20 s21 s22 s23 s24 s25 s26 s27 s28 s29 s30 s31 s32 s33 s34 s35 s36 s37 s38 s39 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s40 s41 s42 s43 s44 s45 s46 s47 s48 s49 s50 s51 s52 s53 s54 s55 s56 s57 s58 s59 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s60 s61 s62 s63 s64 s65 s66 s67 s68 s69 s70 s71 s72 s73 s74 s75 s76 s77 s78 s79 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s80 s81 s82 s83 s84 s85 s86 s87 s88 s89 s90 s91 s92 s93 s94 s95 s96 s97 s98 s99 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; 
-#&gt; $name
-#&gt;            deviance 
-#&gt; "Binomial Deviance" 
-#&gt; 
-#&gt; $glmnet.fit
-#&gt; 
-#&gt; Call:  glmnet(x = z1[, top2_result], y = y1, family = "binomial", alpha = 0) 
-#&gt; 
-#&gt;        Df       %Dev    Lambda
-#&gt;   [1,] 25 -2.403e-15 144.20000
-#&gt;   [2,] 25  3.051e-03 131.40000
-#&gt;   [3,] 25  3.345e-03 119.80000
-#&gt;   [4,] 25  3.666e-03 109.10000
-#&gt;   [5,] 25  4.017e-03  99.42000
-#&gt;   [6,] 25  4.401e-03  90.59000
-#&gt;   [7,] 25  4.821e-03  82.54000
-#&gt;   [8,] 25  5.280e-03  75.21000
-#&gt;   [9,] 25  5.782e-03  68.53000
-#&gt;  [10,] 25  6.329e-03  62.44000
-#&gt;  [11,] 25  6.927e-03  56.89000
-#&gt;  [12,] 25  7.580e-03  51.84000
-#&gt;  [13,] 25  8.291e-03  47.23000
-#&gt;  [14,] 25  9.067e-03  43.04000
-#&gt;  [15,] 25  9.911e-03  39.21000
-#&gt;  [16,] 25  1.083e-02  35.73000
-#&gt;  [17,] 25  1.183e-02  32.56000
-#&gt;  [18,] 25  1.292e-02  29.66000
-#&gt;  [19,] 25  1.410e-02  27.03000
-#&gt;  [20,] 25  1.537e-02  24.63000
-#&gt;  [21,] 25  1.676e-02  22.44000
-#&gt;  [22,] 25  1.823e-02  20.45000
-#&gt;  [23,] 25  1.984e-02  18.63000
-#&gt;  [24,] 25  2.158e-02  16.98000
-#&gt;  [25,] 25  2.345e-02  15.47000
-#&gt;  [26,] 25  2.547e-02  14.09000
-#&gt;  [27,] 25  2.763e-02  12.84000
-#&gt;  [28,] 25  2.995e-02  11.70000
-#&gt;  [29,] 25  3.243e-02  10.66000
-#&gt;  [30,] 25  3.507e-02   9.71400
-#&gt;  [31,] 25  3.788e-02   8.85100
-#&gt;  [32,] 25  4.087e-02   8.06500
-#&gt;  [33,] 25  4.402e-02   7.34800
-#&gt;  [34,] 25  4.736e-02   6.69500
-#&gt;  [35,] 25  5.086e-02   6.10100
-#&gt;  [36,] 25  5.454e-02   5.55900
-#&gt;  [37,] 25  5.838e-02   5.06500
-#&gt;  [38,] 25  6.238e-02   4.61500
-#&gt;  [39,] 25  6.654e-02   4.20500
-#&gt;  [40,] 25  7.083e-02   3.83100
-#&gt;  [41,] 25  7.525e-02   3.49100
-#&gt;  [42,] 25  7.978e-02   3.18100
-#&gt;  [43,] 25  8.440e-02   2.89800
-#&gt;  [44,] 25  8.910e-02   2.64100
-#&gt;  [45,] 25  9.386e-02   2.40600
-#&gt;  [46,] 25  9.866e-02   2.19200
-#&gt;  [47,] 25  1.035e-01   1.99800
-#&gt;  [48,] 25  1.083e-01   1.82000
-#&gt;  [49,] 25  1.130e-01   1.65800
-#&gt;  [50,] 25  1.178e-01   1.51100
-#&gt;  [51,] 25  1.224e-01   1.37700
-#&gt;  [52,] 25  1.270e-01   1.25500
-#&gt;  [53,] 25  1.314e-01   1.14300
-#&gt;  [54,] 25  1.357e-01   1.04200
-#&gt;  [55,] 25  1.399e-01   0.94900
-#&gt;  [56,] 25  1.439e-01   0.86470
-#&gt;  [57,] 25  1.478e-01   0.78790
-#&gt;  [58,] 25  1.515e-01   0.71790
-#&gt;  [59,] 25  1.550e-01   0.65410
-#&gt;  [60,] 25  1.583e-01   0.59600
-#&gt;  [61,] 25  1.614e-01   0.54310
-#&gt;  [62,] 25  1.643e-01   0.49480
-#&gt;  [63,] 25  1.670e-01   0.45090
-#&gt;  [64,] 25  1.696e-01   0.41080
-#&gt;  [65,] 25  1.719e-01   0.37430
-#&gt;  [66,] 25  1.741e-01   0.34110
-#&gt;  [67,] 25  1.761e-01   0.31080
-#&gt;  [68,] 25  1.779e-01   0.28320
-#&gt;  [69,] 25  1.796e-01   0.25800
-#&gt;  [70,] 25  1.811e-01   0.23510
-#&gt;  [71,] 25  1.824e-01   0.21420
-#&gt;  [72,] 25  1.837e-01   0.19520
-#&gt;  [73,] 25  1.848e-01   0.17780
-#&gt;  [74,] 25  1.857e-01   0.16200
-#&gt;  [75,] 25  1.866e-01   0.14760
-#&gt;  [76,] 25  1.874e-01   0.13450
-#&gt;  [77,] 25  1.881e-01   0.12260
-#&gt;  [78,] 25  1.887e-01   0.11170
-#&gt;  [79,] 25  1.892e-01   0.10180
-#&gt;  [80,] 25  1.897e-01   0.09272
-#&gt;  [81,] 25  1.901e-01   0.08449
-#&gt;  [82,] 25  1.904e-01   0.07698
-#&gt;  [83,] 25  1.907e-01   0.07014
-#&gt;  [84,] 25  1.910e-01   0.06391
-#&gt;  [85,] 25  1.912e-01   0.05823
-#&gt;  [86,] 25  1.914e-01   0.05306
-#&gt;  [87,] 25  1.916e-01   0.04835
-#&gt;  [88,] 25  1.917e-01   0.04405
-#&gt;  [89,] 25  1.918e-01   0.04014
-#&gt;  [90,] 25  1.919e-01   0.03657
-#&gt;  [91,] 25  1.920e-01   0.03332
-#&gt;  [92,] 25  1.921e-01   0.03036
-#&gt;  [93,] 25  1.922e-01   0.02767
-#&gt;  [94,] 25  1.922e-01   0.02521
-#&gt;  [95,] 25  1.923e-01   0.02297
-#&gt;  [96,] 25  1.923e-01   0.02093
-#&gt;  [97,] 25  1.923e-01   0.01907
-#&gt;  [98,] 25  1.924e-01   0.01737
-#&gt;  [99,] 25  1.924e-01   0.01583
-#&gt; [100,] 25  1.924e-01   0.01442
-#&gt; 
-#&gt; $lambda.min
-#&gt; [1] 0.0483456
-#&gt; 
-#&gt; $lambda.1se
-#&gt; [1] 0.3743224
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "cv.glmnet"
-#&gt; 
-#&gt; $en2
-#&gt; $lambda
-#&gt;   [1] 139.43126157 127.04457259 115.75828292 105.47463612  96.10456016
-#&gt;   [6]  87.56689591  79.78769423  72.69957539  66.24114548  60.35646469
-#&gt;  [11]  54.99456272  50.10899735  45.65745213  41.60136993  37.90561888
-#&gt;  [16]  34.53818818  31.46991073  28.67421060  26.12687276  23.80583340
-#&gt;  [21]  21.69098877  19.76402111  18.00823995  16.40843755  14.95075718
-#&gt;  [26]  13.62257312  12.41238127  11.30969953  10.30497700   9.38951124
-#&gt;  [31]   8.55537294   7.79533719   7.10282092   6.47182589   5.89688671
-#&gt;  [36]   5.37302355   4.89569895   4.46077855   4.06449527   3.70341672
-#&gt;  [41]   3.37441538   3.07464162   2.80149893   2.55262149   2.32585363
-#&gt;  [46]   2.11923121   1.93096455   1.75942298   1.60312069   1.46070387
-#&gt;  [51]   1.33093896   1.21270201   1.10496891   1.00680652   0.91736460
-#&gt;  [56]   0.83586846   0.76161221   0.69395268   0.63230383   0.57613170
-#&gt;  [61]   0.52494975   0.47831466   0.43582251   0.39710524   0.36182750
-#&gt;  [66]   0.32968374   0.30039555   0.27370924   0.24939366   0.22723822
-#&gt;  [71]   0.20705100   0.18865716   0.17189738   0.15662649   0.14271222
-#&gt;  [76]   0.13003406   0.11848219   0.10795656   0.09836600   0.08962744
-#&gt;  [81]   0.08166518   0.07441027   0.06779987   0.06177671   0.05628864
-#&gt;  [86]   0.05128811   0.04673182   0.04258029   0.03879758   0.03535091
-#&gt;  [91]   0.03221043   0.02934894   0.02674166   0.02436601   0.02220140
-#&gt;  [96]   0.02022909   0.01843199   0.01679454   0.01530256   0.01394313
-#&gt; 
-#&gt; $cvm
-#&gt;   [1] 1.382423 1.379379 1.378733 1.378311 1.377849 1.377345 1.376793 1.376190
-#&gt;   [9] 1.375531 1.374811 1.374026 1.373170 1.372236 1.371218 1.370111 1.368906
-#&gt;  [17] 1.367595 1.366173 1.364629 1.362955 1.361152 1.359228 1.357124 1.354853
-#&gt;  [25] 1.352409 1.349784 1.346969 1.343957 1.340742 1.337317 1.333677 1.329821
-#&gt;  [33] 1.325746 1.321454 1.316947 1.312230 1.307312 1.302203 1.296916 1.291467
-#&gt;  [41] 1.285875 1.280162 1.274351 1.268467 1.262538 1.256592 1.250658 1.244767
-#&gt;  [49] 1.238946 1.233224 1.227629 1.222187 1.216920 1.211850 1.206995 1.202373
-#&gt;  [57] 1.197995 1.193871 1.190010 1.186415 1.183087 1.180025 1.177227 1.174685
-#&gt;  [65] 1.172392 1.170338 1.168512 1.166903 1.165498 1.164282 1.163242 1.162362
-#&gt;  [73] 1.161629 1.161029 1.160548 1.160173 1.159891 1.159691 1.159561 1.159492
-#&gt;  [81] 1.159474 1.159498 1.159557 1.159645 1.159754 1.159880 1.160020 1.160167
-#&gt;  [89] 1.160320 1.160474 1.160629 1.160782 1.160933 1.161079 1.161219 1.161353
-#&gt;  [97] 1.161481 1.161602 1.161717 1.161778
-#&gt; 
-#&gt; $cvsd
-#&gt;   [1] 0.004834042 0.004909104 0.004897969 0.004902540 0.004907615 0.004913245
-#&gt;   [7] 0.004919499 0.004926449 0.004934179 0.004942786 0.004952374 0.004963067
-#&gt;  [13] 0.004974999 0.004988327 0.005003225 0.005019888 0.005038540 0.005059429
-#&gt;  [19] 0.005082834 0.005109068 0.005138962 0.005170572 0.005207324 0.005248507
-#&gt;  [25] 0.005294609 0.005346172 0.005403780 0.005468051 0.005539637 0.005619210
-#&gt;  [31] 0.005707459 0.005805078 0.005912750 0.006031135 0.006160855 0.006302474
-#&gt;  [37] 0.006456490 0.006623314 0.006803261 0.006996541 0.007203254 0.007423387
-#&gt;  [43] 0.007656809 0.007903301 0.008162533 0.008434094 0.008717499 0.009012201
-#&gt;  [49] 0.009317603 0.009633070 0.009957936 0.010291510 0.010633081 0.010981917
-#&gt;  [55] 0.011337270 0.011698369 0.012064421 0.012434608 0.012808087 0.013183986
-#&gt;  [61] 0.013561407 0.013939428 0.014317104 0.014693477 0.015067577 0.015438428
-#&gt;  [67] 0.015804927 0.016166296 0.016521422 0.016869594 0.017209922 0.017541617
-#&gt;  [73] 0.017863958 0.018176294 0.018478055 0.018768758 0.019048013 0.019315520
-#&gt;  [79] 0.019571073 0.019814556 0.020045935 0.020265259 0.020472648 0.020668294
-#&gt;  [85] 0.020852598 0.021026140 0.021188754 0.021340432 0.021481951 0.021613833
-#&gt;  [91] 0.021736615 0.021851010 0.021957221 0.022055394 0.022146102 0.022229862
-#&gt;  [97] 0.022307147 0.022378380 0.022444024 0.022478531
-#&gt; 
-#&gt; $cvup
-#&gt;   [1] 1.387257 1.384289 1.383631 1.383213 1.382757 1.382258 1.381712 1.381116
-#&gt;   [9] 1.380465 1.379754 1.378979 1.378133 1.377211 1.376207 1.375114 1.373925
-#&gt;  [17] 1.372634 1.371232 1.369711 1.368064 1.366291 1.364399 1.362331 1.360101
-#&gt;  [25] 1.357704 1.355130 1.352373 1.349425 1.346281 1.342936 1.339385 1.335626
-#&gt;  [33] 1.331659 1.327485 1.323108 1.318533 1.313769 1.308826 1.303719 1.298464
-#&gt;  [41] 1.293079 1.287586 1.282008 1.276370 1.270700 1.265026 1.259376 1.253779
-#&gt;  [49] 1.248263 1.242857 1.237587 1.232478 1.227553 1.222832 1.218333 1.214071
-#&gt;  [57] 1.210059 1.206306 1.202818 1.199599 1.196648 1.193965 1.191544 1.189378
-#&gt;  [65] 1.187459 1.185776 1.184317 1.183069 1.182019 1.181152 1.180451 1.179904
-#&gt;  [73] 1.179493 1.179206 1.179026 1.178942 1.178939 1.179006 1.179132 1.179306
-#&gt;  [81] 1.179520 1.179763 1.180030 1.180313 1.180606 1.180907 1.181209 1.181508
-#&gt;  [89] 1.181802 1.182088 1.182365 1.182633 1.182890 1.183134 1.183365 1.183583
-#&gt;  [97] 1.183788 1.183981 1.184161 1.184257
-#&gt; 
-#&gt; $cvlo
-#&gt;   [1] 1.377589 1.374470 1.373835 1.373408 1.372942 1.372431 1.371873 1.371263
-#&gt;   [9] 1.370597 1.369869 1.369074 1.368207 1.367261 1.366230 1.365108 1.363886
-#&gt;  [17] 1.362557 1.361113 1.359546 1.357846 1.356013 1.354057 1.351917 1.349604
-#&gt;  [25] 1.347115 1.344438 1.341565 1.338489 1.335202 1.331697 1.327970 1.324016
-#&gt;  [33] 1.319834 1.315423 1.310786 1.305928 1.300856 1.295580 1.290113 1.284471
-#&gt;  [41] 1.278672 1.272739 1.266694 1.260564 1.254375 1.248158 1.241941 1.235754
-#&gt;  [49] 1.229628 1.223591 1.217671 1.211895 1.206287 1.200868 1.195658 1.190674
-#&gt;  [57] 1.185930 1.181437 1.177202 1.173231 1.169525 1.166086 1.162909 1.159991
-#&gt;  [65] 1.157324 1.154900 1.152707 1.150737 1.148976 1.147412 1.146032 1.144821
-#&gt;  [73] 1.143765 1.142853 1.142070 1.141404 1.140843 1.140375 1.139990 1.139677
-#&gt;  [81] 1.139428 1.139233 1.139085 1.138976 1.138901 1.138854 1.138831 1.138827
-#&gt;  [89] 1.138838 1.138861 1.138892 1.138931 1.138976 1.139023 1.139073 1.139123
-#&gt;  [97] 1.139174 1.139224 1.139273 1.139300
-#&gt; 
-#&gt; $nzero
-#&gt;  s0  s1  s2  s3  s4  s5  s6  s7  s8  s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s20 s21 s22 s23 s24 s25 s26 s27 s28 s29 s30 s31 s32 s33 s34 s35 s36 s37 s38 s39 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s40 s41 s42 s43 s44 s45 s46 s47 s48 s49 s50 s51 s52 s53 s54 s55 s56 s57 s58 s59 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s60 s61 s62 s63 s64 s65 s66 s67 s68 s69 s70 s71 s72 s73 s74 s75 s76 s77 s78 s79 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; s80 s81 s82 s83 s84 s85 s86 s87 s88 s89 s90 s91 s92 s93 s94 s95 s96 s97 s98 s99 
-#&gt;  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25 
-#&gt; 
-#&gt; $name
-#&gt;            deviance 
-#&gt; "Binomial Deviance" 
-#&gt; 
-#&gt; $glmnet.fit
-#&gt; 
-#&gt; Call:  glmnet(x = z2[, top2_result], y = y2, family = "binomial", alpha = 0) 
-#&gt; 
-#&gt;        Df       %Dev    Lambda
-#&gt;   [1,] 25 -1.656e-14 139.40000
-#&gt;   [2,] 25  2.969e-03 127.00000
-#&gt;   [3,] 25  3.255e-03 115.80000
-#&gt;   [4,] 25  3.567e-03 105.50000
-#&gt;   [5,] 25  3.909e-03  96.10000
-#&gt;   [6,] 25  4.282e-03  87.57000
-#&gt;   [7,] 25  4.690e-03  79.79000
-#&gt;   [8,] 25  5.136e-03  72.70000
-#&gt;   [9,] 25  5.624e-03  66.24000
-#&gt;  [10,] 25  6.156e-03  60.36000
-#&gt;  [11,] 25  6.737e-03  54.99000
-#&gt;  [12,] 25  7.371e-03  50.11000
-#&gt;  [13,] 25  8.062e-03  45.66000
-#&gt;  [14,] 25  8.815e-03  41.60000
-#&gt;  [15,] 25  9.635e-03  37.91000
-#&gt;  [16,] 25  1.053e-02  34.54000
-#&gt;  [17,] 25  1.150e-02  31.47000
-#&gt;  [18,] 25  1.255e-02  28.67000
-#&gt;  [19,] 25  1.369e-02  26.13000
-#&gt;  [20,] 25  1.493e-02  23.81000
-#&gt;  [21,] 25  1.628e-02  21.69000
-#&gt;  [22,] 25  1.769e-02  19.76000
-#&gt;  [23,] 25  1.926e-02  18.01000
-#&gt;  [24,] 25  2.094e-02  16.41000
-#&gt;  [25,] 25  2.275e-02  14.95000
-#&gt;  [26,] 25  2.470e-02  13.62000
-#&gt;  [27,] 25  2.679e-02  12.41000
-#&gt;  [28,] 25  2.903e-02  11.31000
-#&gt;  [29,] 25  3.142e-02  10.30000
-#&gt;  [30,] 25  3.396e-02   9.39000
-#&gt;  [31,] 25  3.667e-02   8.55500
-#&gt;  [32,] 25  3.954e-02   7.79500
-#&gt;  [33,] 25  4.258e-02   7.10300
-#&gt;  [34,] 25  4.577e-02   6.47200
-#&gt;  [35,] 25  4.914e-02   5.89700
-#&gt;  [36,] 25  5.266e-02   5.37300
-#&gt;  [37,] 25  5.633e-02   4.89600
-#&gt;  [38,] 25  6.016e-02   4.46100
-#&gt;  [39,] 25  6.412e-02   4.06400
-#&gt;  [40,] 25  6.820e-02   3.70300
-#&gt;  [41,] 25  7.240e-02   3.37400
-#&gt;  [42,] 25  7.670e-02   3.07500
-#&gt;  [43,] 25  8.109e-02   2.80100
-#&gt;  [44,] 25  8.553e-02   2.55300
-#&gt;  [45,] 25  9.002e-02   2.32600
-#&gt;  [46,] 25  9.453e-02   2.11900
-#&gt;  [47,] 25  9.905e-02   1.93100
-#&gt;  [48,] 25  1.035e-01   1.75900
-#&gt;  [49,] 25  1.080e-01   1.60300
-#&gt;  [50,] 25  1.124e-01   1.46100
-#&gt;  [51,] 25  1.167e-01   1.33100
-#&gt;  [52,] 25  1.210e-01   1.21300
-#&gt;  [53,] 25  1.251e-01   1.10500
-#&gt;  [54,] 25  1.290e-01   1.00700
-#&gt;  [55,] 25  1.329e-01   0.91740
-#&gt;  [56,] 25  1.366e-01   0.83590
-#&gt;  [57,] 25  1.401e-01   0.76160
-#&gt;  [58,] 25  1.434e-01   0.69400
-#&gt;  [59,] 25  1.466e-01   0.63230
-#&gt;  [60,] 25  1.495e-01   0.57610
-#&gt;  [61,] 25  1.523e-01   0.52490
-#&gt;  [62,] 25  1.549e-01   0.47830
-#&gt;  [63,] 25  1.574e-01   0.43580
-#&gt;  [64,] 25  1.596e-01   0.39710
-#&gt;  [65,] 25  1.617e-01   0.36180
-#&gt;  [66,] 25  1.636e-01   0.32970
-#&gt;  [67,] 25  1.653e-01   0.30040
-#&gt;  [68,] 25  1.669e-01   0.27370
-#&gt;  [69,] 25  1.683e-01   0.24940
-#&gt;  [70,] 25  1.696e-01   0.22720
-#&gt;  [71,] 25  1.708e-01   0.20710
-#&gt;  [72,] 25  1.718e-01   0.18870
-#&gt;  [73,] 25  1.727e-01   0.17190
-#&gt;  [74,] 25  1.735e-01   0.15660
-#&gt;  [75,] 25  1.743e-01   0.14270
-#&gt;  [76,] 25  1.749e-01   0.13000
-#&gt;  [77,] 25  1.755e-01   0.11850
-#&gt;  [78,] 25  1.760e-01   0.10800
-#&gt;  [79,] 25  1.764e-01   0.09837
-#&gt;  [80,] 25  1.768e-01   0.08963
-#&gt;  [81,] 25  1.771e-01   0.08167
-#&gt;  [82,] 25  1.774e-01   0.07441
-#&gt;  [83,] 25  1.776e-01   0.06780
-#&gt;  [84,] 25  1.778e-01   0.06178
-#&gt;  [85,] 25  1.780e-01   0.05629
-#&gt;  [86,] 25  1.782e-01   0.05129
-#&gt;  [87,] 25  1.783e-01   0.04673
-#&gt;  [88,] 25  1.784e-01   0.04258
-#&gt;  [89,] 25  1.785e-01   0.03880
-#&gt;  [90,] 25  1.786e-01   0.03535
-#&gt;  [91,] 25  1.787e-01   0.03221
-#&gt;  [92,] 25  1.787e-01   0.02935
-#&gt;  [93,] 25  1.788e-01   0.02674
-#&gt;  [94,] 25  1.788e-01   0.02437
-#&gt;  [95,] 25  1.788e-01   0.02220
-#&gt;  [96,] 25  1.789e-01   0.02023
-#&gt;  [97,] 25  1.789e-01   0.01843
-#&gt;  [98,] 25  1.789e-01   0.01679
-#&gt;  [99,] 25  1.789e-01   0.01530
-#&gt; [100,] 25  1.790e-01   0.01394
-#&gt; 
-#&gt; $lambda.min
-#&gt; [1] 0.08166518
-#&gt; 
-#&gt; $lambda.1se
-#&gt; [1] 0.4358225
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "cv.glmnet"
-#&gt; 
-#&gt; $feature
-#&gt;  [1] "X1--X3"  "X1--X6"  "X1--X10" "X2--X3"  "X2--X4"  "X2--X8"  "X3--X7" 
-#&gt;  [8] "X3--X9"  "X9--X10" "X1--X2"  "X1--X4"  "X1--X8"  "X1--X9"  "X2--X5" 
-#&gt; [15] "X2--X7"  "X2--X10" "X3--X4"  "X1--X5"  "X1--X7"  "X2--X6"  "X2--X9" 
-#&gt; [22] "X3--X6"  "X3--X10" "X4--X6"  "X6--X9" 
-#&gt; </div></pre>
+#&gt;   1   0 0 0</div><div class='input'><span class='no'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>)
+<span class='no'>top_model_result</span> <span class='kw'>=</span> <span class='fu'>top_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
+<span class='kw'>top1_iterate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>alpha</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>90</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting TOP model using alpha = 1</span></div><div class='output co'>#&gt; 
+#&gt;  0  1 
+#&gt; 36 69 </div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 0 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 36 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 49 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 64 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 79 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>90 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>Fitting TOP model using alpha = 0.1</span></div><div class='output co'>#&gt; 
+#&gt;  0  1 
+#&gt; 89 16 </div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 0 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 89 out of 105</span></div><div class='output co'>#&gt; <span class='message'>90 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 62 out of 89</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1  0  1
+#&gt;   -1  0  0 17
+#&gt;   0   0  0  0
+#&gt;   1  10  0  0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 47 out of 89</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1  0  1
+#&gt;   -1  0  0 10
+#&gt;   0   0  0  0
+#&gt;   1   5  0  0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 44 out of 89</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 2
+#&gt;   0   0 0 0
+#&gt;   1   1 0 0</div><div class='output co'>#&gt; <span class='message'>Step 04: Number of leftover features: 44 out of 89</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 0
+#&gt;   0   0 0 0
+#&gt;   1   0 0 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
