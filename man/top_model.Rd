@@ -38,8 +38,8 @@ All three steps of TOP modelling
 }
 \examples{
 set.seed(1)
-n = 1000
-p = 15
+n = 100
+p = 10
 x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
 x2 = x1 + 0.1
 colnames(x1) = colnames(x2) = paste0("X", 1:p)
@@ -55,5 +55,5 @@ top_model_result = top_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min")
 alpha = c(1, 0.1)
 top_model_result = top_model(z1, z2, y1, y2, w = w,
-top1_iterate = TRUE, alpha = alpha, n_features = 90, s = "lambda.min")
+top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
 }

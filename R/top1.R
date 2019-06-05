@@ -8,6 +8,7 @@
 #' @param nIter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
+#' @param n_features n_features desired
 #' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
@@ -31,8 +32,8 @@
 #' nIter = 20
 #' alpha = 0.1
 #' s = "lambda.min"
-#' top1(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
-top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...){
+#' top1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
+top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
@@ -40,10 +41,19 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
   for(i in 1:nIter){
     message("Step ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
 
+    if(length(selected_features) >= n_features) {
+      message(n_features, " features was reached. ")
+      message("A total of ", length(selected_features), " features were selected. \n")
+      break
+    }
+
+
     if(length(selected_features) == ncol(z1)) {
       message("All features are selected")
       break
     }
+
+
 
     en1 = glmnet::cv.glmnet(
       x = z1[,remaining_features],

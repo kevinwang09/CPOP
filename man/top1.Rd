@@ -4,7 +4,8 @@
 \alias{top1}
 \title{Step 1 of the TOP method}
 \usage{
-top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
+top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, n_features = 50,
+  s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -20,6 +21,8 @@ top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", ...)
 \item{nIter}{Number of iterations}
 
 \item{alpha}{Lasso alpha}
+
+\item{n_features}{n_features desired}
 
 \item{s}{CV-Lasso lambda}
 
@@ -49,5 +52,5 @@ w = compute_weights(z1, z2)
 nIter = 20
 alpha = 0.1
 s = "lambda.min"
-top1(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, s = "lambda.min")
+top1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
 }

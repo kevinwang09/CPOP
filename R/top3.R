@@ -41,13 +41,17 @@ top3 = function(z1, z2, y1, y2, top2_result, intercept = FALSE, ...){
       x = z1[,top2_result],
       y = y1,
       family = "binomial",
-      alpha = 0, ...)
+      alpha = 0,
+      intercept = intercept,
+      ...)
 
     en2 = glmnet::cv.glmnet(
       x = z2[,top2_result],
       y = y2,
       family = "binomial",
-      alpha = 0, ...)
+      alpha = 0,
+      intercept = intercept,
+      ...)
 
   result = list(en1 = en1, en2 = en2, feature = top2_result)
   return(result)
