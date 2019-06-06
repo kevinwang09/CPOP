@@ -3,6 +3,7 @@
 #' @param top_model_result The output of top_model
 #' @param s laso s
 #' @param type "scatter" or "bar"
+#' @param interactive Logical
 #' @import ggplot2
 #' @importFrom tibble tibble
 #' @importFrom tidyr gather
@@ -27,8 +28,9 @@
 #' w = compute_weights(z1, z2)
 #' top_model_result = top_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' plot_top_coef(top_model_result, s = "lambda.min")
-plot_top_coef = function(top_model_result, s = "lambda.min", type = "scatter"){
+#' plot_top_coef(top_model_result, s = "lambda.min", type = "point")
+#' plot_top_coef(top_model_result, s = "lambda.min", type = "text")
+plot_top_coef = function(top_model_result, s = "lambda.min", type = "point"){
   top_model_result$en1$lambda.min
   top_model_result$en2$lambda.min
   coef_en1 = get_lasso_coef(top_model_result$en1, s = s)
@@ -44,13 +46,14 @@ plot_top_coef = function(top_model_result, s = "lambda.min", type = "scatter"){
       coef_name = forcats::fct_reorder(coef_name, coef_en1)
     )
 
-  if(type == "scatter"){
+  if(type == "point"){
     g1 = ggplot(coef_plotdf,
-                aes(x = coef_en1, coef_en2)) +
+                aes(x = coef_en1, y = coef_en2)) +
       geom_point() +
       geom_abline(slope = 1, intercept = 0, colour = "red")
 
     return(g1)
+
   }
 
   if(type == "bar"){
@@ -62,6 +65,15 @@ plot_top_coef = function(top_model_result, s = "lambda.min", type = "scatter"){
                  fill = coef_key)) +
       geom_col()
     return(g2)
+  }
+
+  if(type == "text"){
+    g3 = ggplot(coef_plotdf,
+                aes(x = coef_en1, y = coef_en2, label = coef_name)) +
+      geom_text() +
+      geom_abline(slope = 1, intercept = 0, colour = "red")
+
+    return(g3)
   }
 
 }

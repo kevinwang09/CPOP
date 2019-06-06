@@ -60,13 +60,13 @@ panel_idenDist <- function(x, y)
 {
   usr <- graphics::par("usr"); on.exit(graphics::par(usr))
   graphics::par(usr = c(0, 1, 0, 1))
-  cor <- stats::cor(x, y, method ="pearson")
+  cor <- stats::cor(x, y, method = "pearson")
   corTxt <- format(c(cor, 0.123456789), digits = 3)[1]
   idenDist <- identityDist(x, y)
   idenDistTxt <- format(c(idenDist, 0.123456789), digits = 3)[1]
 
 
-  graphics::text(0.5, 0.25, paste("", corTxt, "\n (", idenDistTxt, ")"), cex = 2)
+  graphics::text(0.5, 0.25, paste("Corr = ", corTxt, "\n iden-dist = ", idenDistTxt), cex = 2)
 }
 
 #' @title A better pairs plot function

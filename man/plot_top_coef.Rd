@@ -4,7 +4,7 @@
 \alias{plot_top_coef}
 \title{Plot top coefficients}
 \usage{
-plot_top_coef(top_model_result, s = "lambda.min", type = "scatter")
+plot_top_coef(top_model_result, s = "lambda.min", type = "point")
 }
 \arguments{
 \item{top_model_result}{The output of top_model}
@@ -12,6 +12,8 @@ plot_top_coef(top_model_result, s = "lambda.min", type = "scatter")
 \item{s}{laso s}
 
 \item{type}{"scatter" or "bar"}
+
+\item{interactive}{Logical}
 }
 \description{
 Plot top coefficients
@@ -34,5 +36,6 @@ z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 top_model_result = top_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min")
-plot_top_coef(top_model_result, s = "lambda.min")
+plot_top_coef(top_model_result, s = "lambda.min", type = "point")
+plot_top_coef(top_model_result, s = "lambda.min", type = "text")
 }
