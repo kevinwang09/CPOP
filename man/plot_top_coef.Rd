@@ -4,12 +4,14 @@
 \alias{plot_top_coef}
 \title{Plot top coefficients}
 \usage{
-plot_top_coef(top_model_result, s = "lambda.min")
+plot_top_coef(top_model_result, s = "lambda.min", type = "scatter")
 }
 \arguments{
 \item{top_model_result}{The output of top_model}
 
 \item{s}{laso s}
+
+\item{type}{"scatter" or "bar"}
 }
 \description{
 Plot top coefficients
@@ -19,10 +21,11 @@ set.seed(1)
 n = 100
 p = 10
 x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-x2 = x1 + 0.1
+x2 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
 colnames(x1) = colnames(x2) = paste0("X", 1:p)
 k = 2
 beta = c(rep(1, k), rep(0, p - k))
+x2[,1] = x2[,1] + 1
 expit = function(x) 1/(1+exp(-x))
 y1 = rbinom(n, 1, prob = expit(x1 \%*\% beta))
 y2 = rbinom(n, 1, prob = expit(x2 \%*\% beta))
@@ -31,4 +34,5 @@ z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 top_model_result = top_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min")
+plot_top_coef(top_model_result, s = "lambda.min")
 }
