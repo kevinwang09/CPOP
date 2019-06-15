@@ -38,4 +38,5 @@ top_model_result = top_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min")
 plot_top_coef(top_model_result, s = "lambda.min", type = "point")
 plot_top_coef(top_model_result, s = "lambda.min", type = "text")
+plot_top_coef(top_model_result, s = "lambda.min", type = "bar")
 }

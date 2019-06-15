@@ -30,9 +30,8 @@
 #' alpha = 1, n_features = 40, s = "lambda.min")
 #' plot_top_coef(top_model_result, s = "lambda.min", type = "point")
 #' plot_top_coef(top_model_result, s = "lambda.min", type = "text")
+#' plot_top_coef(top_model_result, s = "lambda.min", type = "bar")
 plot_top_coef = function(top_model_result, s = "lambda.min", type = "point"){
-  top_model_result$en1$lambda.min
-  top_model_result$en2$lambda.min
   coef_en1 = get_lasso_coef(top_model_result$en1, s = s)
   coef_en2 = get_lasso_coef(top_model_result$en2, s = s)
 
@@ -63,7 +62,7 @@ plot_top_coef = function(top_model_result, s = "lambda.min", type = "point"){
     g2 = coef_plotdf_gather %>%
       ggplot(aes(x = coef_name, y = coef_value,
                  fill = coef_key)) +
-      geom_col()
+      geom_col(position = "dodge")
     return(g2)
   }
 
