@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compare pairwise diff — pairwise_col_diff • top</title>
+<title>Get cv.glmnet coefficient as a matrix or a tibble — get_lasso_coef • top</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Compare pairwise diff — pairwise_col_diff" />
+<meta property="og:title" content="Get cv.glmnet coefficient as a matrix or a tibble — get_lasso_coef" />
 
-<meta property="og:description" content="Compare pairwise diff" />
+<meta property="og:description" content="Get cv.glmnet coefficient as a matrix or a tibble" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,43 +97,69 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compare pairwise diff</h1>
+    <h1>Get cv.glmnet coefficient as a matrix or a tibble</h1>
     
-    <div class="hidden name"><code>pairwise_col_diff.Rd</code></div>
+    <div class="hidden name"><code>get_lasso_coef.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compare pairwise diff</p>
+    <p>Get cv.glmnet coefficient as a matrix or a tibble</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pairwise_col_diff</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>get_lasso_coef</span>(<span class='no'>lassoObj</span>, <span class='no'>s</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A data matrix</p></td>
+      <th>lassoObj</th>
+      <td><p>cv.glmnet object</p></td>
+    </tr>
+    <tr>
+      <th>s</th>
+      <td><p>CV-Lasso lambda</p></td>
+    </tr>
+    <tr>
+      <th>tibble</th>
+      <td><p>Default to FALSE</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A pairwise difference matrix</p>
+    <p>A matrix or a tibble</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>4</span>
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>4</span>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>:<span class='no'>p</span>, <span class='no'>n</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
-<span class='fu'>pairwise_col_diff</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;      X1--X2 X1--X3 X1--X4 X2--X3 X2--X4 X3--X4
-#&gt; [1,]     -1     -2     -3     -1     -2     -1
-#&gt; [2,]     -1     -2     -3     -1     -2     -1
-#&gt; [3,]     -1     -2     -3     -1     -2     -1
-#&gt; [4,]     -1     -2     -3     -1     -2     -1</div></pre>
+<span class='no'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>
+<span class='no'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='no'>k</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='no'>p</span> - <span class='no'>k</span>))
+<span class='no'>expit</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>1</span>/(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(-<span class='no'>x</span>))
+<span class='no'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
+<span class='no'>lassoObj</span> <span class='kw'>=</span> <span class='kw pkg'>glmnet</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet'>cv.glmnet</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='fu'>get_lasso_coef</span>(<span class='kw'>lassoObj</span> <span class='kw'>=</span> <span class='no'>lassoObj</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt;                       1
+#&gt; (Intercept)  0.00856865
+#&gt; X1           0.91702923
+#&gt; X2           0.92766251
+#&gt; X4           0.03493293
+#&gt; X6          -0.01780779
+#&gt; X7          -0.02953057
+#&gt; X9           0.02456317</div><div class='input'><span class='fu'>get_lasso_coef</span>(<span class='kw'>lassoObj</span> <span class='kw'>=</span> <span class='no'>lassoObj</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
+#&gt;   feature_name     beta
+#&gt;   &lt;chr&gt;           &lt;dbl&gt;
+#&gt; 1 (Intercept)   0.00857
+#&gt; 2 X1            0.917  
+#&gt; 3 X2            0.928  
+#&gt; 4 X4            0.0349 
+#&gt; 5 X6           -0.0178 
+#&gt; 6 X7           -0.0295 
+#&gt; 7 X9            0.0246 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
