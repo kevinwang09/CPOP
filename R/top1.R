@@ -83,14 +83,6 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
   # selected_features = setdiff(colnames(z1), remaining_features)
   return(selected_features)
 }
-
-
-
-get_lasso_coef = function(lassoObj, s){
-  coefMatrix = as.matrix(glmnet::coef.cv.glmnet(lassoObj, s = s))
-  result = coefMatrix[coefMatrix[, 1] != 0, , drop = FALSE]
-  return(result)
-}
 ###############
 #' @title Step 1 of the TOP method, iteratred
 #' @description Step 1 of the TOP method, iteratred

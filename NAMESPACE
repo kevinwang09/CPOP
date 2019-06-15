@@ -2,6 +2,7 @@
 
 export(calcIdenDist)
 export(compute_weights)
+export(get_lasso_coef)
 export(identityDist)
 export(pairwise_col_diff)
 export(panel_cor)
