@@ -12,8 +12,6 @@ plot_top_coef(top_model_result, s = "lambda.min", type = "point")
 \item{s}{laso s}
 
 \item{type}{"scatter" or "bar"}
-
-\item{interactive}{Logical}
 }
 \description{
 Plot top coefficients

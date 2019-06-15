@@ -3,7 +3,6 @@
 #' @param top_model_result The output of top_model
 #' @param s laso s
 #' @param type "scatter" or "bar"
-#' @param interactive Logical
 #' @import ggplot2
 #' @importFrom tibble tibble
 #' @importFrom tidyr gather

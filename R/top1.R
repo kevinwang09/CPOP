@@ -116,7 +116,8 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
-#' top1_result = top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = alpha, n_features = 30, s = "lambda.min")
+#' top1_result = top1_iterate(z1, z2, y1, y2, w, nIter = 20,
+#' alpha = alpha, n_features = 30, s = "lambda.min")
 #' top1_result
 top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_features = 50, s = "lambda.min", ...){
 
