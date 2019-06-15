@@ -10,6 +10,8 @@ plot_ratio_network(x, nodesData = FALSE, stat_df = NULL)
 \item{x}{The output of top1 or top2 or get_lasso_coef}
 
 \item{nodesData}{Logical}
+
+\item{stat_df}{stat_df}
 }
 \description{
 Plot ratio network
@@ -46,5 +48,5 @@ color = ifelse(stat < 0, "blue", "red"),
 font.size = ifelse(abs(stat) <= 0.5, 30, 60),
 title = signif(stat, 2)
 )
-plot_ratio_network(x = top_model_coef)
+plot_ratio_network(x = top_model_coef, stat_df = stat_df)
 }

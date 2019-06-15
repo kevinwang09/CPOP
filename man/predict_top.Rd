@@ -43,4 +43,5 @@ nIter = 20
 top_result = top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 head(predict_top(top_result, newz = z1, model_number = 1))
 head(predict_top(top_result, newz = z1, model_number = "both", tibble = TRUE))
+head(predict_top(top_result, newz = z1, model_number = "avg", tibble = TRUE))
 }

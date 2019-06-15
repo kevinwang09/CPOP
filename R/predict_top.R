@@ -30,6 +30,7 @@
 #' top_result = top_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 #' head(predict_top(top_result, newz = z1, model_number = 1))
 #' head(predict_top(top_result, newz = z1, model_number = "both", tibble = TRUE))
+#' head(predict_top(top_result, newz = z1, model_number = "avg", tibble = TRUE))
 predict_top = function(top_result, newz, s = "lambda.min", model_number = 1L, tibble = FALSE){
   ## If any discovered featureset is not in newz, then stop
   if(!all(top_result$feature %in% colnames(newz))){
@@ -51,6 +52,14 @@ predict_top = function(top_result, newz, s = "lambda.min", model_number = 1L, ti
     result2 = glmnet::predict.cv.glmnet(object = top_result$en2, newx = newz[,top_result$feature], s = s)
     result = cbind(result1, result2)
     colnames(result) = c("top_model1", "top_model2")
+  }
+
+  if(model_number == "avg"){
+    result1 = glmnet::predict.cv.glmnet(object = top_result$en1, newx = newz[,top_result$feature], s = s)
+    result2 = glmnet::predict.cv.glmnet(object = top_result$en2, newx = newz[,top_result$feature], s = s)
+
+    result = cbind(result1, result2, (result1 + result2)/2)
+    colnames(result) = c("top_model1", "top_model2", "top_model_avg")
   }
 
   # rownames(result) = rownames(newz)
