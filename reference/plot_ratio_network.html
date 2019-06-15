@@ -115,7 +115,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>The output of top1 or top2</p></td>
+      <td><p>The output of top1 or top2 or get_lasso_coef</p></td>
     </tr>
     <tr>
       <th>nodesData</th>
@@ -142,7 +142,43 @@
 #&gt;  7 X6              2    20        10 X6   
 #&gt;  8 X7              6    60        30 X7   
 #&gt;  9 X8              5    50        25 X8   
-#&gt; 10 X9              6    60        30 X9   </div></pre>
+#&gt; 10 X9              6    60        30 X9   </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>x2</span> <span class='kw'>=</span> <span class='no'>x1</span> + <span class='fl'>0.1</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x1</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x2</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
+<span class='no'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>
+<span class='no'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='no'>k</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='no'>p</span> - <span class='no'>k</span>))
+<span class='no'>expit</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>1</span>/(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(-<span class='no'>x</span>))
+<span class='no'>y1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x1</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
+<span class='no'>y2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x2</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
+<span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
+<span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
+<span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
+<span class='no'>top_model_result</span> <span class='kw'>=</span> <span class='fu'><a href='top_model.html'>top_model</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 03: Number of selected features: 19 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 04: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 05: Number of selected features: 26 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 06: Number of selected features: 30 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 07: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 08: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 09: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 10: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 11: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 12: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 13: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 14: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 15: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 16: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 17: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 18: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 19: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 20: Number of selected features: 36 out of 45</span></div><div class='output co'>#&gt; <span class='message'>Step 01: Number of leftover features: 30 out of 36</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 2
+#&gt;   0   0 0 0
+#&gt;   1   4 0 0</div><div class='output co'>#&gt; <span class='message'>Step 02: Number of leftover features: 26 out of 36</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 2
+#&gt;   0   0 0 0
+#&gt;   1   2 0 0</div><div class='output co'>#&gt; <span class='message'>Step 03: Number of leftover features: 26 out of 36</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;      -1 0 1
+#&gt;   -1  0 0 0
+#&gt;   0   0 0 0
+#&gt;   1   0 0 0</div><div class='input'><span class='no'>top_model_coef</span> <span class='kw'>=</span> <span class='fu'><a href='get_lasso_coef.html'>get_lasso_coef</a></span>(<span class='kw'>lassoObj</span> <span class='kw'>=</span> <span class='no'>top_model_result</span>$<span class='no'>en1</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>stat_df</span> <span class='kw'>=</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x1</span>),
+<span class='kw'>stat</span> <span class='kw'>=</span> <span class='no'>beta</span>,
+<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>*<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='no'>stat</span>),
+<span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>stat</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>, <span class='st'>"blue"</span>, <span class='st'>"red"</span>),
+<span class='kw'>font.size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='no'>stat</span>) <span class='kw'>&lt;=</span> <span class='fl'>0.5</span>, <span class='fl'>30</span>, <span class='fl'>60</span>),
+<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>signif</a></span>(<span class='no'>stat</span>, <span class='fl'>2</span>)
+)
+<span class='fu'>plot_ratio_network</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>top_model_coef</span>)</div><div class='output co'>#&gt; <span class='error'>Error in tbl_vars(y): object 'stat_df' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
