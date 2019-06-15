@@ -4,7 +4,7 @@
 \alias{plot_ratio_network}
 \title{Plot ratio network}
 \usage{
-plot_ratio_network(x, nodesData = FALSE)
+plot_ratio_network(x, nodesData = FALSE, stat_df = NULL)
 }
 \arguments{
 \item{x}{The output of top1 or top2 or get_lasso_coef}

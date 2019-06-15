@@ -2,6 +2,7 @@
 #' @description  Plot ratio network
 #' @param x The output of top1 or top2 or get_lasso_coef
 #' @param nodesData Logical
+#' @param stat_df stat_df
 #' @importFrom tibble tibble
 #' @importFrom tidyr separate
 #' @importFrom visNetwork visNetwork
@@ -39,8 +40,8 @@
 #' font.size = ifelse(abs(stat) <= 0.5, 30, 60),
 #' title = signif(stat, 2)
 #' )
-#' plot_ratio_network(x = top_model_coef)
-plot_ratio_network = function(x, nodesData = FALSE){
+#' plot_ratio_network(x = top_model_coef, stat_df = stat_df)
+plot_ratio_network = function(x, nodesData = FALSE, stat_df = NULL){
   if(is.character(x)){
     edges = tibble::tibble(x) %>%
       tidyr::separate(col = x,
@@ -55,6 +56,7 @@ plot_ratio_network = function(x, nodesData = FALSE){
         font.size = 0.5*size) %>%
       dplyr::mutate(label = id)
   } else {
+    stopifnot(!is.null(stat_df))
 
     edges = x %>%
       tidyr::separate(col = feature_name,
