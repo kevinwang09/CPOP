@@ -20,5 +20,7 @@ n = 4
 p = 4
 x = matrix(rep(1:p, n), nrow = n, ncol = p, byrow = TRUE)
 colnames(x) = paste0("X", 1:p)
-pairwise_col_diff(x)
+identical(pairwise_col_diff(x),
+pairwise_col_diff(x[,4:1]))
+
 }

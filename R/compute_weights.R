@@ -3,6 +3,7 @@
 #' @param x1 A data matrix
 #' @param x2 A data matrix
 #' @return A vector
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' n = 10
@@ -12,9 +13,9 @@
 #' compute_weights(x1, x2)
 compute_weights = function(x1, x2){
 
-  stopifnot({
+  assertthat::assert_that(
     identical(ncol(x1), ncol(x2))
-  })
+  )
 
   mX1 = colMeans(x1)
   mX2 = colMeans(x2)
