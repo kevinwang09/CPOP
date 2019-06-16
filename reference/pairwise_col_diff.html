@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">top</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.14</span>
       </span>
     </div>
 
@@ -129,11 +129,9 @@
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>4</span>
 <span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>:<span class='no'>p</span>, <span class='no'>n</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
-<span class='fu'>pairwise_col_diff</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;      X1--X2 X1--X3 X1--X4 X2--X3 X2--X4 X3--X4
-#&gt; [1,]     -1     -2     -3     -1     -2     -1
-#&gt; [2,]     -1     -2     -3     -1     -2     -1
-#&gt; [3,]     -1     -2     -3     -1     -2     -1
-#&gt; [4,]     -1     -2     -3     -1     -2     -1</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/identical'>identical</a></span>(<span class='fu'>pairwise_col_diff</span>(<span class='no'>x</span>),
+<span class='fu'>pairwise_col_diff</span>(<span class='no'>x</span>[,<span class='fl'>4</span>:<span class='fl'>1</span>]))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
