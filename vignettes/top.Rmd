@@ -8,14 +8,14 @@ output:
     toc_float: true
 package: BiocStyle
 vignette: >
-%\VignetteIndexEntry{top}
+  %\VignetteIndexEntry{top}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
   
 ```{r}
-  library(top)
+library(top)
 ```
 
 ```{r}
@@ -85,8 +85,11 @@ abline(a = 0, b = 1)
 top::identityDist(
 predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
 predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
-```
 
+top::plot_top_coef(top3_result, type = "scatter")
+top::plot_top_coef(top3_result, type = "bar")
+top::plot_top_coef(top3_result, type = "text")
+```
 
 
 # Ridge on all features
@@ -135,6 +138,16 @@ top::identityDist(
 ```
 
 
+```{r}
+upper_elements = function(x){x[upper.tri(x)]}
+```
+
+```{r}
+boxplot(
+  upper_elements(cor(x1)) - upper_elements(cor(x2)),
+  upper_elements(cor(x1[,top1_result])) - upper_elements(cor(x2[,top1_result])),
+        upper_elements(cor(x1[,top2_result])) - upper_elements(cor(x2[,top2_result])))
+```
 
 
 
