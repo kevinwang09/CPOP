@@ -8,79 +8,15 @@ output:
     toc_float: true
 package: BiocStyle
 vignette: >
-  %\VignetteIndexEntry{top}
+%\VignetteIndexEntry{top}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
   
 ```{r}
-library(top)
+  library(top)
 ```
-
-
-
-<!-- ```{r} -->
-<!-- set.seed(1) -->
-<!-- n = 1000 -->
-<!-- p = 10 -->
-<!-- x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- # x2 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- x2 = x1 + 0.1 -->
-<!-- colnames(x1) = colnames(x2) = paste0("X", 1:p) -->
-<!-- k = 2 -->
-<!-- beta1 = c(rep(1, k), rep(0, p - k)) -->
-<!-- beta2 = c(rep(0.2, k), rep(0, p - k)) -->
-<!-- expit = function(x) 1/(1+exp(-x)) -->
-<!-- y1 = rbinom(n, 1, prob = expit(x1 %*% beta1)) -->
-<!-- y2 = rbinom(n, 1, prob = expit(x2 %*% beta2)) -->
-
-<!-- table(y1) -->
-<!-- table(y2) -->
-
-<!-- plot(colMeans(x1), colMeans(x2)) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-<!-- ``` -->
-
-
-<!-- ```{r} -->
-<!-- z1 = pairwise_col_diff(x1) -->
-<!-- z2 = pairwise_col_diff(x2) -->
-<!-- w = compute_weights(z1, z2) -->
-<!-- nIter = 20 -->
-<!-- top1_result = top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", nfolds = 5) -->
-<!-- s = "lambda.min" -->
-<!-- top2_result = top2(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nfolds = 5) -->
-<!-- ``` -->
-
-
-<!-- # Evaluation of the ordinary method -->
-<!-- ```{r} -->
-<!-- lasso1 = glmnet::cv.glmnet( -->
-<!--   x = x1, -->
-<!--   y = y1, -->
-<!--   family = "binomial") -->
-<!-- lasso1_pred_x2 = glmnet::predict.cv.glmnet(lasso1, newx = x2, s = "lambda.min", type = "class") -->
-
-
-
-<!-- ``` -->
-
-<!-- # Evaluation of the ordinary method -->
-<!-- ```{r} -->
-<!-- topMethod = glmnet::cv.glmnet( -->
-<!--   x = z1[,top2_result], -->
-<!--   y = y1, -->
-<!--   family = "binomial") -->
-
-<!-- topMethod_pred_x2 = glmnet::predict.cv.glmnet(topMethod, newx = z2[,top2_result], s = "lambda.min", type = "class") -->
-
-
-<!-- caret::confusionMatrix(table(y2, lasso1_pred_x2)) -->
-<!-- caret::confusionMatrix(table(y2, topMethod_pred_x2)) -->
-<!-- ``` -->
-
-
 
 ```{r}
 set.seed(1)
@@ -113,23 +49,47 @@ y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
 table(y1)
 table(y2)
 
+plot(colMeans(x1), colMeans(x2))
+top::identityDist(colMeans(x1), colMeans(x2))
+abline(a = 0, b = 1, col = "red")
+
+
 # z1 = pairwise_col_diff(x1)
 # z2 = pairwise_col_diff(x2)
 w = compute_weights(x1, x2)
 nIter = 20
 
 top1_result = top1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+
+plot(colMeans(x1)[top1_result], colMeans(x2)[top1_result])
+top::identityDist(colMeans(x1)[top1_result], colMeans(x2)[top1_result])
+abline(a = 0, b = 1, col = "red")
+
+
+
 s = "lambda.min"
 
 top2_result = top2(x1, x2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
 
+plot(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
+top::identityDist(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
+abline(a = 0, b = 1, col = "red")
+
+
 top3_result = top3(x1, x2, y1, y2, top2_result = top2_result, intercept = FALSE)
 
 plot(predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
-     predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
+predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
 abline(a = 0, b = 1)
+
+top::identityDist(
+predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
+predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
 ```
 
+
+
+# Ridge on all features
 ```{r}
 lasso1 = glmnet::cv.glmnet(
   x = x1,
@@ -145,7 +105,38 @@ lasso2 = glmnet::cv.glmnet(
 plot(predict(lasso1, newx = x1, s = "lambda.min"),
      predict(lasso2, newx = x1, s = "lambda.min"))
 abline(a = 0, b = 1)
+
+top::identityDist(
+  predict(lasso1, newx = x1, s = "lambda.min"),
+  predict(lasso2, newx = x1, s = "lambda.min"))
 ```
+
+
+# Ridge on Step1 features
+```{r}
+lasso1 = glmnet::cv.glmnet(
+  x = x1[,top1_result],
+  y = y1,
+  family = "binomial", alpha = 0)
+
+lasso2 = glmnet::cv.glmnet(
+  x = x2[,top1_result],
+  y = y2,
+  family = "binomial", alpha = 0)
+
+
+plot(predict(lasso1, newx = x1[,top1_result], s = "lambda.min"),
+     predict(lasso2, newx = x1[,top1_result], s = "lambda.min"))
+abline(a = 0, b = 1)
+
+top::identityDist(
+  predict(lasso1, newx = x1[,top1_result], s = "lambda.min"),
+  predict(lasso2, newx = x1[,top1_result], s = "lambda.min"))
+```
+
+
+
+
 
 ```{r}
 sessionInfo()
