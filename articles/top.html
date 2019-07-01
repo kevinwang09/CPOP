@@ -72,64 +72,13 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(top)</a></code></pre></div>
-<pre><code>## Registered S3 methods overwritten by 'ggplot2':
-##   method         from 
-##   [.quosures     rlang
-##   c.quosures     rlang
-##   print.quosures rlang</code></pre>
-<!-- ```{r} -->
-<!-- set.seed(1) -->
-<!-- n = 1000 -->
-<!-- p = 10 -->
-<!-- x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- # x2 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- x2 = x1 + 0.1 -->
-<!-- colnames(x1) = colnames(x2) = paste0("X", 1:p) -->
-<!-- k = 2 -->
-<!-- beta1 = c(rep(1, k), rep(0, p - k)) -->
-<!-- beta2 = c(rep(0.2, k), rep(0, p - k)) -->
-<!-- expit = function(x) 1/(1+exp(-x)) -->
-<!-- y1 = rbinom(n, 1, prob = expit(x1 %*% beta1)) -->
-<!-- y2 = rbinom(n, 1, prob = expit(x2 %*% beta2)) -->
-<!-- table(y1) -->
-<!-- table(y2) -->
-<!-- plot(colMeans(x1), colMeans(x2)) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- z1 = pairwise_col_diff(x1) -->
-<!-- z2 = pairwise_col_diff(x2) -->
-<!-- w = compute_weights(z1, z2) -->
-<!-- nIter = 20 -->
-<!-- top1_result = top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min", nfolds = 5) -->
-<!-- s = "lambda.min" -->
-<!-- top2_result = top2(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nfolds = 5) -->
-<!-- ``` -->
-<!-- # Evaluation of the ordinary method -->
-<!-- ```{r} -->
-<!-- lasso1 = glmnet::cv.glmnet( -->
-<!--   x = x1, -->
-<!--   y = y1, -->
-<!--   family = "binomial") -->
-<!-- lasso1_pred_x2 = glmnet::predict.cv.glmnet(lasso1, newx = x2, s = "lambda.min", type = "class") -->
-<!-- ``` -->
-<!-- # Evaluation of the ordinary method -->
-<!-- ```{r} -->
-<!-- topMethod = glmnet::cv.glmnet( -->
-<!--   x = z1[,top2_result], -->
-<!--   y = y1, -->
-<!--   family = "binomial") -->
-<!-- topMethod_pred_x2 = glmnet::predict.cv.glmnet(topMethod, newx = z2[,top2_result], s = "lambda.min", type = "class") -->
-<!-- caret::confusionMatrix(table(y2, lasso1_pred_x2)) -->
-<!-- caret::confusionMatrix(table(y2, topMethod_pred_x2)) -->
-<!-- ``` -->
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">n =<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">p =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Matrix)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mvtnorm)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">n =<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">p =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Matrix)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mvtnorm)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -138,49 +87,54 @@
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">sigma1 =<span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/nearPD">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cov2cor</a></span>()</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">sigma2 =<span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/nearPD">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cov2cor</a></span>()</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># x2 = x1 + 0.2</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">x1 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mvtnorm/topics/Mvnorm">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma1)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">x2 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mvtnorm/topics/Mvnorm">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma2)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">sigma1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sigma1 =<span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/nearPD">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cov2cor</a></span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">sigma2 =<span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/nearPD">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cov2cor</a></span>()</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># x2 = x1 + 0.2</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">x1 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mvtnorm/topics/Mvnorm">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma1)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">x2 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mvtnorm/topics/Mvnorm">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma2)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">sigma1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
 <pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]
 ## [1,] 1.0000000 0.2183731 0.1879947 0.4507799 0.4080451
 ## [2,] 0.2183731 1.0000000 0.2169021 0.2334969 0.4026574
 ## [3,] 0.1879947 0.2169021 1.0000000 0.3388525 0.0160735
 ## [4,] 0.4507799 0.2334969 0.3388525 1.0000000 0.3298534
 ## [5,] 0.4080451 0.4026574 0.0160735 0.3298534 1.0000000</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">sigma2[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sigma2[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
 <pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]
 ## [1,] 1.0000000 0.5869847 0.6240197 0.5232686 0.6153168
 ## [2,] 0.5869847 1.0000000 0.6104769 0.5929620 0.5469960
 ## [3,] 0.6240197 0.6104769 1.0000000 0.5984543 0.6412884
 ## [4,] 0.5232686 0.5929620 0.5984543 1.0000000 0.5093101
 ## [5,] 0.6153168 0.5469960 0.6412884 0.5093101 1.0000000</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(x1) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(x2) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"X"</span>, <span class="dv">1</span><span class="op">:</span>p)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">k =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">beta =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="fl">0.4</span>, k), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">0</span>, p <span class="op">-</span><span class="st"> </span>k))</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">expit =<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="op">-</span>x))</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">y1 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x1 <span class="op">%*%</span><span class="st"> </span>beta))</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">y2 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x2 <span class="op">%*%</span><span class="st"> </span>beta))</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(y1)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(x1) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(x2) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"X"</span>, <span class="dv">1</span><span class="op">:</span>p)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">k =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">beta =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="fl">0.4</span>, k), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">0</span>, p <span class="op">-</span><span class="st"> </span>k))</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">expit =<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="op">-</span>x))</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">y1 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x1 <span class="op">%*%</span><span class="st"> </span>beta))</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">y2 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x2 <span class="op">%*%</span><span class="st"> </span>beta))</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(y1)</a></code></pre></div>
 <pre><code>## y1
 ##   0   1 
 ## 495 505</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(y2)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(y2)</a></code></pre></div>
 <pre><code>## y2
 ##   0   1 
 ## 498 502</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># z1 = pairwise_col_diff(x1)</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co"># z2 = pairwise_col_diff(x2)</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">w =<span class="st"> </span><span class="kw"><a href="../reference/compute_weights.html">compute_weights</a></span>(x1, x2)</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">nIter =<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">top1_result =<span class="st"> </span><span class="kw"><a href="../reference/top1.html">top1</a></span>(x1, x2, y1, y2, w, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">s =</span> <span class="st">"lambda.min"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1), <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2))</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1), <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2))</a></code></pre></div>
+<pre><code>## [1] 0.01822394</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># z1 = pairwise_col_diff(x1)</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co"># z2 = pairwise_col_diff(x2)</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">w =<span class="st"> </span><span class="kw"><a href="../reference/compute_weights.html">compute_weights</a></span>(x1, x2)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">nIter =<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">top1_result =<span class="st"> </span><span class="kw"><a href="../reference/top1.html">top1</a></span>(x1, x2, y1, y2, w, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">s =</span> <span class="st">"lambda.min"</span>)</a></code></pre></div>
 <pre><code>## Step 01: Number of selected features: 0 out of 100</code></pre>
 <pre><code>## Step 02: Number of selected features: 4 out of 100</code></pre>
 <pre><code>## Step 03: Number of selected features: 14 out of 100</code></pre>
@@ -192,9 +146,14 @@
 <pre><code>## Step 09: Number of selected features: 57 out of 100</code></pre>
 <pre><code>## 50 features was reached.</code></pre>
 <pre><code>## A total of 57 features were selected.</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">s =<span class="st"> "lambda.min"</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">top2_result =<span class="st"> </span><span class="kw"><a href="../reference/top2.html">top2</a></span>(x1, x2, y1, y2, <span class="dt">top1_result =</span> top1_result, <span class="dt">s =</span> <span class="st">"lambda.min"</span>, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1)[top1_result], <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2)[top1_result])</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1)[top1_result], <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2)[top1_result])</a></code></pre></div>
+<pre><code>## [1] 0.008314006</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">s =<span class="st"> "lambda.min"</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3">top2_result =<span class="st"> </span><span class="kw"><a href="../reference/top2.html">top2</a></span>(x1, x2, y1, y2, <span class="dt">top1_result =</span> top1_result, <span class="dt">s =</span> <span class="st">"lambda.min"</span>, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## Step 01: Number of leftover features: 25 out of 57</code></pre>
 <pre><code>## The sign matrix between the two data:</code></pre>
 <pre><code>##     
@@ -216,28 +175,78 @@
 ##   -1  0 0 0
 ##   0   0 0 0
 ##   1   0 0 0</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">top3_result =<span class="st"> </span><span class="kw"><a href="../reference/top3.html">top3</a></span>(x1, x2, y1, y2, <span class="dt">top2_result =</span> top2_result, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en1, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb35-4" data-line-number="4">     <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en2, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="top_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">lasso1 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb36-2" data-line-number="2">  <span class="dt">x =</span> x1,</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3">  <span class="dt">y =</span> y1,</a>
-<a class="sourceLine" id="cb36-4" data-line-number="4">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb36-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb36-6" data-line-number="6">lasso2 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb36-7" data-line-number="7">  <span class="dt">x =</span> x2,</a>
-<a class="sourceLine" id="cb36-8" data-line-number="8">  <span class="dt">y =</span> y2,</a>
-<a class="sourceLine" id="cb36-9" data-line-number="9">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb36-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb36-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb36-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso1, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb36-13" data-line-number="13">     <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso2, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
-<a class="sourceLine" id="cb36-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1)[top2_result], <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2)[top2_result])</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x1)[top2_result], <span class="kw"><a href="https://www.rdocumentation.org/packages/Matrix/topics/colSums">colMeans</a></span>(x2)[top2_result])</a></code></pre></div>
+<pre><code>## [1] 0.008112304</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">top3_result =<span class="st"> </span><span class="kw"><a href="../reference/top3.html">top3</a></span>(x1, x2, y1, y2, <span class="dt">top2_result =</span> top2_result, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en1, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en2, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-4.png" width="700"></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(</a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en1, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(top3_result<span class="op">$</span>en2, <span class="dt">newx =</span> x1[,top2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
+<pre><code>## [1] 0.1108214</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/plot_top_coef">plot_top_coef</a></span>(top3_result, <span class="dt">type =</span> <span class="st">"scatter"</span>)</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/plot_top_coef">plot_top_coef</a></span>(top3_result, <span class="dt">type =</span> <span class="st">"bar"</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-5.png" width="700"></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/plot_top_coef">plot_top_coef</a></span>(top3_result, <span class="dt">type =</span> <span class="st">"text"</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-2-6.png" width="700"></p>
+<div id="ridge-on-all-features" class="section level1">
+<h1 class="hasAnchor">
+<a href="#ridge-on-all-features" class="anchor"></a>Ridge on all features</h1>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">lasso1 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">  <span class="dt">x =</span> x1,</a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">  <span class="dt">y =</span> y1,</a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb48-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb48-6" data-line-number="6">lasso2 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
+<a class="sourceLine" id="cb48-7" data-line-number="7">  <span class="dt">x =</span> x2,</a>
+<a class="sourceLine" id="cb48-8" data-line-number="8">  <span class="dt">y =</span> y2,</a>
+<a class="sourceLine" id="cb48-9" data-line-number="9">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb48-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb48-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb48-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso1, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb48-13" data-line-number="13">     <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso2, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
+<a class="sourceLine" id="cb48-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="top_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(</a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso1, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso2, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
+<pre><code>## [1] 0.1800576</code></pre>
+</div>
+<div id="ridge-on-step1-features" class="section level1">
+<h1 class="hasAnchor">
+<a href="#ridge-on-step1-features" class="anchor"></a>Ridge on Step1 features</h1>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">lasso1 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">  <span class="dt">x =</span> x1[,top1_result],</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3">  <span class="dt">y =</span> y1,</a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6">lasso2 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/glmnet/topics/cv.glmnet">cv.glmnet</a></span>(</a>
+<a class="sourceLine" id="cb51-7" data-line-number="7">  <span class="dt">x =</span> x2[,top1_result],</a>
+<a class="sourceLine" id="cb51-8" data-line-number="8">  <span class="dt">y =</span> y2,</a>
+<a class="sourceLine" id="cb51-9" data-line-number="9">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb51-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb51-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb51-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso1, <span class="dt">newx =</span> x1[,top1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb51-13" data-line-number="13">     <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso2, <span class="dt">newx =</span> x1[,top1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
+<a class="sourceLine" id="cb51-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">top<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/top/topics/identityDist">identityDist</a></span>(</a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso1, <span class="dt">newx =</span> x1[,top1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
+<a class="sourceLine" id="cb52-3" data-line-number="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(lasso2, <span class="dt">newx =</span> x1[,top1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
+<pre><code>## [1] 0.219467</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">upper_elements =<span class="st"> </span><span class="cf">function</span>(x){x[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lower.tri">upper.tri</a></span>(x)]}</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>(</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">  <span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x1)) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x2)),</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">  <span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x1[,top1_result])) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x2[,top1_result])),</a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">        <span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x1[,top2_result])) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor">cor</a></span>(x2[,top2_result])))</a></code></pre></div>
+<p><img src="top_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo</a></span>()</a></code></pre></div>
 <pre><code>## R version 3.6.0 (2017-01-27)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
@@ -258,31 +267,41 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] dplyr_0.8.1      mvtnorm_1.0-10   Matrix_1.2-17    top_0.0.14      
+## [1] dplyr_0.8.2      mvtnorm_1.0-11   Matrix_1.2-17    top_0.0.14      
 ## [5] BiocStyle_2.12.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.1         plyr_1.8.4         compiler_3.6.0    
-##  [4] pillar_1.4.1       BiocManager_1.30.4 iterators_1.0.10  
-##  [7] forcats_0.4.0      tools_3.6.0        digest_0.6.19     
-## [10] jsonlite_1.6       lattice_0.20-38    evaluate_0.14     
-## [13] memoise_1.1.0      tibble_2.1.3       gtable_0.3.0      
-## [16] pkgconfig_2.0.2    rlang_0.3.4        foreach_1.4.4     
-## [19] commonmark_1.7     yaml_2.2.0         pkgdown_1.3.0     
-## [22] xfun_0.7           stringr_1.4.0      roxygen2_6.1.1    
-## [25] xml2_1.2.0         knitr_1.23         htmlwidgets_1.3   
-## [28] desc_1.2.0         fs_1.3.1           glmnet_2.0-18     
-## [31] rprojroot_1.3-2    grid_3.6.0         tidyselect_0.2.5  
-## [34] glue_1.3.1         R6_2.4.0           rmarkdown_1.13    
-## [37] bookdown_0.11      tidyr_0.8.3        purrr_0.3.2       
-## [40] ggplot2_3.1.1      magrittr_1.5       codetools_0.2-16  
+##  [1] Rcpp_1.0.1         compiler_3.6.0     pillar_1.4.2      
+##  [4] BiocManager_1.30.4 iterators_1.0.10   forcats_0.4.0     
+##  [7] tools_3.6.0        digest_0.6.19      jsonlite_1.6      
+## [10] lattice_0.20-38    evaluate_0.14      memoise_1.1.0     
+## [13] tibble_2.1.3       gtable_0.3.0       pkgconfig_2.0.2   
+## [16] rlang_0.4.0        foreach_1.4.4      commonmark_1.7    
+## [19] yaml_2.2.0         pkgdown_1.3.0      xfun_0.8          
+## [22] stringr_1.4.0      roxygen2_6.1.1     xml2_1.2.0        
+## [25] knitr_1.23         htmlwidgets_1.3    desc_1.2.0        
+## [28] fs_1.3.1           glmnet_2.0-18      rprojroot_1.3-2   
+## [31] grid_3.6.0         tidyselect_0.2.5   glue_1.3.1        
+## [34] R6_2.4.0           rmarkdown_1.13     bookdown_0.11     
+## [37] tidyr_0.8.3        purrr_0.3.2        ggplot2_3.2.0     
+## [40] magrittr_1.5       ellipsis_0.2.0     codetools_0.2-16  
 ## [43] backports_1.1.4    scales_1.0.0       htmltools_0.3.6   
 ## [46] MASS_7.3-51.4      assertthat_0.2.1   colorspace_1.4-1  
-## [49] proxy_0.4-23       stringi_1.4.3      visNetwork_2.0.7  
-## [52] lazyeval_0.2.2     munsell_0.5.0      crayon_1.3.4</code></pre>
+## [49] labeling_0.3       proxy_0.4-23       stringi_1.4.3     
+## [52] visNetwork_2.0.7   lazyeval_0.2.2     munsell_0.5.0     
+## [55] crayon_1.3.4</code></pre>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#ridge-on-all-features">Ridge on all features</a></li>
+      <li><a href="#ridge-on-step1-features">Ridge on Step1 features</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
