@@ -39,11 +39,15 @@ top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50, n
 
   if(top1_iterate){
     top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, n_features = n_features,nIter = nIter, alpha = alpha, s = s, ...)
+    if(length(top1_result) == 0){return(NULL)}
     top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    if(length(top2_result) == 0){return(NULL)}
     top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
   } else {
     top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, nIter = nIter, alpha = alpha, s = s, ...)
+    if(length(top1_result) == 0){return(NULL)}
     top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    if(length(top2_result) == 0){return(NULL)}
     top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
   }
 
