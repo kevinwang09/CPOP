@@ -5,7 +5,7 @@
 \title{Step 1 of the TOP method, iteratred}
 \usage{
 top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1),
-  n_features = 50, s = "lambda.min", ...)
+  n_features = 50, family = "binomial", s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -23,6 +23,8 @@ top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1),
 \item{alpha}{Lasso alpha, vector}
 
 \item{n_features}{n_features desired}
+
+\item{family}{see glmnet family}
 
 \item{s}{CV-Lasso lambda}
 

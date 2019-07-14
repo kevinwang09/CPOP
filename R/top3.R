@@ -7,6 +7,7 @@
 #' @param top2_result top2 result
 #' @param intercept default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet
+#' @param family see glmnet family
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
 #' @return A vector
@@ -36,11 +37,11 @@
 #' predict(top3_result$en2, newx = z1[,top2_result], s = "lambda.min"))
 #' abline(a = 0, b = 1)
 #'
-top3 = function(z1, z2, y1, y2, top2_result, intercept = FALSE, ...){
+top3 = function(z1, z2, y1, y2, top2_result, intercept = FALSE, family = "binomial", ...){
     en1 = glmnet::cv.glmnet(
       x = z1[,top2_result],
       y = y1,
-      family = "binomial",
+      family = family,
       alpha = 0,
       intercept = intercept,
       ...)
@@ -48,7 +49,7 @@ top3 = function(z1, z2, y1, y2, top2_result, intercept = FALSE, ...){
     en2 = glmnet::cv.glmnet(
       x = z2[,top2_result],
       y = y2,
-      family = "binomial",
+      family = family,
       alpha = 0,
       intercept = intercept,
       ...)

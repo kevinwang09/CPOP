@@ -4,8 +4,8 @@
 \alias{top1}
 \title{Step 1 of the TOP method}
 \usage{
-top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, n_features = 50,
-  s = "lambda.min", ...)
+top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial",
+  n_features = 50, s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -21,6 +21,8 @@ top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, n_features = 50,
 \item{nIter}{Number of iterations}
 
 \item{alpha}{Lasso alpha}
+
+\item{family}{See glmnet family}
 
 \item{n_features}{n_features desired}
 

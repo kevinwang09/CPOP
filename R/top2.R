@@ -8,6 +8,7 @@
 #' @param nIter Number of iterations
 #' @param s CV-Lasso lambda
 #' @param ... Extra parameter settings for cv.glmnet
+#' @param family see glmnet family
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
 #' @return A vector
@@ -31,7 +32,9 @@
 #' top1_result = top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 #' s = "lambda.min"
 #' top2_result = top2_iterate(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20)
-top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
+top2_iterate = function(z1, z2, y1, y2,
+                        top1_result, s = "lambda.min",
+                        nIter = 20, family = "binomial", ...){
   p = length(top1_result)
   top2_features = top1_result
 
@@ -42,7 +45,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
-      family = "binomial",
+      family = family,
       alpha = 0, ...)
 
     coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
@@ -60,7 +63,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
     ridge2 = glmnet::cv.glmnet(
       x = z2_reduced,
       y = y2,
-      family = "binomial",
+      family = family,
       lower.limits = lower.limits,
       upper.limits = upper.limits,
       alpha = 0, ...)
@@ -94,6 +97,7 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
 #' @param nIter Number of iterations
 #' @param s CV-Lasso lambda
 #' @param ... Extra parameter settings for cv.glmnet
+#' @param family see glmnet family
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
 #' @return A vector
@@ -117,7 +121,8 @@ top2_iterate = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 2
 #' top1_result = top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 #' s = "lambda.min"
 #' top2_result = top2(z1, z2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20)
-top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
+top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20,
+                family = "binomial", ...){
   p = length(top1_result)
   top2_features = top1_result
 
@@ -128,7 +133,7 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
-      family = "binomial",
+      family = family,
       alpha = 0, ...)
 
     coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
@@ -137,7 +142,7 @@ top2 = function(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20, ...){
     ridge2 = glmnet::cv.glmnet(
       x = z2_reduced,
       y = y2,
-      family = "binomial",
+      family = family,
       alpha = 0, ...)
 
     coef2 = glmnet::coef.cv.glmnet(ridge2, s = s)[-1, , drop = FALSE]

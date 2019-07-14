@@ -5,7 +5,7 @@
 \title{Step 2 of the TOP method iteratively bounded}
 \usage{
 top2_iterate(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20,
-  ...)
+  family = "binomial", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -21,6 +21,8 @@ top2_iterate(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20,
 \item{s}{CV-Lasso lambda}
 
 \item{nIter}{Number of iterations}
+
+\item{family}{see glmnet family}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }

@@ -5,7 +5,8 @@
 \title{All three steps of TOP modelling}
 \usage{
 top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
-  nIter = 20, alpha = 1, s = "lambda.min", ...)
+  nIter = 20, alpha = 1, family = "binomial", s = "lambda.min",
+  ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -25,6 +26,8 @@ top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
 \item{nIter}{Number of iterations}
 
 \item{alpha}{Lasso alpha}
+
+\item{family}{family of glmnet}
 
 \item{s}{CV-Lasso lambda}
 

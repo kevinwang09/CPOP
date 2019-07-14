@@ -10,6 +10,7 @@
 #' @param nIter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
+#' @param family family of glmnet
 #' @param ... Extra parameter settings for cv.glmnet in top1
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
@@ -35,20 +36,41 @@
 #' alpha = c(1, 0.1)
 #' top_model_result = top_model(z1, z2, y1, y2, w = w,
 #' top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
-top_model = function(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50, nIter = 20, alpha = 1, s = "lambda.min", ...){
+#'
+#' top_model_result = top_model(z1, z2, round(abs(y1)), round(abs(y2)), w = w,
+#'                              top1_iterate = TRUE, alpha = alpha,
+#'                              n_features = 40, s = "lambda.min",
+#'                              family = "poisson")
+top_model = function(z1, z2, y1, y2, w,
+                     top1_iterate = FALSE,
+                     n_features = 50, nIter = 20, alpha = 1,
+                     family = "binomial",
+                     s = "lambda.min", ...){
 
   if(top1_iterate){
-    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, n_features = n_features,nIter = nIter, alpha = alpha, s = s, ...)
+    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+                               n_features = n_features, nIter = nIter,
+                               alpha = alpha, s = s,
+                               family = family,
+                               ...)
     if(length(top1_result) == 0){return(NULL)}
-    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                       top1_result = top1_result, s = s, nIter = nIter, family = family)
     if(length(top2_result) == 0){return(NULL)}
-    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
+    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                       top2_result = top2_result, family = family, intercept = FALSE)
   } else {
-    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, nIter = nIter, alpha = alpha, s = s, ...)
+    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+                       nIter = nIter, alpha = alpha,
+                       s = s, family = family, ...)
     if(length(top1_result) == 0){return(NULL)}
-    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top1_result = top1_result, s = s, nIter = nIter)
+    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                       top1_result = top1_result, s = s,
+                       nIter = nIter, family = family)
     if(length(top2_result) == 0){return(NULL)}
-    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2, top2_result = top2_result, intercept = FALSE)
+    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                       top2_result = top2_result, family = family,
+                       intercept = FALSE)
   }
 
   return(top3_result)

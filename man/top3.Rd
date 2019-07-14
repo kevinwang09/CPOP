@@ -4,7 +4,8 @@
 \alias{top3}
 \title{Step 3 of the TOP method iterate}
 \usage{
-top3(z1, z2, y1, y2, top2_result, intercept = FALSE, ...)
+top3(z1, z2, y1, y2, top2_result, intercept = FALSE,
+  family = "binomial", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -18,6 +19,8 @@ top3(z1, z2, y1, y2, top2_result, intercept = FALSE, ...)
 \item{top2_result}{top2 result}
 
 \item{intercept}{default to FALSE}
+
+\item{family}{see glmnet family}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }

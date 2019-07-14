@@ -10,6 +10,7 @@
 #' @param s CV-Lasso lambda
 #' @param n_features n_features desired
 #' @param ... Extra parameter settings for cv.glmnet
+#' @param family See glmnet family
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
 #' @return A vector
@@ -33,7 +34,7 @@
 #' alpha = 0.1
 #' s = "lambda.min"
 #' top1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
-top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = "lambda.min", ...){
+top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
@@ -58,7 +59,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
     en1 = glmnet::cv.glmnet(
       x = z1[,remaining_features],
       y = y1,
-      family = "binomial",
+      family = family,
       penalty.factor = w[remaining_features],
       alpha = alpha,
       ...)
@@ -66,7 +67,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
     en2 = glmnet::cv.glmnet(
       x = z2[,remaining_features],
       y = y2,
-      family = "binomial",
+      family = family,
       penalty.factor = w[remaining_features],
       alpha = alpha,
       ...)
@@ -95,6 +96,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
 #' @param alpha Lasso alpha, vector
 #' @param s CV-Lasso lambda
 #' @param n_features n_features desired
+#' @param family see glmnet family
 #' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
@@ -119,7 +121,10 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,  n_features = 50, s = 
 #' top1_result = top1_iterate(z1, z2, y1, y2, w, nIter = 20,
 #' alpha = alpha, n_features = 30, s = "lambda.min")
 #' top1_result
-top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_features = 50, s = "lambda.min", ...){
+top1_iterate = function(z1, z2, y1, y2, w,
+                        nIter = 20, alpha = c(1, 0.1),
+                        n_features = 50, family = "binomial",
+                        s = "lambda.min", ...){
 
   # remaining_features = colnames(z1)
   all_selected_features = c()
@@ -130,10 +135,11 @@ top1_iterate = function(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1), n_feat
     updated_w[all_selected_features] = 0
     print(table(sign(updated_w)))
 
-    this_top1_features = top1(z1,
-                              z2,
+    this_top1_features = top1(z1, z2,
                               y1, y2,
-                              w = updated_w, nIter = 20, n_features = n_features, alpha = this_alpha, s = "lambda.min")
+                              w = updated_w, nIter = 20,
+                              n_features = n_features, alpha = this_alpha, family = family,
+                              s = "lambda.min")
 
     all_selected_features = unique(c(all_selected_features, this_top1_features))
 
