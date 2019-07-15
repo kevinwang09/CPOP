@@ -1,5 +1,5 @@
 #' @title Step 1 of the TOP method
-#' @description Step 1 of the TOP method
+#' @description Step 1 of the TOP method, for a single given alpha
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -81,12 +81,11 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n
     remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
-  # selected_features = setdiff(colnames(z1), remaining_features)
   return(selected_features)
 }
 ###############
 #' @title Step 1 of the TOP method, iteratred
-#' @description Step 1 of the TOP method, iteratred
+#' @description Step 1 of the TOP method, for multiple alpha inputs
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -122,7 +121,7 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n
 #' alpha = alpha, n_features = 30, s = "lambda.min")
 #' top1_result
 top1_iterate = function(z1, z2, y1, y2, w,
-                        nIter = 20, alpha = c(1, 0.1),
+                        nIter = 20, alpha = 1,
                         n_features = 50, family = "binomial",
                         s = "lambda.min", ...){
 

@@ -4,7 +4,7 @@
 \alias{top1_iterate}
 \title{Step 1 of the TOP method, iteratred}
 \usage{
-top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1),
+top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = 1,
   n_features = 50, family = "binomial", s = "lambda.min", ...)
 }
 \arguments{
@@ -34,7 +34,7 @@ top1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = c(1, 0.1),
 A vector
 }
 \description{
-Step 1 of the TOP method, iteratred
+Step 1 of the TOP method, for multiple alpha inputs
 }
 \examples{
 set.seed(1)

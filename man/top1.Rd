@@ -34,7 +34,7 @@ top1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial",
 A vector
 }
 \description{
-Step 1 of the TOP method
+Step 1 of the TOP method, for a single given alpha
 }
 \examples{
 set.seed(1)

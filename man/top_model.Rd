@@ -4,9 +4,8 @@
 \alias{top_model}
 \title{All three steps of TOP modelling}
 \usage{
-top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
-  nIter = 20, alpha = 1, family = "binomial", s = "lambda.min",
-  ...)
+top_model(z1, z2, y1, y2, w, n_features = 50, nIter = 20, alpha = 1,
+  family = "binomial", s = "lambda.min", top2_break = TRUE, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -19,8 +18,6 @@ top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
 
 \item{w}{A vector}
 
-\item{top1_iterate}{Should we use top1_iterate?}
-
 \item{n_features}{n_features desired}
 
 \item{nIter}{Number of iterations}
@@ -30,6 +27,9 @@ top_model(z1, z2, y1, y2, w, top1_iterate = FALSE, n_features = 50,
 \item{family}{family of glmnet}
 
 \item{s}{CV-Lasso lambda}
+
+\item{top2_break}{Should top2 loop be broken the first time
+differential betas are removed}
 
 \item{...}{Extra parameter settings for cv.glmnet in top1}
 }
@@ -59,4 +59,9 @@ alpha = 1, n_features = 40, s = "lambda.min")
 alpha = c(1, 0.1)
 top_model_result = top_model(z1, z2, y1, y2, w = w,
 top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
+
+top_model_result = top_model(z1, z2, round(abs(y1)), round(abs(y2)), w = w,
+                             top1_iterate = TRUE, alpha = alpha,
+                             n_features = 40, s = "lambda.min",
+                             family = "poisson")
 }

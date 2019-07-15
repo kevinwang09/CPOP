@@ -5,12 +5,13 @@
 #' @param y1 A vector
 #' @param y2 A vector
 #' @param w A vector
-#' @param top1_iterate Should we use top1_iterate?
 #' @param n_features n_features desired
 #' @param nIter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
 #' @param family family of glmnet
+#' @param top2_break Should top2 loop be broken the first time
+#' differential betas are removed
 #' @param ... Extra parameter settings for cv.glmnet in top1
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
@@ -42,36 +43,22 @@
 #'                              n_features = 40, s = "lambda.min",
 #'                              family = "poisson")
 top_model = function(z1, z2, y1, y2, w,
-                     top1_iterate = FALSE,
                      n_features = 50, nIter = 20, alpha = 1,
                      family = "binomial",
-                     s = "lambda.min", ...){
+                     s = "lambda.min", top2_break = TRUE, ...){
 
-  if(top1_iterate){
-    top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-                               n_features = n_features, nIter = nIter,
-                               alpha = alpha, s = s,
-                               family = family,
-                               ...)
-    if(length(top1_result) == 0){return(NULL)}
-    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                       top1_result = top1_result, s = s, nIter = nIter, family = family)
-    if(length(top2_result) == 0){return(NULL)}
-    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                       top2_result = top2_result, family = family, intercept = FALSE)
-  } else {
-    top1_result = top1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-                       nIter = nIter, alpha = alpha,
-                       s = s, family = family, ...)
-    if(length(top1_result) == 0){return(NULL)}
-    top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                       top1_result = top1_result, s = s,
-                       nIter = nIter, family = family)
-    if(length(top2_result) == 0){return(NULL)}
-    top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                       top2_result = top2_result, family = family,
-                       intercept = FALSE)
-  }
+  top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+                             n_features = n_features, nIter = nIter,
+                             alpha = alpha, s = s,
+                             family = family,
+                             ...)
+  if(length(top1_result) == 0){return(NULL)}
+  top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                     top1_result = top1_result, s = s, nIter = nIter, family = family,
+                     top2_break = top2_break)
+  if(length(top2_result) == 0){return(NULL)}
+  top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                     top2_result = top2_result, family = family, intercept = FALSE)
 
   return(top3_result)
 }

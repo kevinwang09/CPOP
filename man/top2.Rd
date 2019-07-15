@@ -5,7 +5,7 @@
 \title{Step 2 of the TOP method}
 \usage{
 top2(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20,
-  family = "binomial", ...)
+  family = "binomial", top2_break = TRUE, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -23,6 +23,9 @@ top2(z1, z2, y1, y2, top1_result, s = "lambda.min", nIter = 20,
 \item{nIter}{Number of iterations}
 
 \item{family}{see glmnet family}
+
+\item{top2_break}{Should top2 loop be broken the first time
+differential betas are removed}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }
