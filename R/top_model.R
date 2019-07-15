@@ -11,6 +11,8 @@
 #' @param s CV-Lasso lambda
 #' @param family family of glmnet
 #' @param top2_break Should top2 loop be broken the first time
+#' @param top2_type "sign" or "mag"
+#' @param top2_mag a threshold
 #' differential betas are removed
 #' @param ... Extra parameter settings for cv.glmnet in top1
 #' @importFrom glmnet cv.glmnet
@@ -37,6 +39,9 @@
 #' alpha = c(1, 0.1)
 #' top_model_result = top_model(z1, z2, y1, y2, w = w,
 #' top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
+#' top_model_result2 = top_model(z1, z2, y1, y2, w = w,
+#' top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min",
+#' top2_type = "mag", top2_mag = 1)
 #'
 #' top_model_result = top_model(z1, z2, round(abs(y1)), round(abs(y2)), w = w,
 #'                              top1_iterate = TRUE, alpha = alpha,
@@ -45,7 +50,7 @@
 top_model = function(z1, z2, y1, y2, w,
                      n_features = 50, nIter = 20, alpha = 1,
                      family = "binomial",
-                     s = "lambda.min", top2_break = TRUE, ...){
+                     s = "lambda.min", top2_break = TRUE, top2_type = "sign", top2_mag = 1, ...){
 
   top1_result = top1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
                              n_features = n_features, nIter = nIter,
@@ -53,9 +58,16 @@ top_model = function(z1, z2, y1, y2, w,
                              family = family,
                              ...)
   if(length(top1_result) == 0){return(NULL)}
-  top2_result = top2(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+  if (top2_type == "sign"){
+    top2_result = top2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                      top1_result = top1_result, s = s, nIter = nIter, family = family,
-                     top2_break = top2_break)
+                     top2_break = top2_break)}
+  if (top2_type == "mag"){
+    top2_result = top2_mag(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+                            top1_result = top1_result, s = s, nIter = nIter, family = family,
+                            top2_break = FALSE, mag = top2_mag)}
+
+
   if(length(top2_result) == 0){return(NULL)}
   top3_result = top3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                      top2_result = top2_result, family = family, intercept = FALSE)

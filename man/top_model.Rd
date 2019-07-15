@@ -5,7 +5,8 @@
 \title{All three steps of TOP modelling}
 \usage{
 top_model(z1, z2, y1, y2, w, n_features = 50, nIter = 20, alpha = 1,
-  family = "binomial", s = "lambda.min", top2_break = TRUE, ...)
+  family = "binomial", s = "lambda.min", top2_break = TRUE,
+  top2_type = "sign", top2_mag = 1, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -28,7 +29,11 @@ top_model(z1, z2, y1, y2, w, n_features = 50, nIter = 20, alpha = 1,
 
 \item{s}{CV-Lasso lambda}
 
-\item{top2_break}{Should top2 loop be broken the first time
+\item{top2_break}{Should top2 loop be broken the first time}
+
+\item{top2_type}{"sign" or "mag"}
+
+\item{top2_mag}{a threshold
 differential betas are removed}
 
 \item{...}{Extra parameter settings for cv.glmnet in top1}
@@ -59,6 +64,9 @@ alpha = 1, n_features = 40, s = "lambda.min")
 alpha = c(1, 0.1)
 top_model_result = top_model(z1, z2, y1, y2, w = w,
 top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
+top_model_result2 = top_model(z1, z2, y1, y2, w = w,
+top1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min",
+top2_type = "mag", top2_mag = 1)
 
 top_model_result = top_model(z1, z2, round(abs(y1)), round(abs(y2)), w = w,
                              top1_iterate = TRUE, alpha = alpha,

@@ -69,7 +69,7 @@ abline(a = 0, b = 1, col = "red")
 
 s = "lambda.min"
 
-top2_result = top2(x1, x2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
+top2_result = top2_sign(x1, x2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
 
 plot(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
 top::identityDist(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
