@@ -21,31 +21,7 @@ panel_cor <- function(x, y)
 
 }
 
-#' Identity Distance
-#' @param x a vector
-#' @param y a vector
-#' @export
-#' @examples
-#' set.seed(1)
-#' x = rnorm(100)
-#' identityDist(x = x, y = x)
-#' identityDist(x = x, y = 2*x)
-identityDist = function(x, y){
-  res = stats::median(abs(x - y)/sqrt(2))
-  return(res)
-}
 
-#' Identity Distance for a matrix
-#' @param matrix a matrix
-#' @export
-#' @importFrom proxy dist
-#' @examples
-#' set.seed(1)
-#' x = matrix(rnorm(100), ncol = 10)
-#' calcIdenDist(x)
-calcIdenDist = function(matrix){
-  proxy::dist(matrix, method = identityDist)
-}
 
 #' @title pairs panel with identity distance
 #' @param x a vector
