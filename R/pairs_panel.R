@@ -10,15 +10,9 @@ panel_cor <- function(x, y)
 {
   usr <- graphics::par("usr"); on.exit(graphics::par(usr))
   graphics::par(usr = c(0, 1, 0, 1))
-  # r <- cor(x[subset], y[subset], method ="pearson")
-  r <- stats::cor(x, y, method ="pearson")
+  r <- stats::cor(x, y, method = "pearson")
   txt <- format(c(r, 0.123456789), digits = 3)[1]
-  # if(all(subset)){
-  graphics::text(0.5, 0.25, paste("",txt), cex = 2)
-  # } else {
-  #   text(0.5, 0.25, paste("subset Corr=",txt), cex = 2)
-  # }
-
+  graphics::text(0.5, 0.5, paste("",txt), cex = 2.5)
 }
 
 
@@ -40,9 +34,7 @@ panel_idenDist <- function(x, y)
   corTxt <- format(c(cor, 0.123456789), digits = 3)[1]
   idenDist <- identityDist(x, y)
   idenDistTxt <- format(c(idenDist, 0.123456789), digits = 3)[1]
-
-
-  graphics::text(0.5, 0.25, paste("Corr = ", corTxt, "\n iden-dist = ", idenDistTxt), cex = 2)
+  graphics::text(0.5, 0.5, paste0("Corr: ", corTxt, "\n iden-dist: ", idenDistTxt), cex = 2.5)
 }
 
 #' @title A better pairs plot function
