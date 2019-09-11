@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get cv.glmnet coefficient as a matrix or a tibble — get_lasso_coef • CPOP</title>
+<title>Step 1 of the CPOP method, iteratred — cpop1_iterate • CPOP</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Get cv.glmnet coefficient as a matrix or a tibble — get_lasso_coef" />
+<meta property="og:title" content="Step 1 of the CPOP method, iteratred — cpop1_iterate" />
 
-<meta property="og:description" content="Get cv.glmnet coefficient as a matrix or a tibble" />
+<meta property="og:description" content="Step 1 of the CPOP method, for multiple alpha inputs" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,69 +101,88 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get cv.glmnet coefficient as a matrix or a tibble</h1>
+    <h1>Step 1 of the CPOP method, iteratred</h1>
     
-    <div class="hidden name"><code>get_lasso_coef.Rd</code></div>
+    <div class="hidden name"><code>cpop1_iterate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Get cv.glmnet coefficient as a matrix or a tibble</p>
+    <p>Step 1 of the CPOP method, for multiple alpha inputs</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_lasso_coef</span>(<span class='no'>lassoObj</span>, <span class='no'>s</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>cpop1_iterate</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>lassoObj</th>
-      <td><p>cv.glmnet object</p></td>
+      <th>z1</th>
+      <td><p>A data matrix</p></td>
+    </tr>
+    <tr>
+      <th>z2</th>
+      <td><p>A data matrix</p></td>
+    </tr>
+    <tr>
+      <th>y1</th>
+      <td><p>A vector</p></td>
+    </tr>
+    <tr>
+      <th>y2</th>
+      <td><p>A vector</p></td>
+    </tr>
+    <tr>
+      <th>w</th>
+      <td><p>A vector</p></td>
+    </tr>
+    <tr>
+      <th>nIter</th>
+      <td><p>Number of iterations</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>Lasso alpha, vector</p></td>
+    </tr>
+    <tr>
+      <th>n_features</th>
+      <td><p>n_features desired</p></td>
+    </tr>
+    <tr>
+      <th>family</th>
+      <td><p>see glmnet family</p></td>
     </tr>
     <tr>
       <th>s</th>
       <td><p>CV-Lasso lambda</p></td>
     </tr>
     <tr>
-      <th>tibble</th>
-      <td><p>Default to FALSE</p></td>
+      <th>...</th>
+      <td><p>Extra parameter settings for cv.glmnet</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix or a tibble</p>
+    <p>A vector</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>x</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"X"</span>, <span class='fl'>1</span>:<span class='no'>p</span>)
-<span class='no'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>
-<span class='no'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='no'>k</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>, <span class='no'>p</span> - <span class='no'>k</span>))
-<span class='no'>expit</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>1</span>/(<span class='fl'>1</span>+<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>x</span>))
-<span class='no'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'>expit</span>(<span class='no'>x</span> <span class='kw'>%*%</span> <span class='no'>beta</span>))
-<span class='no'>lassoObj</span> <span class='kw'>=</span> <span class='kw pkg'>glmnet</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/glmnet/man/cv.glmnet.html'>cv.glmnet</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'>get_lasso_coef</span>(<span class='kw'>lassoObj</span> <span class='kw'>=</span> <span class='no'>lassoObj</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt;                       1
-#&gt; (Intercept)  0.00856865
-#&gt; X1           0.91702923
-#&gt; X2           0.92766251
-#&gt; X4           0.03493293
-#&gt; X6          -0.01780779
-#&gt; X7          -0.02953057
-#&gt; X9           0.02456317</div><div class='input'><span class='fu'>get_lasso_coef</span>(<span class='kw'>lassoObj</span> <span class='kw'>=</span> <span class='no'>lassoObj</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   feature_name     beta
-#&gt;   &lt;chr&gt;           &lt;dbl&gt;
-#&gt; 1 (Intercept)   0.00857
-#&gt; 2 X1            0.917  
-#&gt; 3 X2            0.928  
-#&gt; 4 X4            0.0349 
-#&gt; 5 X6           -0.0178 
-#&gt; 6 X7           -0.0295 
-#&gt; 7 X9            0.0246 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cpop_data</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'CPOP'</span>)
+<span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
+<span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
+<span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
+<span class='no'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>0.01</span>)
+<span class='no'>cpop1_result</span> <span class='kw'>=</span> <span class='fu'>cpop1_iterate</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>alpha</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
+#&gt;  0  1 
+#&gt; 13 32 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>30 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 34 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>30 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 34 features were selected. </span></div><div class='input'><span class='no'>cpop1_result</span></div><div class='output co'>#&gt;  [1] "X1--X10" "X1--X3"  "X1--X6"  "X10--X5" "X10--X8" "X10--X9" "X2--X3" 
+#&gt;  [8] "X2--X4"  "X2--X8"  "X3--X5"  "X3--X7"  "X3--X9"  "X4--X5"  "X4--X9" 
+#&gt; [15] "X1--X2"  "X1--X4"  "X1--X8"  "X1--X9"  "X10--X2" "X2--X5"  "X2--X7" 
+#&gt; [22] "X3--X4"  "X5--X6"  "X1--X5"  "X1--X7"  "X10--X3" "X10--X7" "X2--X6" 
+#&gt; [29] "X2--X9"  "X3--X6"  "X4--X6"  "X4--X8"  "X5--X8"  "X8--X9" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
