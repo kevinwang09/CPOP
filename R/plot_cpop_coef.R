@@ -1,6 +1,6 @@
-#' @title Plot top coefficients
-#' @description Plot top coefficients
-#' @param top_model_result The output of top_model
+#' @title Plot cpop coefficients
+#' @description Plot cpop coefficients
+#' @param cpop_model_result The output of cpop_model
 #' @param s laso s
 #' @param type "scatter" or "bar"
 #' @import ggplot2
@@ -10,29 +10,22 @@
 #' @importFrom forcats fct_reorder
 #' @export
 #' @examples
+#' data(cpop_data, package = 'CPOP')
 #' set.seed(1)
-#' n = 100
-#' p = 10
-#' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' colnames(x1) = colnames(x2) = paste0("X", 1:p)
-#' k = 2
-#' beta = c(rep(1, k), rep(0, p - k))
-#' x2[,1] = x2[,1] + 1
-#' expit = function(x) 1/(1+exp(-x))
-#' y1 = rbinom(n, 1, prob = expit(x1 %*% beta))
-#' y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' top_model_result = top_model(z1, z2, y1, y2, w = w,
+#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' plot_top_coef(top_model_result, s = "lambda.min", type = "point")
-#' plot_top_coef(top_model_result, s = "lambda.min", type = "text")
-#' plot_top_coef(top_model_result, s = "lambda.min", type = "bar")
-plot_top_coef = function(top_model_result, s = "lambda.min", type = "point"){
-  coef_en1 = get_lasso_coef(top_model_result$en1, s = s)
-  coef_en2 = get_lasso_coef(top_model_result$en2, s = s)
+#' alpha = c(1, 0.1)
+#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
+#' cpop1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
+#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "point")
+#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "text")
+#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "bar")
+plot_cpop_coef = function(cpop_model_result, s = "lambda.min", type = "point"){
+  coef_en1 = get_lasso_coef(cpop_model_result$en1, s = s)
+  coef_en2 = get_lasso_coef(cpop_model_result$en2, s = s)
 
   stopifnot(identical(rownames(coef_en1),
                       rownames(coef_en2)))

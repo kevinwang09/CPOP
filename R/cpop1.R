@@ -1,5 +1,5 @@
-#' @title Step 1 of the TOP method
-#' @description Step 1 of the TOP method, for a single given alpha
+#' @title Step 1 of the CPOP method
+#' @description Step 1 of the CPOP method, for a single given alpha
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -16,31 +16,22 @@
 #' @return A vector
 #' @export
 #' @examples
+#' data(cpop_data, package = 'CPOP')
 #' set.seed(1)
-#' n = 1000
-#' p = 10
-#' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = x1 + 0.1
-#' colnames(x1) = colnames(x2) = paste0("X", 1:p)
-#' k = 2
-#' beta = c(rep(1, k), rep(0, p - k))
-#' expit = function(x) 1/(1+exp(-x))
-#' y1 = rbinom(n, 1, prob = expit(x1 %*% beta))
-#' y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' nIter = 20
 #' alpha = 0.1
 #' s = "lambda.min"
-#' top1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
-top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n_features = 50, s = "lambda.min", ...){
+#' cpop1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
+cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
 
   for(i in 1:nIter){
-    message("TOP1 - Step: ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
+    message("CPOP1 - Step: ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
 
     if(length(selected_features) >= n_features) {
       message(n_features, " features was reached. ")
@@ -84,8 +75,8 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n
   return(selected_features)
 }
 ###############
-#' @title Step 1 of the TOP method, iteratred
-#' @description Step 1 of the TOP method, for multiple alpha inputs
+#' @title Step 1 of the CPOP method, iteratred
+#' @description Step 1 of the CPOP method, for multiple alpha inputs
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -102,25 +93,15 @@ top1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n
 #' @return A vector
 #' @export
 #' @examples
-#' set.seed(1)
-#' n = 1000
-#' p = 10
-#' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = x1 + matrix(rnorm(n * p, mean = 0, sd = 0.1), nrow = n, ncol = p)
-#' colnames(x1) = colnames(x2) = paste0("X", 1:p)
-#' k = 2
-#' beta = c(rep(1, k), rep(0, p - k))
-#' expit = function(x) 1/(1+exp(-x))
-#' y1 = rbinom(n, 1, prob = expit(x1 %*% beta))
-#' y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
+#' data(cpop_data, package = 'CPOP')
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
-#' top1_result = top1_iterate(z1, z2, y1, y2, w, nIter = 20,
+#' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
 #' alpha = alpha, n_features = 30, s = "lambda.min")
-#' top1_result
-top1_iterate = function(z1, z2, y1, y2, w,
+#' cpop1_result
+cpop1_iterate = function(z1, z2, y1, y2, w,
                         nIter = 20, alpha = 1,
                         n_features = 50, family = "binomial",
                         s = "lambda.min", ...){
@@ -129,18 +110,18 @@ top1_iterate = function(z1, z2, y1, y2, w,
   all_selected_features = c()
 
   for(this_alpha in alpha){
-    message("Fitting TOP model using alpha = ", this_alpha, "\n")
+    message("Fitting CPOP model using alpha = ", this_alpha, "\n")
     updated_w = w
     updated_w[all_selected_features] = 0
     print(table(sign(updated_w)))
 
-    this_top1_features = top1(z1, z2,
+    this_cpop1_features = cpop1(z1, z2,
                               y1, y2,
                               w = updated_w, nIter = 20,
                               n_features = n_features, alpha = this_alpha, family = family,
                               s = "lambda.min")
 
-    all_selected_features = unique(c(all_selected_features, this_top1_features))
+    all_selected_features = unique(c(all_selected_features, this_cpop1_features))
 
     if(length(all_selected_features) >= n_features) {
       message(n_features, " features was reached. ")

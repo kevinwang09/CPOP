@@ -1,11 +1,11 @@
-Package: top
+Package: CPOP
 Type: Package
-Title: TOP
+Title: CPOP
 Version: 0.0.18
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre"))
     )
-Description: TOP aims to top methods. 
+Description: CPOP aims to construct CPOP methods. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

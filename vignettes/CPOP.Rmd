@@ -1,5 +1,5 @@
 ---
-title: "An introduction to the top package"
+title: "An introduction to the cpop package"
 author:
 - name: Kevin Y.X. Wang
   affiliation: School of Mathematics and Statistics, The University of Sydney, Australia
@@ -8,14 +8,14 @@ output:
     toc_float: true
 package: BiocStyle
 vignette: >
-  %\VignetteIndexEntry{top}
+  %\VignetteIndexEntry{cpop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
   
 ```{r}
-library(top)
+library(CPOP)
 ```
 
 ```{r}
@@ -50,7 +50,7 @@ table(y1)
 table(y2)
 
 plot(colMeans(x1), colMeans(x2))
-top::identityDist(colMeans(x1), colMeans(x2))
+CPOP::identityDist(colMeans(x1), colMeans(x2))
 abline(a = 0, b = 1, col = "red")
 
 
@@ -59,36 +59,36 @@ abline(a = 0, b = 1, col = "red")
 w = compute_weights(x1, x2)
 nIter = 20
 
-top1_result = top1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+cpop1_result = cpop1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
 
-plot(colMeans(x1)[top1_result], colMeans(x2)[top1_result])
-top::identityDist(colMeans(x1)[top1_result], colMeans(x2)[top1_result])
+plot(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result])
+CPOP::identityDist(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result])
 abline(a = 0, b = 1, col = "red")
 
 
 
 s = "lambda.min"
 
-top2_result = top2_sign(x1, x2, y1, y2, top1_result = top1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
+cpop2_result = cpop2_sign(x1, x2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, intercept = FALSE)
 
-plot(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
-top::identityDist(colMeans(x1)[top2_result], colMeans(x2)[top2_result])
+plot(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result])
+CPOP::identityDist(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result])
 abline(a = 0, b = 1, col = "red")
 
 
-top3_result = top3(x1, x2, y1, y2, top2_result = top2_result, intercept = FALSE)
+cpop3_result = cpop3(x1, x2, y1, y2, cpop2_result = cpop2_result, intercept = FALSE)
 
-plot(predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
-predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
+plot(predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"),
+predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min"))
 abline(a = 0, b = 1)
 
-top::identityDist(
-predict(top3_result$en1, newx = x1[,top2_result], s = "lambda.min"),
-predict(top3_result$en2, newx = x1[,top2_result], s = "lambda.min"))
+CPOP::identityDist(
+predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"),
+predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min"))
 
-top::plot_top_coef(top3_result, type = "scatter")
-top::plot_top_coef(top3_result, type = "bar")
-top::plot_top_coef(top3_result, type = "text")
+CPOP::plot_cpop_coef(cpop3_result, type = "scatter")
+CPOP::plot_cpop_coef(cpop3_result, type = "bar")
+CPOP::plot_cpop_coef(cpop3_result, type = "text")
 ```
 
 
@@ -109,7 +109,7 @@ plot(predict(lasso1, newx = x1, s = "lambda.min"),
      predict(lasso2, newx = x1, s = "lambda.min"))
 abline(a = 0, b = 1)
 
-top::identityDist(
+CPOP::identityDist(
   predict(lasso1, newx = x1, s = "lambda.min"),
   predict(lasso2, newx = x1, s = "lambda.min"))
 ```
@@ -118,23 +118,23 @@ top::identityDist(
 # Ridge on Step1 features
 ```{r}
 lasso1 = glmnet::cv.glmnet(
-  x = x1[,top1_result],
+  x = x1[,cpop1_result],
   y = y1,
   family = "binomial", alpha = 0)
 
 lasso2 = glmnet::cv.glmnet(
-  x = x2[,top1_result],
+  x = x2[,cpop1_result],
   y = y2,
   family = "binomial", alpha = 0)
 
 
-plot(predict(lasso1, newx = x1[,top1_result], s = "lambda.min"),
-     predict(lasso2, newx = x1[,top1_result], s = "lambda.min"))
+plot(predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"),
+     predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min"))
 abline(a = 0, b = 1)
 
-top::identityDist(
-  predict(lasso1, newx = x1[,top1_result], s = "lambda.min"),
-  predict(lasso2, newx = x1[,top1_result], s = "lambda.min"))
+CPOP::identityDist(
+  predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"),
+  predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min"))
 ```
 
 
@@ -145,8 +145,8 @@ upper_elements = function(x){x[upper.tri(x)]}
 ```{r}
 boxplot(
   upper_elements(cor(x1)) - upper_elements(cor(x2)),
-  upper_elements(cor(x1[,top1_result])) - upper_elements(cor(x2[,top1_result])),
-        upper_elements(cor(x1[,top2_result])) - upper_elements(cor(x2[,top2_result])))
+  upper_elements(cor(x1[,cpop1_result])) - upper_elements(cor(x2[,cpop1_result])),
+        upper_elements(cor(x1[,cpop2_result])) - upper_elements(cor(x2[,cpop2_result])))
 ```
 
 
