@@ -18,3 +18,11 @@
 # y1 = rbinom(n, 1, prob = expit(x1 %*% beta))
 # y2 = rbinom(n, 1, prob = expit(x2 %*% beta))
 # save(x1, x2, y1, y2, file = "./data/cpop_data.RData")
+
+
+#' @title A melanoma data
+#' @description A melanoma data
+#' @param list_melanoma_means list_melanoma_means
+#' @param list_melanoma_sigma list_melanoma_sigma
+#' @param list_melanoma_samples list_melanoma_samples
+#' @usage data(melanoma_example, package = 'CPOP')
