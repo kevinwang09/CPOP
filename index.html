@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CPOP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.19</span>
       </span>
     </div>
 
@@ -62,12 +62,33 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="top" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#top" class="anchor"></a>TOP</h1></div>
 
-<p>TOP</p>
+<div id="cpop" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#cpop" class="anchor"></a>CPOP</h1></div>
+
 </div>
+<div id="cpop---cross-platform-omics-prediction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#cpop---cross-platform-omics-prediction" class="anchor"></a>CPOP - Cross-Platform Omics Prediction</h1>
+<p>Due to data scale differences between multiple omics data, a model constructed from a training data tends to have poor prediction power on a validation data. While the usual bioinfomatics approach is to re-normalise both the training and the validation data, this step may not be possible due to ethics constrains. CPOP avoids re-normalisation of additional data through the use of log-ratio features and thus also enable prediction for single omics samples.</p>
+<p>The novelty of the CPOP procedure lies in its ability to construct a <strong>transferable</strong> model across gene expression platforms and for prospective experiments. Such a transferable model can be trained to make predictions on independent validation data with an accuracy that is similar to a re-substituted model. The CPOP procedure also has the flexibility to be adapted to suit the most common clinical response variables, including linear response, binomial and multinomial response and Cox PH models.</p>
+</div>
+<div id="vignette" class="section level1">
+<h1 class="hasAnchor">
+<a href="#vignette" class="anchor"></a>Vignette</h1>
+</div>
+<div id="installation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"kevinwang09/CPOP"</span>)</a></code></pre></div>
+</div>
+<div id="references" class="section level1">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<p>This is unpublished work, please do not distribute.</p>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -88,6 +109,7 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/kevinwang09/top"><img src="https://travis-ci.org/kevinwang09/top.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://codecov.io/gh/kevinwang09/CPOP?branch=master"><img src="https://codecov.io/gh/kevinwang09/CPOP/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>

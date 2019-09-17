@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CPOP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.19</span>
       </span>
     </div>
 
@@ -74,224 +74,318 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(CPOP)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">n =<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">p =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Matrix)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mvtnorm)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a></code></pre></div>
+<div id="load-melanoma-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#load-melanoma-data" class="anchor"></a>Load melanoma data</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"melanoma_example"</span>, <span class="dt">package =</span> <span class="st">"CPOP"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mvtnorm)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">tcga_x =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html">rmvnorm</a></span>(<span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(list_melanoma_samples<span class="op">$</span>tcga), </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                        <span class="dt">mean =</span> list_melanoma_means<span class="op">$</span>tcga, </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                        <span class="dt">sigma =</span> list_melanoma_sigma<span class="op">$</span>tcga)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">tcga_z =<span class="st"> </span>CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/pairwise_col_diff.html">pairwise_col_diff</a></span>(tcga_x)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">tcga_beta =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Beta.html">rbeta</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(tcga_z), <span class="dt">shape1 =</span> <span class="fl">0.1</span>, <span class="dt">shape2 =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span>(tcga_beta)</a></code></pre></div>
+<p><img src="CPOP_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">tcga_y =<span class="st"> </span>tcga_z <span class="op">%*%</span><span class="st"> </span>tcga_beta</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">###################################################</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">sweden_x =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html">rmvnorm</a></span>(<span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(list_melanoma_samples<span class="op">$</span>sweden), </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">                        <span class="dt">mean =</span> list_melanoma_means<span class="op">$</span>sweden, </a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">                        <span class="dt">sigma =</span> list_melanoma_sigma<span class="op">$</span>sweden)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">sweden_beta =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Beta.html">rbeta</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(tcga_z), <span class="dt">shape1 =</span> <span class="fl">0.1</span>, <span class="dt">shape2 =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">sweden_z =<span class="st"> </span>CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/pairwise_col_diff.html">pairwise_col_diff</a></span>(sweden_x)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">sweden_y =<span class="st"> </span>sweden_z <span class="op">%*%</span><span class="st"> </span>sweden_beta</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(tcga_beta, sweden_beta)</a></code></pre></div>
+<p><img src="CPOP_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">naive_lasso =<span class="st"> </span><span class="cf">function</span>(x, y, family){</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  glmnet<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html">cv.glmnet</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">family =</span> family)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">naive_lasso_tcga =<span class="st"> </span><span class="kw">naive_lasso</span>(<span class="dt">x =</span> tcga_z, <span class="dt">y =</span> tcga_y, <span class="dt">family =</span> <span class="st">"gaussian"</span>)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/get_lasso_coef.html">get_lasso_coef</a></span>(naive_lasso_tcga, <span class="dt">s =</span> <span class="st">"lambda.min"</span>)</a></code></pre></div>
+<pre><code>##                               1
+## (Intercept)       -1.676476e+02
+## ABCA8--SERPINA5    6.966651e+00
+## ABCA8--XYLT1       1.364924e+01
+## ALDH1A3--RNF126P1  6.885566e+00
+## ANKRD29--RNF126P1  7.899598e+00
+## ANKRD29--SERPINA5  6.255377e+00
+## ANKRD29--TCN1      5.991336e-01
+## APOL3--KIR2DL3     5.255481e-01
+## APOL3--PYHIN1      1.670109e+01
+## APOL3--SAMD3       3.986091e-01
+## APOL3--SAMD9L      2.004755e-01
+## APOL3--SAMSN1      1.127282e+00
+## APOL3--SLAMF8      7.051585e-01
+## CCL19--IRX3        1.787724e+00
+## CCL19--IRX6        1.165017e+00
+## CCL19--MMP12       9.573040e-01
+## CCL19--TYRP1       2.734379e+01
+## CD19--MMP12        2.301931e-01
+## CD19--PVRIG        9.149303e-01
+## CD247--ICOS        5.518949e+00
+## CD247--PTPN22      2.819210e-04
+## CD247--PYHIN1      1.030862e+01
+## CD247--ZAP70       2.884801e+01
+## CD6--ICOS          1.567634e+00
+## CD6--LCP1          6.747935e+00
+## CD6--PTPN22        1.294825e+00
+## CD79A--GPR143      3.965350e-01
+## CD79A--IRX6        1.448525e-03
+## CD79A--MMP12       2.595449e+00
+## CD79A--SNRPD2      3.205659e+00
+## CD79A--TSPAN10     4.733802e-03
+## CD79A--TYRP1       2.627319e-02
+## CD86--SAMSN1       5.040932e-02
+## CD8A--GZMA         1.755433e+01
+## CD96--HSD11B1      1.736768e+00
+## CD96--KIR2DL3      5.709792e+00
+## CD96--SERPINA5     6.077632e+00
+## CD96--SLAMF1       1.090740e+01
+## CENPB--MGST1       6.737819e-01
+## CENPB--RND2        1.573138e-03
+## CENPB--SNRPD2      4.848195e+00
+## CILP--MAPT         5.527527e+00
+## CILP--SOX2         1.469375e+00
+## CILP--TTYH1        7.514096e-02
+## CILP--TYRP1        1.135027e+00
+## CLEC10A--FABP7     5.421262e+00
+## CLEC10A--HSD11B1   4.519659e-02
+## CLEC10A--RNF126P1  2.454889e-02
+## CLEC10A--SERPINA5  1.597657e-02
+## CLEC10A--TCN1      3.871853e-01
+## CLEC10A--TMEM163   1.300990e+01
+## CLEC10A--TYRP1     6.466029e-04
+## COL11A1--MAGEA10   5.196838e+00
+## COL11A1--MGST1     5.341022e+00
+## COL4A5--MEGF10     5.630834e+00
+## COL4A5--TTYH1      1.465064e+01
+## CPN1--GPR143       1.008088e+01
+## CPN1--MAPK4        7.860870e+00
+## CXCL9--RGS1        2.649345e+01
+## CXCL9--SLAMF8      1.310759e+01
+## CXCR6--SAMD3       2.062905e+01
+## CYP2J2--MAGEA10    5.216037e+00
+## DHRS9--IRX3        1.260029e-03
+## DHRS9--TYRP1       1.722271e-01
+## EIF1AY--IRX3       3.252143e+00
+## EIF1AY--TMEM163    1.614970e+00
+## EPSTI1--IFI44L    -5.165213e+00
+## ERAP2--MGST1       6.413977e+00
+## EVI2B--SAMSN1      4.996751e+01
+## FGL2--TTYH1        5.044652e+00
+## FOXD1--RND2        4.915334e+00
+## GBP1--STAT1        1.974398e+00
+## GBP2--SAMD9L       1.576160e-01
+## GBP2--SAMSN1       6.145249e+00
+## GBP2--SOX2         1.020264e+01
+## GBP2--STAT1        1.350924e+00
+## GBP4--KIR2DL3      3.294422e+00
+## GBP5--GCH1         8.190463e+00
+## GZMB--SERPINF1     2.472361e+00
+## IFNG--SAMD3        9.801547e-01
+## IL13RA2--MAGEA10   1.014812e+01
+## IL18RAP--JSRP1     1.361248e-03
+## IL18RAP--TSPAN10   2.259177e+00
+## IL18RAP--ZAP70     7.566151e-03
+## IL32--SLAMF8       1.775459e+01
+## LYZ--RNF126P1      8.383339e+00
+## LYZ--SERPINF1      1.254296e+00
+## MMP12--TNFRSF17   -2.260593e+00
+## PVRIG--TNFRSF17   -6.075568e+00
+## TNFRSF17--TYRP1    3.038962e-02</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">naive_lasso_tcga_pred_sweden =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(naive_lasso_tcga, <span class="dt">newx =</span> sweden_z, <span class="dt">s =</span> <span class="st">"lambda.min"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sweden_y, naive_lasso_tcga_pred_sweden)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
+<p><img src="CPOP_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">####################</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">####################</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">w =<span class="st"> </span>CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/compute_weights.html">compute_weights</a></span>(tcga_z, sweden_z)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">tcga_sweden_cpop =<span class="st"> </span>CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/cpop_model.html">cpop_model</a></span>(<span class="dt">z1 =</span> tcga_z, </a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">                                    <span class="dt">z2 =</span> sweden_z, </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">                                    <span class="dt">y1 =</span> tcga_y, </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">                                    <span class="dt">y2 =</span> sweden_y, <span class="dt">w =</span> w, <span class="dt">n_features =</span> <span class="dv">100</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">family =</span> <span class="st">"gaussian"</span>)</a></code></pre></div>
+<pre><code>## Fitting CPOP model using alpha = 1</code></pre>
 <pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sigma1 =<span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov2cor</a></span>()</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">sigma2 =<span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(p <span class="op">*</span><span class="st"> </span>p, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span><span class="st"> </span>Matrix<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html">nearPD</a></span>())<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov2cor</a></span>()</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># x2 = x1 + 0.2</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">x1 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma1)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">x2 =<span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html">rmvnorm</a></span>(<span class="dt">n =</span> n, <span class="dt">sigma =</span> sigma2)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">sigma1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
-<pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]
-## [1,] 1.0000000 0.2183731 0.1879947 0.4507799 0.4080451
-## [2,] 0.2183731 1.0000000 0.2169021 0.2334969 0.4026574
-## [3,] 0.1879947 0.2169021 1.0000000 0.3388525 0.0160735
-## [4,] 0.4507799 0.2334969 0.3388525 1.0000000 0.3298534
-## [5,] 0.4080451 0.4026574 0.0160735 0.3298534 1.0000000</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sigma2[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
-<pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]
-## [1,] 1.0000000 0.5869847 0.6240197 0.5232686 0.6153168
-## [2,] 0.5869847 1.0000000 0.6104769 0.5929620 0.5469960
-## [3,] 0.6240197 0.6104769 1.0000000 0.5984543 0.6412884
-## [4,] 0.5232686 0.5929620 0.5984543 1.0000000 0.5093101
-## [5,] 0.6153168 0.5469960 0.6412884 0.5093101 1.0000000</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(x1) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(x2) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"X"</span>, <span class="dv">1</span><span class="op">:</span>p)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">k =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">beta =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">0.4</span>, k), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>, p <span class="op">-</span><span class="st"> </span>k))</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">expit =<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>x))</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">y1 =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x1 <span class="op">%*%</span><span class="st"> </span>beta))</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">y2 =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, <span class="dt">prob =</span> <span class="kw">expit</span>(x2 <span class="op">%*%</span><span class="st"> </span>beta))</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(y1)</a></code></pre></div>
-<pre><code>## y1
-##   0   1 
-## 495 505</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(y2)</a></code></pre></div>
-<pre><code>## y2
-##   0   1 
-## 498 502</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1), <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2))</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1), <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2))</a></code></pre></div>
-<pre><code>## [1] 0.01822394</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># z1 = pairwise_col_diff(x1)</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co"># z2 = pairwise_col_diff(x2)</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">w =<span class="st"> </span><span class="kw"><a href="../reference/compute_weights.html">compute_weights</a></span>(x1, x2)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">nIter =<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">cpop1_result =<span class="st"> </span><span class="kw"><a href="../reference/cpop1.html">cpop1</a></span>(x1, x2, y1, y2, w, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">s =</span> <span class="st">"lambda.min"</span>)</a></code></pre></div>
-<pre><code>## CPOP1 - Step: 01: Number of selected features: 0 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 02: Number of selected features: 4 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 03: Number of selected features: 14 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 04: Number of selected features: 25 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 05: Number of selected features: 33 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 06: Number of selected features: 37 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 07: Number of selected features: 41 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 08: Number of selected features: 48 out of 100</code></pre>
-<pre><code>## CPOP1 - Step: 09: Number of selected features: 57 out of 100</code></pre>
-<pre><code>## 50 features was reached.</code></pre>
-<pre><code>## A total of 57 features were selected.</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1)[cpop1_result], <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2)[cpop1_result])</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1)[cpop1_result], <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2)[cpop1_result])</a></code></pre></div>
-<pre><code>## [1] 0.008314006</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">s =<span class="st"> "lambda.min"</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3">cpop2_result =<span class="st"> </span><span class="kw"><a href="../reference/cpop2_sign.html">cpop2_sign</a></span>(x1, x2, y1, y2, <span class="dt">cpop1_result =</span> cpop1_result, <span class="dt">s =</span> <span class="st">"lambda.min"</span>, <span class="dt">nIter =</span> <span class="dv">20</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 25 out of 57</code></pre>
+##     1 
+## 12246</code></pre>
+<pre><code>## CPOP1 - Step: 01: Number of selected features: 0 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 02: Number of selected features: 3 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 03: Number of selected features: 13 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 04: Number of selected features: 19 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 05: Number of selected features: 40 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 06: Number of selected features: 63 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 07: Number of selected features: 77 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 08: Number of selected features: 89 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 09: Number of selected features: 97 out of 12246</code></pre>
+<pre><code>## CPOP1 - Step: 10: Number of selected features: 103 out of 12246</code></pre>
+<pre><code>## 100 features was reached.</code></pre>
+<pre><code>## A total of 103 features were selected.</code></pre>
+<pre><code>## 100 features was reached.</code></pre>
+<pre><code>## A total of 103 features were selected.</code></pre>
+<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 86 out of 103</code></pre>
 <pre><code>## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1  0  1
-##   -1  0  0 18
+##   -1  0  0  6
 ##   0   0  0  0
-##   1  14  0  0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 17 out of 57
+##   1  11  0  0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 59 out of 103
+## The sign matrix between the two data:</code></pre>
+<pre><code>##     
+##      -1  0  1
+##   -1  0  0 16
+##   0   0  0  0
+##   1  11  0  0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 50 out of 103
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 5
 ##   0   0 0 0
-##   1   3 0 0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 17 out of 57
+##   1   4 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 04: Number of leftover features: 41 out of 103
+## The sign matrix between the two data:</code></pre>
+<pre><code>##     
+##      -1 0 1
+##   -1  0 0 1
+##   0   0 0 0
+##   1   8 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 05: Number of leftover features: 37 out of 103
+## The sign matrix between the two data:</code></pre>
+<pre><code>##     
+##      -1 0 1
+##   -1  0 0 2
+##   0   0 0 0
+##   1   2 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 06: Number of leftover features: 34 out of 103
+## The sign matrix between the two data:</code></pre>
+<pre><code>##     
+##      -1 0 1
+##   -1  0 0 1
+##   0   0 0 0
+##   1   2 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 07: Number of leftover features: 33 out of 103
+## The sign matrix between the two data:</code></pre>
+<pre><code>##     
+##      -1 0 1
+##   -1  0 0 1
+##   0   0 0 0
+##   1   0 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 08: Number of leftover features: 33 out of 103
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 0
 ##   0   0 0 0
 ##   1   0 0 0</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1)[cpop2_result], <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2)[cpop2_result])</a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x1)[cpop2_result], <span class="kw"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colMeans</a></span>(x2)[cpop2_result])</a></code></pre></div>
-<pre><code>## [1] 0.008112304</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">cpop3_result =<span class="st"> </span><span class="kw"><a href="../reference/cpop3.html">cpop3</a></span>(x1, x2, y1, y2, <span class="dt">cpop2_result =</span> cpop2_result, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(cpop3_result<span class="op">$</span>en1, <span class="dt">newx =</span> x1[,cpop2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(cpop3_result<span class="op">$</span>en2, <span class="dt">newx =</span> x1[,cpop2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-4.png" width="700"></p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(</a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(cpop3_result<span class="op">$</span>en1, <span class="dt">newx =</span> x1[,cpop2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(cpop3_result<span class="op">$</span>en2, <span class="dt">newx =</span> x1[,cpop2_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
-<pre><code>## [1] 0.1108214</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/plot_cpop_coef.html">plot_cpop_coef</a></span>(cpop3_result, <span class="dt">type =</span> <span class="st">"scatter"</span>)</a>
-<a class="sourceLine" id="cb46-2" data-line-number="2">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/plot_cpop_coef.html">plot_cpop_coef</a></span>(cpop3_result, <span class="dt">type =</span> <span class="st">"bar"</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-5.png" width="700"></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/plot_cpop_coef.html">plot_cpop_coef</a></span>(cpop3_result, <span class="dt">type =</span> <span class="st">"text"</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-2-6.png" width="700"></p>
-<div id="ridge-on-all-features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ridge-on-all-features" class="anchor"></a>Ridge on all features</h1>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">lasso1 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb48-2" data-line-number="2">  <span class="dt">x =</span> x1,</a>
-<a class="sourceLine" id="cb48-3" data-line-number="3">  <span class="dt">y =</span> y1,</a>
-<a class="sourceLine" id="cb48-4" data-line-number="4">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb48-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb48-6" data-line-number="6">lasso2 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb48-7" data-line-number="7">  <span class="dt">x =</span> x2,</a>
-<a class="sourceLine" id="cb48-8" data-line-number="8">  <span class="dt">y =</span> y2,</a>
-<a class="sourceLine" id="cb48-9" data-line-number="9">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb48-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb48-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb48-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso1, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb48-13" data-line-number="13">     <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso2, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
-<a class="sourceLine" id="cb48-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso1, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso2, <span class="dt">newx =</span> x1, <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
-<pre><code>## [1] 0.1800576</code></pre>
-</div>
-<div id="ridge-on-step1-features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ridge-on-step1-features" class="anchor"></a>Ridge on Step1 features</h1>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">lasso1 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">  <span class="dt">x =</span> x1[,cpop1_result],</a>
-<a class="sourceLine" id="cb51-3" data-line-number="3">  <span class="dt">y =</span> y1,</a>
-<a class="sourceLine" id="cb51-4" data-line-number="4">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb51-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb51-6" data-line-number="6">lasso2 =<span class="st"> </span>glmnet<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html">cv.glmnet</a></span>(</a>
-<a class="sourceLine" id="cb51-7" data-line-number="7">  <span class="dt">x =</span> x2[,cpop1_result],</a>
-<a class="sourceLine" id="cb51-8" data-line-number="8">  <span class="dt">y =</span> y2,</a>
-<a class="sourceLine" id="cb51-9" data-line-number="9">  <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb51-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb51-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb51-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso1, <span class="dt">newx =</span> x1[,cpop1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb51-13" data-line-number="13">     <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso2, <span class="dt">newx =</span> x1[,cpop1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a>
-<a class="sourceLine" id="cb51-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="CPOP_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/identityDist.html">identityDist</a></span>(</a>
-<a class="sourceLine" id="cb52-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso1, <span class="dt">newx =</span> x1[,cpop1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>),</a>
-<a class="sourceLine" id="cb52-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(lasso2, <span class="dt">newx =</span> x1[,cpop1_result], <span class="dt">s =</span> <span class="st">"lambda.min"</span>))</a></code></pre></div>
-<pre><code>## [1] 0.219467</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">upper_elements =<span class="st"> </span><span class="cf">function</span>(x){x[<span class="kw"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span>(x)]}</a></code></pre></div>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>(</a>
-<a class="sourceLine" id="cb55-2" data-line-number="2">  <span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x1)) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x2)),</a>
-<a class="sourceLine" id="cb55-3" data-line-number="3">  <span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x1[,cpop1_result])) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x2[,cpop1_result])),</a>
-<a class="sourceLine" id="cb55-4" data-line-number="4">        <span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x1[,cpop2_result])) <span class="op">-</span><span class="st"> </span><span class="kw">upper_elements</span>(<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x2[,cpop2_result])))</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/predict_cpop.html">predict_cpop</a></span>(tcga_sweden_cpop, <span class="dt">newz =</span> sweden_z, <span class="dt">model_number =</span> <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb44-2" data-line-number="2">     sweden_y)</a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</a></code></pre></div>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</a></code></pre></div>
-<pre><code>## R version 3.6.1 (2017-01-27)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 14.04.5 LTS
-## 
-## Matrix products: default
-## BLAS:   /home/travis/R-bin/lib/R/lib/libRblas.so
-## LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-## [1] dplyr_0.8.3      mvtnorm_1.0-11   Matrix_1.2-17    CPOP_0.0.18     
-## [5] BiocStyle_2.12.0
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.2         compiler_3.6.1     pillar_1.4.2      
-##  [4] BiocManager_1.30.4 iterators_1.0.12   forcats_0.4.0     
-##  [7] tools_3.6.1        zeallot_0.1.0      digest_0.6.20     
-## [10] jsonlite_1.6       lifecycle_0.1.0    lattice_0.20-38   
-## [13] evaluate_0.14      memoise_1.1.0      tibble_2.1.3      
-## [16] gtable_0.3.0       pkgconfig_2.0.2    rlang_0.4.0       
-## [19] foreach_1.4.7      yaml_2.2.0         pkgdown_1.4.1     
-## [22] xfun_0.9           stringr_1.4.0      knitr_1.24        
-## [25] htmlwidgets_1.3    vctrs_0.2.0        desc_1.2.0        
-## [28] fs_1.3.1           glmnet_2.0-18      rprojroot_1.3-2   
-## [31] grid_3.6.1         tidyselect_0.2.5   glue_1.3.1        
-## [34] R6_2.4.0           rmarkdown_1.15     bookdown_0.13     
-## [37] tidyr_1.0.0        purrr_0.3.2        ggplot2_3.2.1     
-## [40] magrittr_1.5       ellipsis_0.2.0.1   codetools_0.2-16  
-## [43] backports_1.1.4    scales_1.0.0       htmltools_0.3.6   
-## [46] MASS_7.3-51.4      assertthat_0.2.1   colorspace_1.4-1  
-## [49] labeling_0.3       proxy_0.4-23       stringi_1.4.3     
-## [52] visNetwork_2.0.8   lazyeval_0.2.2     munsell_0.5.0     
-## [55] crayon_1.3.4</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/plot_cpop_coef.html">plot_cpop_coef</a></span>(tcga_sweden_cpop, <span class="dt">type =</span> <span class="st">"text"</span>)</a></code></pre></div>
+<p><img src="CPOP_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">CPOP<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/CPOP/man/plot_cpop_coef.html">plot_cpop_coef</a></span>(tcga_sweden_cpop, <span class="dt">type =</span> <span class="st">"bar"</span>)</a></code></pre></div>
+<p><img src="CPOP_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
+<!-- ```{r} -->
+<!-- set.seed(1) -->
+<!-- n = 1000 -->
+<!-- p = 100 -->
+<!-- library(Matrix) -->
+<!-- library(mvtnorm) -->
+<!-- library(dplyr) -->
+<!-- sigma1 = (matrix(rnorm(p * p, mean = 1, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor() -->
+<!-- sigma2 = (matrix(rnorm(p * p, mean = 5, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor() -->
+<!-- # x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
+<!-- # x2 = x1 + 0.2 -->
+<!-- x1 = mvtnorm::rmvnorm(n = n, sigma = sigma1) -->
+<!-- x2 = mvtnorm::rmvnorm(n = n, sigma = sigma2) -->
+<!-- sigma1[1:5, 1:5] -->
+<!-- sigma2[1:5, 1:5] -->
+<!-- colnames(x1) = colnames(x2) = paste0("X", 1:p) -->
+<!-- k = 2 -->
+<!-- beta = c(rep(0.4, k), rep(0, p - k)) -->
+<!-- expit = function(x) 1/(1+exp(-x)) -->
+<!-- y1 = rbinom(n, 1, prob = expit(x1 %*% beta)) -->
+<!-- y2 = rbinom(n, 1, prob = expit(x2 %*% beta)) -->
+<!-- table(y1) -->
+<!-- table(y2) -->
+<!-- plot(colMeans(x1), colMeans(x2)) -->
+<!-- CPOP::identityDist(colMeans(x1), colMeans(x2)) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+<!-- # z1 = pairwise_col_diff(x1) -->
+<!-- # z2 = pairwise_col_diff(x2) -->
+<!-- w = compute_weights(x1, x2) -->
+<!-- nIter = 20 -->
+<!-- cpop1_result = cpop1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min") -->
+<!-- plot(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result]) -->
+<!-- CPOP::identityDist(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result]) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+<!-- s = "lambda.min" -->
+<!-- cpop2_result = cpop2_sign(x1, x2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, intercept = FALSE) -->
+<!-- plot(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result]) -->
+<!-- CPOP::identityDist(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result]) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+<!-- cpop3_result = cpop3(x1, x2, y1, y2, cpop2_result = cpop2_result, intercept = FALSE) -->
+<!-- plot(predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"), -->
+<!-- predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min")) -->
+<!-- abline(a = 0, b = 1) -->
+<!-- CPOP::identityDist( -->
+<!-- predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"), -->
+<!-- predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min")) -->
+<!-- CPOP::plot_cpop_coef(cpop3_result, type = "scatter") -->
+<!-- CPOP::plot_cpop_coef(cpop3_result, type = "bar") -->
+<!-- CPOP::plot_cpop_coef(cpop3_result, type = "text") -->
+<!-- ``` -->
+<!-- # Ridge on all features -->
+<!-- ```{r} -->
+<!-- lasso1 = glmnet::cv.glmnet( -->
+<!--   x = x1, -->
+<!--   y = y1, -->
+<!--   family = "binomial", alpha = 0) -->
+<!-- lasso2 = glmnet::cv.glmnet( -->
+<!--   x = x2, -->
+<!--   y = y2, -->
+<!--   family = "binomial", alpha = 0) -->
+<!-- plot(predict(lasso1, newx = x1, s = "lambda.min"), -->
+<!--      predict(lasso2, newx = x1, s = "lambda.min")) -->
+<!-- abline(a = 0, b = 1) -->
+<!-- CPOP::identityDist( -->
+<!--   predict(lasso1, newx = x1, s = "lambda.min"), -->
+<!--   predict(lasso2, newx = x1, s = "lambda.min")) -->
+<!-- ``` -->
+<!-- # Ridge on Step1 features -->
+<!-- ```{r} -->
+<!-- lasso1 = glmnet::cv.glmnet( -->
+<!--   x = x1[,cpop1_result], -->
+<!--   y = y1, -->
+<!--   family = "binomial", alpha = 0) -->
+<!-- lasso2 = glmnet::cv.glmnet( -->
+<!--   x = x2[,cpop1_result], -->
+<!--   y = y2, -->
+<!--   family = "binomial", alpha = 0) -->
+<!-- plot(predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"), -->
+<!--      predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min")) -->
+<!-- abline(a = 0, b = 1) -->
+<!-- CPOP::identityDist( -->
+<!--   predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"), -->
+<!--   predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min")) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- upper_elements = function(x){x[upper.tri(x)]} -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- boxplot( -->
+<!--   upper_elements(cor(x1)) - upper_elements(cor(x2)), -->
+<!--   upper_elements(cor(x1[,cpop1_result])) - upper_elements(cor(x2[,cpop1_result])), -->
+<!--         upper_elements(cor(x1[,cpop2_result])) - upper_elements(cor(x2[,cpop2_result]))) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- sessionInfo() -->
+<!-- ``` -->
 </div>
   </div>
 
@@ -300,8 +394,7 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#ridge-on-all-features">Ridge on all features</a></li>
-      <li><a href="#ridge-on-step1-features">Ridge on Step1 features</a></li>
+<li><a href="#load-melanoma-data">Load melanoma data</a></li>
       </ul>
 </div>
       </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Coefficient of repeatability — coef_repeat • CPOP</title>
+<title>The logit function — logit • CPOP</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Coefficient of repeatability — coef_repeat" />
+<meta property="og:title" content="The logit function — logit" />
 
-<meta property="og:description" content="Coefficient of repeatability" />
+<meta property="og:description" content="The logit function" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,40 +101,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Coefficient of repeatability</h1>
+    <h1>The logit function</h1>
     
-    <div class="hidden name"><code>coef_repeat.Rd</code></div>
+    <div class="hidden name"><code>logit.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Coefficient of repeatability</p>
+    <p>The logit function</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>coef_repeat</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <pre class="usage"><span class='fu'>logit</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a vector</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>a vector</p></td>
+      <td><p>numeric</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
-<span class='no'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
-<span class='co'># identityDist(x, y)</span>
-<span class='fu'>coef_repeat</span>(<span class='no'>x</span>, <span class='no'>y</span>)</div><div class='output co'>#&gt;    mean_d      sd_d 
-#&gt; 0.1466954 1.3153953 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='no'>logit</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)</div><div class='img'><img src='logit-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
