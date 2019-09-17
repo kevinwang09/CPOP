@@ -2,7 +2,7 @@ CPOP
 ================
 
 [![Travis build
-status](https://travis-ci.org/kevinwang09/top.svg?branch=master)](https://travis-ci.org/kevinwang09/top)
+status](https://travis-ci.org/kevinwang09/CPOP.svg?branch=master)](https://travis-ci.org/kevinwang09/CPOP)
 [![Codecov test
 coverage](https://codecov.io/gh/kevinwang09/CPOP/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinwang09/CPOP?branch=master)
 

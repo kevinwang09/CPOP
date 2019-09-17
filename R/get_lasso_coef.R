@@ -21,8 +21,15 @@
 #' get_lasso_coef(lassoObj = lassoObj, s = "lambda.min", tibble = TRUE)
 
 get_lasso_coef = function(lassoObj, s, tibble = FALSE){
-  coefMatrix = as.matrix(glmnet::coef.cv.glmnet(lassoObj, s = s))
-  result = coefMatrix[coefMatrix[, 1] != 0, , drop = FALSE]
+  if("cv.glmnet" %in% class(lassoObj)){
+    coef_matrix = as.matrix(glmnet::coef.cv.glmnet(lassoObj, s = s))
+  } else if("glmnet" %in% class(lassoObj)){
+    coef_matrix = as.matrix(glmnet::coef.glmnet(lassoObj, s = s))
+  } else {
+    stop("Only glmnet and cv.glmnet objects are acceptable")
+  }
+
+  result = coef_matrix[coef_matrix[, 1] != 0, , drop = FALSE]
 
   if(tibble){
     result = tibble::tibble(

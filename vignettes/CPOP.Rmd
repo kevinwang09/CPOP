@@ -20,7 +20,7 @@ library(CPOP)
 
 # Load melanoma data 
 ```{r}
-data("melanoma_example", package = "CPOP")
+data(melanoma_example, package = "CPOP")
 ```
 
 
@@ -84,6 +84,18 @@ CPOP::plot_cpop_coef(tcga_sweden_cpop, type = "bar")
 
 
 
+<!-- ```{r} -->
+<!-- library(HDCI) -->
+<!-- tcga_sweden_escv = HDCI::escv.glmnet(x = tcga_z,  -->
+<!--                                      y = tcga_y, family = "gaussian") -->
+
+<!-- get_lasso_coef(tcga_sweden_escv$glmnet.fit, s = tcga_sweden_escv$lambda.escv, tibble = TRUE) -->
+<!-- naive_lasso_tcga_pred_sweden_escv = predict(tcga_sweden_escv$glmnet.fit,  -->
+<!--                                             newx = sweden_z, s = tcga_sweden_escv$lambda.escv) -->
+
+<!-- plot(sweden_y, naive_lasso_tcga_pred_sweden_escv) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+<!-- ``` -->
 
 
 <!-- ```{r} -->
