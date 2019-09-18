@@ -72,7 +72,8 @@ w = CPOP::compute_weights(tcga_z, sweden_z)
 tcga_sweden_cpop = CPOP::cpop_model(z1 = tcga_z, 
                                     z2 = sweden_z, 
                                     y1 = tcga_y, 
-                                    y2 = sweden_y, w = w, n_features = 100, alpha = 1, family = "gaussian")
+                                    y2 = sweden_y, w = w, n_features = 100, alpha = 1, 
+                                    family = "gaussian", intercept = FALSE)
 
 plot(CPOP::predict_cpop(tcga_sweden_cpop, newz = sweden_z, model_number = 1),
      sweden_y)
@@ -83,155 +84,54 @@ CPOP::plot_cpop_coef(tcga_sweden_cpop, type = "bar")
 ```
 
 
-
 <!-- ```{r} -->
-<!-- library(HDCI) -->
-<!-- tcga_sweden_escv = HDCI::escv.glmnet(x = tcga_z,  -->
-<!--                                      y = tcga_y, family = "gaussian") -->
+<!-- ridge1_coef = coef(tcga_sweden_cpop$en1, s = tcga_sweden_cpop$en1$lambda) -->
+<!-- ridge2_coef = coef(tcga_sweden_cpop$en2, s = tcga_sweden_cpop$en2$lambda) -->
 
-<!-- get_lasso_coef(tcga_sweden_escv$glmnet.fit, s = tcga_sweden_escv$lambda.escv, tibble = TRUE) -->
-<!-- naive_lasso_tcga_pred_sweden_escv = predict(tcga_sweden_escv$glmnet.fit,  -->
-<!--                                             newx = sweden_z, s = tcga_sweden_escv$lambda.escv) -->
+<!-- which(tcga_sweden_cpop$en1$lambda == tcga_sweden_cpop$en1$lambda.min) -->
+<!-- which(tcga_sweden_cpop$en2$lambda == tcga_sweden_cpop$en2$lambda.min) -->
 
-<!-- plot(sweden_y, naive_lasso_tcga_pred_sweden_escv) -->
+<!-- new_iden_dist = function(x, y){ -->
+<!--   identityDist(x, y) + -->
+<!--     abs(e1071::skewness(x, y)) + -->
+<!--     (1 - cor(x, y)) -->
+<!-- } -->
+
+<!-- one_vs_mat_newdist = function(x, mat){ -->
+<!--   purrr::map_dbl(1:100, -->
+<!--                  ~ tryCatch(new_iden_dist(x, mat[,.x]), error = function(e){10})) -->
+<!-- } -->
+
+<!-- beta_newdist = purrr::map(1:100, -->
+<!--                            ~ one_vs_mat_newdist(ridge1_coef[,.x], ridge2_coef)) %>% -->
+<!--   do.call(cbind, .) %>% abs -->
+
+<!-- beta_newdist %>% -->
+<!--   d3heatmap::d3heatmap(Rowv = F, Colv = F, colors = "Blues") -->
+<!-- ############################### -->
+<!-- beta_newdist_index = which(beta_newdist == min(beta_newdist), arr.ind = TRUE) -->
+<!-- plot(ridge1_coef[,beta_newdist_index[1]],  -->
+<!--      ridge2_coef[,beta_newdist_index[2]]) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+
+<!-- newdist_beta1 = (ridge1_coef[,beta_newdist_index[1]])[-1] -->
+<!-- newdist_beta2 = (ridge2_coef[,beta_newdist_index[1]])[-1] -->
+
+<!-- plot(tcga_z[,names(newdist_beta1)] %*% newdist_beta1,  -->
+<!--      tcga_z[,names(newdist_beta2)] %*% newdist_beta2) -->
+<!-- abline(a = 0, b = 1, col = "red") -->
+
+<!-- plot(sweden_z[,names(newdist_beta1)] %*% newdist_beta1,  -->
+<!--      sweden_z[,names(newdist_beta2)] %*% newdist_beta2) -->
 <!-- abline(a = 0, b = 1, col = "red") -->
 <!-- ``` -->
 
 
-<!-- ```{r} -->
-<!-- set.seed(1) -->
-<!-- n = 1000 -->
-<!-- p = 100 -->
-
-<!-- library(Matrix) -->
-<!-- library(mvtnorm) -->
-<!-- library(dplyr) -->
-
-
-<!-- sigma1 = (matrix(rnorm(p * p, mean = 1, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor() -->
-<!-- sigma2 = (matrix(rnorm(p * p, mean = 5, sd = 1), nrow = p, ncol = p) %>% Matrix::nearPD())$mat %>% as.matrix() %>% cov2cor() -->
-<!-- # x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p) -->
-<!-- # x2 = x1 + 0.2 -->
-<!-- x1 = mvtnorm::rmvnorm(n = n, sigma = sigma1) -->
-<!-- x2 = mvtnorm::rmvnorm(n = n, sigma = sigma2) -->
-
-<!-- sigma1[1:5, 1:5] -->
-<!-- sigma2[1:5, 1:5] -->
-
-<!-- colnames(x1) = colnames(x2) = paste0("X", 1:p) -->
-<!-- k = 2 -->
-<!-- beta = c(rep(0.4, k), rep(0, p - k)) -->
-
-<!-- expit = function(x) 1/(1+exp(-x)) -->
-<!-- y1 = rbinom(n, 1, prob = expit(x1 %*% beta)) -->
-<!-- y2 = rbinom(n, 1, prob = expit(x2 %*% beta)) -->
-
-<!-- table(y1) -->
-<!-- table(y2) -->
-
-<!-- plot(colMeans(x1), colMeans(x2)) -->
-<!-- CPOP::identityDist(colMeans(x1), colMeans(x2)) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-
-
-<!-- # z1 = pairwise_col_diff(x1) -->
-<!-- # z2 = pairwise_col_diff(x2) -->
-<!-- w = compute_weights(x1, x2) -->
-<!-- nIter = 20 -->
-
-<!-- cpop1_result = cpop1(x1, x2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min") -->
-
-<!-- plot(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result]) -->
-<!-- CPOP::identityDist(colMeans(x1)[cpop1_result], colMeans(x2)[cpop1_result]) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
 
 
 
-<!-- s = "lambda.min" -->
 
-<!-- cpop2_result = cpop2_sign(x1, x2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, intercept = FALSE) -->
-
-<!-- plot(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result]) -->
-<!-- CPOP::identityDist(colMeans(x1)[cpop2_result], colMeans(x2)[cpop2_result]) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-
-
-<!-- cpop3_result = cpop3(x1, x2, y1, y2, cpop2_result = cpop2_result, intercept = FALSE) -->
-
-<!-- plot(predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"), -->
-<!-- predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min")) -->
-<!-- abline(a = 0, b = 1) -->
-
-<!-- CPOP::identityDist( -->
-<!-- predict(cpop3_result$en1, newx = x1[,cpop2_result], s = "lambda.min"), -->
-<!-- predict(cpop3_result$en2, newx = x1[,cpop2_result], s = "lambda.min")) -->
-
-<!-- CPOP::plot_cpop_coef(cpop3_result, type = "scatter") -->
-<!-- CPOP::plot_cpop_coef(cpop3_result, type = "bar") -->
-<!-- CPOP::plot_cpop_coef(cpop3_result, type = "text") -->
-<!-- ``` -->
-
-
-<!-- # Ridge on all features -->
-<!-- ```{r} -->
-<!-- lasso1 = glmnet::cv.glmnet( -->
-<!--   x = x1, -->
-<!--   y = y1, -->
-<!--   family = "binomial", alpha = 0) -->
-
-<!-- lasso2 = glmnet::cv.glmnet( -->
-<!--   x = x2, -->
-<!--   y = y2, -->
-<!--   family = "binomial", alpha = 0) -->
-
-
-<!-- plot(predict(lasso1, newx = x1, s = "lambda.min"), -->
-<!--      predict(lasso2, newx = x1, s = "lambda.min")) -->
-<!-- abline(a = 0, b = 1) -->
-
-<!-- CPOP::identityDist( -->
-<!--   predict(lasso1, newx = x1, s = "lambda.min"), -->
-<!--   predict(lasso2, newx = x1, s = "lambda.min")) -->
-<!-- ``` -->
-
-
-<!-- # Ridge on Step1 features -->
-<!-- ```{r} -->
-<!-- lasso1 = glmnet::cv.glmnet( -->
-<!--   x = x1[,cpop1_result], -->
-<!--   y = y1, -->
-<!--   family = "binomial", alpha = 0) -->
-
-<!-- lasso2 = glmnet::cv.glmnet( -->
-<!--   x = x2[,cpop1_result], -->
-<!--   y = y2, -->
-<!--   family = "binomial", alpha = 0) -->
-
-
-<!-- plot(predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"), -->
-<!--      predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min")) -->
-<!-- abline(a = 0, b = 1) -->
-
-<!-- CPOP::identityDist( -->
-<!--   predict(lasso1, newx = x1[,cpop1_result], s = "lambda.min"), -->
-<!--   predict(lasso2, newx = x1[,cpop1_result], s = "lambda.min")) -->
-<!-- ``` -->
-
-
-<!-- ```{r} -->
-<!-- upper_elements = function(x){x[upper.tri(x)]} -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- boxplot( -->
-<!--   upper_elements(cor(x1)) - upper_elements(cor(x2)), -->
-<!--   upper_elements(cor(x1[,cpop1_result])) - upper_elements(cor(x2[,cpop1_result])), -->
-<!--         upper_elements(cor(x1[,cpop2_result])) - upper_elements(cor(x2[,cpop2_result]))) -->
-<!-- ``` -->
-
-
-
-<!-- ```{r} -->
-<!-- sessionInfo() -->
-<!-- ``` -->
+```{r}
+sessionInfo()
+```
 
