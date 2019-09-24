@@ -170,19 +170,15 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cpop_data</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'CPOP'</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cpop_data_binary</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'CPOP'</span>)
 <span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
 <span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
 <span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
 <span class='no'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>0.01</span>)
 <span class='no'>cpop1_result</span> <span class='kw'>=</span> <span class='fu'>cpop1_iterate</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
 <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>alpha</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
-#&gt;  0  1 
-#&gt; 13 32 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>30 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 34 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>30 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 34 features were selected. </span></div><div class='input'><span class='no'>cpop1_result</span></div><div class='output co'>#&gt;  [1] "X1--X10" "X1--X3"  "X1--X6"  "X10--X5" "X10--X8" "X10--X9" "X2--X3" 
-#&gt;  [8] "X2--X4"  "X2--X8"  "X3--X5"  "X3--X7"  "X3--X9"  "X4--X5"  "X4--X9" 
-#&gt; [15] "X1--X2"  "X1--X4"  "X1--X8"  "X1--X9"  "X10--X2" "X2--X5"  "X2--X7" 
-#&gt; [22] "X3--X4"  "X5--X6"  "X1--X5"  "X1--X7"  "X10--X3" "X10--X7" "X2--X6" 
-#&gt; [29] "X2--X9"  "X3--X6"  "X4--X6"  "X4--X8"  "X5--X8"  "X8--X9" </div></pre>
+#&gt;  1 
+#&gt; 45 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step: 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='error'>Error in lognet(x, is.sparse, ix, jx, y, weights, offset, alpha, nobs,     nvars, jd, vp, cl, ne, nx, nlam, flmin, ulam, thresh, isd,     intr, vnames, maxit, kopt, family): one multinomial or binomial class has 1 or 0 observations; not allowed</span></div><div class='input'><span class='no'>cpop1_result</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'cpop1_result' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
