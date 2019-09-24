@@ -45,5 +45,7 @@ w = compute_weights(z1, z2)
 nIter = 20
 alpha = 0.1
 s = "lambda.min"
-cpop1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
+cpop1(z1, z2, y1, y2, w, nIter = 20,
+family = "binomial",
+n_features = 20, alpha = alpha, s = "lambda.min")
 }

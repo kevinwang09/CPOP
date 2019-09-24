@@ -16,7 +16,7 @@
 #' @return A vector
 #' @export
 #' @examples
-#' data(cpop_data, package = 'CPOP')
+#' data(cpop_data_binary, package = 'CPOP')
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
@@ -24,7 +24,9 @@
 #' alpha = c(1, 0.1, 0.01)
 #' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
 #' alpha = alpha, n_features = 30, s = "lambda.min")
-#' cpop2_result = cpop2_sign(z1, z2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20)
+#' cpop2_result = cpop2_sign(z1, z2, y1, y2,
+#' cpop1_result = cpop1_result,
+#' family = "binomial", s = "lambda.min", nIter = 20)
 cpop2_sign = function(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
                 family = "binomial", cpop2_break = TRUE, ...){
   p = length(cpop1_result)

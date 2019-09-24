@@ -24,7 +24,9 @@
 #' nIter = 20
 #' alpha = 0.1
 #' s = "lambda.min"
-#' cpop1(z1, z2, y1, y2, w, nIter = 20, n_features = 20, alpha = alpha, s = "lambda.min")
+#' cpop1(z1, z2, y1, y2, w, nIter = 20,
+#' family = "binomial",
+#' n_features = 20, alpha = alpha, s = "lambda.min")
 cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
@@ -93,7 +95,7 @@ cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", 
 #' @return A vector
 #' @export
 #' @examples
-#' data(cpop_data, package = 'CPOP')
+#' data(cpop_data_binary, package = 'CPOP')
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)

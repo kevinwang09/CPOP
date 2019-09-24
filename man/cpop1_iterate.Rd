@@ -37,7 +37,7 @@ A vector
 Step 1 of the CPOP method, for multiple alpha inputs
 }
 \examples{
-data(cpop_data, package = 'CPOP')
+data(cpop_data_binary, package = 'CPOP')
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)

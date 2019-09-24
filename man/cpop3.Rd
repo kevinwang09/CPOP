@@ -31,7 +31,7 @@ A vector
 Step 3 of the CPOP method
 }
 \examples{
-data(cpop_data, package = 'CPOP')
+data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
@@ -39,8 +39,10 @@ w = compute_weights(z1, z2)
 alpha = c(1, 0.1, 0.01)
 cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
 alpha = alpha, n_features = 30, s = "lambda.min")
-cpop2_result = cpop2_sign(z1, z2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20)
-cpop3_result = cpop3(z1, z2, y1, y2, cpop2_result = cpop2_result, intercept = FALSE)
+cpop2_result = cpop2_sign(z1, z2, y1, y2,
+cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, family = "binomial")
+cpop3_result = cpop3(z1, z2, y1, y2,
+cpop2_result = cpop2_result, family = "binomial", intercept = FALSE)
 plot(predict(cpop3_result$en1, newx = z1[,cpop2_result], s = "lambda.min"),
 predict(cpop3_result$en2, newx = z1[,cpop2_result], s = "lambda.min"))
 abline(a = 0, b = 1)
