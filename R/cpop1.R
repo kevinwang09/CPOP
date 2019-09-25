@@ -33,7 +33,7 @@ cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", 
   selected_features = c()
 
   for(i in 1:nIter){
-    message("CPOP1 - Step: ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
+    message("CPOP1 - Step ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
 
     if(length(selected_features) >= n_features) {
       message(n_features, " features was reached. ")

@@ -41,13 +41,13 @@ glmnet_escv = function(x, y, n_folds = 5, lambda = 10^seq(3, -3, length = 100), 
 
   es_lambda = es_numerator/col2norm(yhat_bar)^2
 
-  es_lambda_min = purrr::map_dbl(list_lambda, ~ .x[which.min(es_lambda)]) %>% mean
+  es_lambda_min = lambda[which.min(es_lambda)]
 
 
 
-  plot(y1, predict(full_glmnet, newx = x, s = es_lambda_min))
+  plot(y, predict(full_glmnet, newx = x, s = es_lambda_min))
   abline(a = 0, b = 1, col = "red")
-  print(new_iden_dist(y1, predict(full_glmnet, newx = x, s = es_lambda_min)))
+  print(new_iden_dist(y, predict(full_glmnet, newx = x, s = es_lambda_min)))
 
   # plot(y1, predict(full_glmnet, newx = x, s = es_lambda_min) + rexp(n))
   # abline(a = 0, b = 1, col = "red")

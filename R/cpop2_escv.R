@@ -1,3 +1,85 @@
+#' @title Step 2 of the CPOP method using HDCI package
+#' @description Step 2 of the CPOP method using HDCI package
+#' @param cpop1_result cpop1 result
+#' @param z1 A data matrix
+#' @param z2 A data matrix
+#' @param y1 A vector
+#' @param y2 A vector
+#' @param nIter Number of iterations
+#' @param s CV-Lasso lambda
+#' @param ... Extra parameter settings for cv.glmnet
+#' @param family see glmnet family
+#' differential betas are removed
+#' @importFrom glmnet cv.glmnet
+#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom HDCI escv.glmnet
+#' @return A vector
+#' @export
+#' @examples
+#' data(cpop_data_binary, package = 'CPOP')
+#' set.seed(1)
+#' z1 = pairwise_col_diff(x1)
+#' z2 = pairwise_col_diff(x2)
+#' w = compute_weights(z1, z2)
+#' alpha = 0.1
+#' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
+#' alpha = alpha, n_features = 30, s = "lambda.min")
+#' cpop2_hdci_result = cpop2_hdci(z1, z2, y1, y2,
+#' cpop1_result = cpop1_result,
+#' family = "binomial", s = "lambda.min", nIter = 20, cpop2_break = FALSE)
+
+cpop2_hdci = function(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
+                      family = "binomial", cpop2_break = TRUE, ...){
+  p = length(cpop1_result)
+  cpop2_features = cpop1_result
+
+  for(j in 1:nIter){
+    z1_reduced = z1[,cpop2_features]
+    z2_reduced = z2[,cpop2_features]
+
+    ridge1 = HDCI::escv.glmnet(
+      x = z1_reduced,
+      y = y1,
+      family = family,
+      alpha = 0, intercept = FALSE, ...)
+
+    coef1 = glmnet::coef.cv.glmnet(ridge1, s = ridge1$lambda.escv)[-1, , drop = FALSE]
+    signCoef1 = sign(coef1)
+
+    ridge2 =  HDCI::escv.glmnet(
+      x = z2_reduced,
+      y = y2,
+      family = family,
+      alpha = 0, intercept = FALSE, ...)
+
+    coef2 = glmnet::coef.cv.glmnet(ridge2, s = ridge2$lambda.escv)[-1, , drop = FALSE]
+    signCoef2 = sign(coef2)
+
+    cpop2_features = cpop2_features[as.matrix(signCoef1 == signCoef2)]
+
+    confTable = table(
+      factor(as.matrix(signCoef1), levels = c(-1, 0, 1)),
+      factor(as.matrix(signCoef2), levels = c(-1, 0, 1)))
+    confTable_diag0 = confTable
+    diag(confTable_diag0) = 0
+    message("CPOP2 - Sign: Step ", sprintf("%02d", j), ": Number of leftover features: ", length(cpop2_features), " out of ", p)
+    message("The sign matrix between the two data:")
+    print(confTable_diag0)
+    if(cpop2_break & sum(confTable_diag0) == 0){break}
+  } ## End j-loop
+  return(cpop2_features)
+}
+####################################################
+####################################################
+####################################################
+
+
+
+
+
+####################################################
+####################################################
+####################################################
 # set.seed(1)
 # n = 1000
 # p = 10
