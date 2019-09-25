@@ -17,9 +17,6 @@
 #' w = compute_weights(z1, z2)
 #' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' alpha = c(1, 0.1)
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
-#' cpop1_iterate = TRUE, alpha = alpha, n_features = 40, s = "lambda.min")
 #' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "point")
 #' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "text")
 #' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "bar")
