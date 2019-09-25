@@ -30,10 +30,10 @@ data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
-alpha = 0.1
 s = "lambda.min"
 naive_glmnet_result = naive_glmnet(z1, z2, y1, y2,
-family = "binomial", alpha = 0, s = "lambda.min")
-naive_glmnet_result$coef_tibble \%>\%
-ggplot(aes(x = ))
+family = "binomial", alpha = 1, s = "lambda.min")
+plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "point")
+plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "text")
+plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "bar")
 }

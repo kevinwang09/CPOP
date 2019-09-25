@@ -30,7 +30,7 @@
 #' abline(a = 0, b = 1, col = "blue")
 #'
 cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "gaussian", ...){
-    en1 = glmnet::cv.glmnet(
+  glmnet1 = glmnet::cv.glmnet(
       x = z1[,cpop2_result],
       y = y1,
       family = family,
@@ -38,7 +38,7 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "gaus
       intercept = intercept,
       ...)
 
-    en2 = glmnet::cv.glmnet(
+  glmnet2 = glmnet::cv.glmnet(
       x = z2[,cpop2_result],
       y = y2,
       family = family,
@@ -46,7 +46,7 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "gaus
       intercept = intercept,
       ...)
 
-  result = list(en1 = en1, en2 = en2, feature = cpop2_result)
+  result = list(glmnet1 = glmnet1, glmnet2 = glmnet2, feature = cpop2_result)
   return(result)
 }
 
@@ -84,7 +84,7 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "gaus
 #' abline(a = 0, b = 1, col = "red")
 #'
 cpop3_hdci = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "guassian", ...){
-  en1 = HDCI::escv.glmnet(
+  glmnet1 = HDCI::escv.glmnet(
     x = z1[,cpop2_result],
     y = y1,
     family = family,
@@ -92,7 +92,7 @@ cpop3_hdci = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = 
     intercept = intercept,
     ...)
 
-  en2 = HDCI::escv.glmnet(
+  glmnet2 = HDCI::escv.glmnet(
     x = z2[,cpop2_result],
     y = y2,
     family = family,
@@ -100,6 +100,6 @@ cpop3_hdci = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = 
     intercept = intercept,
     ...)
 
-  result = list(en1 = en1, en2 = en2, feature = cpop2_result)
+  result = list(glmnet1 = glmnet1, glmnet2 = eglmnet2, feature = cpop2_result)
   return(result)
 }

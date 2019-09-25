@@ -18,27 +18,15 @@
 #' s = "lambda.min"
 #' naive_glmnet_result = naive_glmnet(z1, z2, y1, y2,
 #' family = "binomial", alpha = 1, s = "lambda.min")
-#' naive_glmnet_result$coef_tibble %>%
-#' ggplot(aes(x = coef1, y = coef2, label = feature_name)) +
-#' geom_text() +
-#' geom_abline(slope = 1, intercept = 0, colour = "red")
+#' plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "point")
+#' plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "text")
+#' plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "bar")
 
 naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
   glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, ...)
   glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, ...)
 
-  coef1 = glmnet::coef.cv.glmnet(glmnet1, s = s)
-  coef2 = glmnet::coef.cv.glmnet(glmnet2, s = s)
-
-  coef_tibble = tibble::tibble(
-    feature_name = rownames(coef1),
-    coef1 = as.vector(coef1),
-    coef2 = as.vector(coef2)
-  )
-
-
   result = list(glmnet1 = glmnet1,
-                glmnet2 = glmnet2,
-                coef_tibble = coef_tibble)
+                glmnet2 = glmnet2)
   return(result)
 }

@@ -17,26 +17,34 @@
 #' w = compute_weights(z1, z2)
 #' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "point")
-#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "text")
-#' plot_cpop_coef(cpop_model_result, s = "lambda.min", type = "bar")
-plot_cpop_coef = function(cpop_model_result, s = "lambda.min", type = "point"){
-  coef_en1 = get_lasso_coef(cpop_model_result$en1, s = s)
-  coef_en2 = get_lasso_coef(cpop_model_result$en2, s = s)
+#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "point")
+#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "text")
+#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "bar")
+plot_glmnet_coef = function(model_result, s = "lambda.min", type = "point"){
 
-  stopifnot(identical(rownames(coef_en1),
-                      rownames(coef_en2)))
+  if("cv.glmnet" %in% class(model_result$glmnet1)){
+    coef1 = glmnet::coef.cv.glmnet(model_result$glmnet1, s = s)
+    coef2 = glmnet::coef.cv.glmnet(model_result$glmnet2, s = s)
+  } else if("glmnet" %in% class(model_result$glmnet1)){
+    coef1 = glmnet::coef.glmnet(model_result$glmnet1, s = s)
+    coef2 = glmnet::coef.glmnet(model_result$glmnet2, s = s)
+  } else {
+    stop("Only glmnet and cv.glmnet objects are acceptable")
+  }
 
-  coef_plotdf = tibble(coef_name = rownames(coef_en1),
-                       coef_en1,
-                       coef_en2) %>%
+  stopifnot(identical(rownames(coef1),
+                      rownames(coef2)))
+
+  coef_plotdf = tibble(coef_name = rownames(coef1),
+                       coef1 = as.vector(coef1),
+                       coef2 = as.vector(coef2)) %>%
     dplyr::mutate(
-      coef_name = forcats::fct_reorder(coef_name, coef_en1)
+      coef_name = forcats::fct_reorder(coef_name, coef1)
     )
 
   if(type == "point"){
     g1 = ggplot(coef_plotdf,
-                aes(x = coef_en1, y = coef_en2)) +
+                aes(x = coef1, y = coef2)) +
       geom_point() +
       geom_abline(slope = 1, intercept = 0, colour = "red")
 
@@ -57,7 +65,7 @@ plot_cpop_coef = function(cpop_model_result, s = "lambda.min", type = "point"){
 
   if(type == "text"){
     g3 = ggplot(coef_plotdf,
-                aes(x = coef_en1, y = coef_en2, label = coef_name)) +
+                aes(x = coef1, y = coef2, label = coef_name)) +
       geom_text() +
       geom_abline(slope = 1, intercept = 0, colour = "red")
 
