@@ -4,7 +4,7 @@
 \alias{cpop1}
 \title{Step 1 of the CPOP method}
 \usage{
-cpop1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial",
+cpop1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "gaussian",
   n_features = 50, s = "lambda.min", ...)
 }
 \arguments{
@@ -37,7 +37,7 @@ A vector
 Step 1 of the CPOP method, for a single given alpha
 }
 \examples{
-data(cpop_data, package = 'CPOP')
+data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)

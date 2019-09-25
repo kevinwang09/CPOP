@@ -5,7 +5,7 @@
 \title{Step 2 of the CPOP method}
 \usage{
 cpop2_mag(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
-  family = "binomial", cpop2_break = FALSE, mag = 1, ...)
+  family = "gaussian", cpop2_break = FALSE, mag = 1, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -38,12 +38,13 @@ A vector
 Step 2 of the CPOP method
 }
 \examples{
-data(cpop_data, package = 'CPOP')
+data(cpop_data_binary, package = 'CPOP')
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 alpha = c(1, 0.1, 0.01)
 cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-alpha = alpha, n_features = 30, s = "lambda.min")
-cpop2_result = cpop2_mag(z1, z2, y1, y2, cpop1_result = cpop1_result, s = "lambda.min", nIter = 20)
+alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
+cpop2_result = cpop2_mag(z1, z2, y1, y2,
+cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, family = "binomial")
 }

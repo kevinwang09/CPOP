@@ -20,7 +20,7 @@
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
 #' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-#' alpha = alpha, n_features = 30, s = "lambda.min")
+#' alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
 #' cpop2_result = cpop2_sign(z1, z2, y1, y2,
 #' cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, family = "binomial")
 #' cpop3_result = cpop3(z1, z2, y1, y2,
@@ -29,7 +29,7 @@
 #' predict(cpop3_result$en2, newx = z1[,cpop2_result], s = "lambda.min"))
 #' abline(a = 0, b = 1, col = "blue")
 #'
-cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "binomial", ...){
+cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "gaussian", ...){
     en1 = glmnet::cv.glmnet(
       x = z1[,cpop2_result],
       y = y1,
@@ -73,7 +73,7 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "bino
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
 #' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-#' alpha = alpha, n_features = 30, s = "lambda.min")
+#' alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
 #' cpop2_hdci_result = cpop2_hdci(z1, z2, y1, y2,
 #' cpop1_result = cpop1_result, s = "lambda.min",
 #' nIter = 20, family = "binomial", cpop2_break = TRUE)
@@ -83,7 +83,7 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "bino
 #' glmnet::predict.cv.glmnet(cpop3_hdci_result$en2, newx = z1[,cpop2_hdci_result], s = cpop3_hdci_result$en1$lambda.escv))
 #' abline(a = 0, b = 1, col = "red")
 #'
-cpop3_hdci = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "binomial", ...){
+cpop3_hdci = function(z1, z2, y1, y2, cpop2_result, intercept = FALSE, family = "guassian", ...){
   en1 = HDCI::escv.glmnet(
     x = z1[,cpop2_result],
     y = y1,

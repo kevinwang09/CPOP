@@ -16,7 +16,7 @@
 #' @return A vector
 #' @export
 #' @examples
-#' data(cpop_data, package = 'CPOP')
+#' data(cpop_data_binary, package = 'CPOP')
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
@@ -27,7 +27,8 @@
 #' cpop1(z1, z2, y1, y2, w, nIter = 20,
 #' family = "binomial",
 #' n_features = 20, alpha = alpha, s = "lambda.min")
-cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", n_features = 50, s = "lambda.min", ...){
+cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1,
+                 family = "gaussian", n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
@@ -101,11 +102,11 @@ cpop1 = function(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "binomial", 
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
 #' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-#' alpha = alpha, n_features = 30, s = "lambda.min")
+#' alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
 #' cpop1_result
 cpop1_iterate = function(z1, z2, y1, y2, w,
                         nIter = 20, alpha = 1,
-                        n_features = 50, family = "binomial",
+                        n_features = 50, family = "gaussian",
                         s = "lambda.min", ...){
 
   # remaining_features = colnames(z1)
