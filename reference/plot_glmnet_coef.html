@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prediction function for CPOP — predict_cpop • CPOP</title>
+<title>Plot cpop coefficients — plot_glmnet_coef • CPOP</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Prediction function for CPOP — predict_cpop" />
+<meta property="og:title" content="Plot cpop coefficients — plot_glmnet_coef" />
 
-<meta property="og:description" content="Prediction function for CPOP" />
+<meta property="og:description" content="Plot cpop coefficients" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,48 +101,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prediction function for CPOP</h1>
+    <h1>Plot cpop coefficients</h1>
     
-    <div class="hidden name"><code>predict_cpop.Rd</code></div>
+    <div class="hidden name"><code>plot_glmnet_coef.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Prediction function for CPOP</p>
+    <p>Plot cpop coefficients</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='no'>newz</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_glmnet_coef</span>(<span class='no'>cpop_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"point"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cpop_result</th>
-      <td><p>cpop_model result</p></td>
-    </tr>
-    <tr>
-      <th>newz</th>
-      <td><p>New data</p></td>
+      <td><p>The output of cpop_model</p></td>
     </tr>
     <tr>
       <th>s</th>
-      <td><p>CV-Lasso lambda</p></td>
+      <td><p>laso s</p></td>
     </tr>
     <tr>
-      <th>model_number</th>
-      <td><p>1 or 2 or "both"</p></td>
-    </tr>
-    <tr>
-      <th>tibble</th>
-      <td><p>Logical</p></td>
+      <th>type</th>
+      <td><p>"scatter" or "bar"</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A vector</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -151,8 +138,8 @@
 <span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
 <span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
 <span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
-<span class='no'>cpop_result</span> <span class='kw'>=</span> <span class='fu'><a href='cpop_model.html'>cpop_model</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
-<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
+<span class='no'>cpop_cpop_result</span> <span class='kw'>=</span> <span class='fu'><a href='cpop_model.html'>cpop_model</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
 #&gt;  0  1 
 #&gt; 13 32 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 05: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 06: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 07: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 08: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 09: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 10: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 11: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 12: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 13: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 14: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 15: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 16: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 17: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 18: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 19: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 20: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>40 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 29 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
@@ -170,37 +157,13 @@
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z1</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt;      cpop_model1
-#&gt; [1,]   1.7596790
-#&gt; [2,]   1.2645249
-#&gt; [3,]  -0.7999196
-#&gt; [4,]   0.7238488
-#&gt; [5,]   0.7628222
-#&gt; [6,]  -2.1672757</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z1</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 3
-#&gt;   samples cpop_model1 cpop_model2
-#&gt;   &lt;chr&gt;         &lt;dbl&gt;       &lt;dbl&gt;
-#&gt; 1 1             1.76        1.48 
-#&gt; 2 2             1.26        1.30 
-#&gt; 3 3            -0.800      -0.879
-#&gt; 4 4             0.724       0.669
-#&gt; 5 5             0.763       0.754
-#&gt; 6 6            -2.17       -2.12 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z1</span>, <span class='kw'>model_number</span> <span class='kw'>=</span> <span class='st'>"avg"</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 4
-#&gt;   samples cpop_model1 cpop_model2 cpop_model_avg
-#&gt;   &lt;chr&gt;         &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
-#&gt; 1 1             1.76        1.48           1.62 
-#&gt; 2 2             1.26        1.30           1.28 
-#&gt; 3 3            -0.800      -0.879         -0.840
-#&gt; 4 4             0.724       0.669          0.697
-#&gt; 5 5             0.763       0.754          0.758
-#&gt; 6 6            -2.17       -2.12          -2.14 </div></pre>
+#&gt;   1   0 0 0</div><div class='input'><span class='fu'>plot_glmnet_coef</span>(<span class='no'>cpop_cpop_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"point"</span>)</div><div class='img'><img src='plot_glmnet_coef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_glmnet_coef</span>(<span class='no'>cpop_cpop_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"text"</span>)</div><div class='img'><img src='plot_glmnet_coef-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_glmnet_coef</span>(<span class='no'>cpop_cpop_result</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bar"</span>)</div><div class='img'><img src='plot_glmnet_coef-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
