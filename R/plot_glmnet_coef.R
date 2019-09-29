@@ -1,6 +1,6 @@
 #' @title Plot cpop coefficients
 #' @description Plot cpop coefficients
-#' @param cpop_model_result The output of cpop_model
+#' @param cpop_result The output of cpop_model
 #' @param s laso s
 #' @param type "scatter" or "bar"
 #' @import ggplot2
@@ -15,19 +15,19 @@
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
+#' cpop_cpop_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
-#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "point")
-#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "text")
-#' plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "bar")
-plot_glmnet_coef = function(model_result, s = "lambda.min", type = "point"){
+#' plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "point")
+#' plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "text")
+#' plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "bar")
+plot_glmnet_coef = function(cpop_result, s = "lambda.min", type = "point"){
 
-  if("cv.glmnet" %in% class(model_result$glmnet1)){
-    coef1 = glmnet::coef.cv.glmnet(model_result$glmnet1, s = s)
-    coef2 = glmnet::coef.cv.glmnet(model_result$glmnet2, s = s)
-  } else if("glmnet" %in% class(model_result$glmnet1)){
-    coef1 = glmnet::coef.glmnet(model_result$glmnet1, s = s)
-    coef2 = glmnet::coef.glmnet(model_result$glmnet2, s = s)
+  if("cv.glmnet" %in% class(cpop_result$glmnet1)){
+    coef1 = glmnet::coef.cv.glmnet(cpop_result$glmnet1, s = s)
+    coef2 = glmnet::coef.cv.glmnet(cpop_result$glmnet2, s = s)
+  } else if("glmnet" %in% class(cpop_result$glmnet1)){
+    coef1 = glmnet::coef.glmnet(cpop_result$glmnet1, s = s)
+    coef2 = glmnet::coef.glmnet(cpop_result$glmnet2, s = s)
   } else {
     stop("Only glmnet and cv.glmnet objects are acceptable")
   }

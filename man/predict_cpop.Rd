@@ -25,22 +25,13 @@ A vector
 Prediction function for CPOP
 }
 \examples{
+data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
-n = 1000
-p = 10
-x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-x2 = x1 + 0.1
-colnames(x1) = colnames(x2) = paste0("X", 1:p)
-k = 2
-beta = c(rep(1, k), rep(0, p - k))
-expit = function(x) 1/(1+exp(-x))
-y1 = rbinom(n, 1, prob = expit(x1 \%*\% beta))
-y2 = rbinom(n, 1, prob = expit(x2 \%*\% beta))
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-nIter = 20
-cpop_result = cpop_model(z1, z2, y1, y2, w, nIter = 20, alpha = 1, s = "lambda.min")
+cpop_result = cpop_model(z1, z2, y1, y2, w = w,
+alpha = 1, n_features = 40, s = "lambda.min", family = "binomial")
 head(predict_cpop(cpop_result, newz = z1, model_number = 1))
 head(predict_cpop(cpop_result, newz = z1, model_number = "both", tibble = TRUE))
 head(predict_cpop(cpop_result, newz = z1, model_number = "avg", tibble = TRUE))

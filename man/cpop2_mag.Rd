@@ -4,8 +4,8 @@
 \alias{cpop2_mag}
 \title{Step 2 of the CPOP method}
 \usage{
-cpop2_mag(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
-  family = "gaussian", cpop2_break = FALSE, mag = 1, ...)
+cpop2_mag(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min",
+  nIter = 20, cpop2_break = FALSE, mag = 1, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -16,13 +16,13 @@ cpop2_mag(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
 
 \item{y2}{A vector}
 
+\item{family}{see glmnet family}
+
 \item{cpop1_result}{cpop1 result}
 
 \item{s}{CV-Lasso lambda}
 
 \item{nIter}{Number of iterations}
-
-\item{family}{see glmnet family}
 
 \item{cpop2_break}{If break is needed, logical}
 

@@ -4,14 +4,14 @@
 \alias{plot_glmnet_coef}
 \title{Plot cpop coefficients}
 \usage{
-plot_glmnet_coef(model_result, s = "lambda.min", type = "point")
+plot_glmnet_coef(cpop_result, s = "lambda.min", type = "point")
 }
 \arguments{
+\item{cpop_result}{The output of cpop_model}
+
 \item{s}{laso s}
 
 \item{type}{"scatter" or "bar"}
-
-\item{cpop_model_result}{The output of cpop_model}
 }
 \description{
 Plot cpop coefficients
@@ -22,9 +22,9 @@ set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
+cpop_cpop_result = cpop_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min")
-plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "point")
-plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "text")
-plot_glmnet_coef(cpop_model_result, s = "lambda.min", type = "bar")
+plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "point")
+plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "text")
+plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "bar")
 }

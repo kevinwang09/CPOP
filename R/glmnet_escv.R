@@ -8,10 +8,20 @@
 #' @importFrom glmnet glmnet
 #' @importFrom glmnet coef.glmnet
 #' @importFrom caret createFolds
+#' @importFrom e1071 skewness
 #' @return A vector
 #' @export
 #' @examples
-#' data(cpop_data_linear, package = 'CPOP')
+#' set.seed(1)
+#' n = 1000
+#' p = 10
+#' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
+#' x2 = x1 + matrix(rnorm(n * p, mean = 0, sd = 0.1), nrow = n, ncol = p)
+#' colnames(x1) = colnames(x2) = sprintf("X%02d", 1:p)
+#' k = 2
+#' beta = c(rep(1, k), rep(0, p - k))
+#' y1 = x1 %*% beta + rnorm(n, mean = 0, sd = 0.5)
+#' y2 = x2 %*% beta + rnorm(n, mean = 0, sd = 0.5)
 #' glmnet_escv(x = x1, y = y1)
 
 glmnet_escv = function(x, y, n_folds = 5, lambda = 10^seq(3, -3, length = 100), ...){

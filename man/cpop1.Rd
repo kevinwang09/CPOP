@@ -4,7 +4,7 @@
 \alias{cpop1}
 \title{Step 1 of the CPOP method}
 \usage{
-cpop1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "gaussian",
+cpop1(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1,
   n_features = 50, s = "lambda.min", ...)
 }
 \arguments{
@@ -18,11 +18,11 @@ cpop1(z1, z2, y1, y2, w, nIter = 20, alpha = 1, family = "gaussian",
 
 \item{w}{A vector}
 
+\item{family}{See glmnet family}
+
 \item{nIter}{Number of iterations}
 
 \item{alpha}{Lasso alpha}
-
-\item{family}{See glmnet family}
 
 \item{n_features}{n_features desired}
 
@@ -42,10 +42,8 @@ set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-nIter = 20
 alpha = 0.1
 s = "lambda.min"
-cpop1(z1, z2, y1, y2, w, nIter = 20,
-family = "binomial",
-n_features = 20, alpha = alpha, s = "lambda.min")
+cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+family = "binomial", alpha = 0.1)
 }

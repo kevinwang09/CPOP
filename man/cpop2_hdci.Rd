@@ -4,8 +4,8 @@
 \alias{cpop2_hdci}
 \title{Step 2 of the CPOP method using HDCI package}
 \usage{
-cpop2_hdci(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
-  family = "binomial", cpop2_break = TRUE, ...)
+cpop2_hdci(z1, z2, y1, y2, cpop1_result, family, s = "lambda.min",
+  nIter = 20, cpop2_break = TRUE, ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -18,11 +18,14 @@ cpop2_hdci(z1, z2, y1, y2, cpop1_result, s = "lambda.min", nIter = 20,
 
 \item{cpop1_result}{cpop1 result}
 
+\item{family}{see glmnet family}
+
 \item{s}{CV-Lasso lambda}
 
 \item{nIter}{Number of iterations}
 
-\item{family}{see glmnet family
+\item{cpop2_break}{Should cpop2 loop be broken the first time
+differential betas are removed
 differential betas are removed}
 
 \item{...}{Extra parameter settings for cv.glmnet}
@@ -39,10 +42,9 @@ set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-alpha = 0.1
-cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-alpha = alpha, n_features = 30, s = "lambda.min")
-cpop2_hdci_result = cpop2_hdci(z1, z2, y1, y2,
-cpop1_result = cpop1_result,
-family = "binomial", s = "lambda.min", nIter = 20, cpop2_break = FALSE)
+cpop1_result = cpop1_iterate(
+z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+family = "binomial", alpha = 0.1)
+cpop2_hdci_result = cpop2_hdci(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+cpop1_result = cpop1_result, family = "binomial")
 }

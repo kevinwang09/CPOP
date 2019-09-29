@@ -8,13 +8,13 @@ output:
     toc_float: true
 package: BiocStyle
 vignette: >
-  %\VignetteIndexEntry{cpop}
+%\VignetteIndexEntry{cpop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
+  ---
   
   
-```{r}
+  ```{r}
 library(CPOP)
 ```
 
@@ -28,8 +28,8 @@ data(melanoma_example, package = "CPOP")
 library(mvtnorm)
 set.seed(1234)
 tcga_x = mvtnorm::rmvnorm(n = length(list_melanoma_samples$tcga), 
-                        mean = list_melanoma_means$tcga, 
-                        sigma = list_melanoma_sigma$tcga)
+                          mean = list_melanoma_means$tcga, 
+                          sigma = list_melanoma_sigma$tcga)
 tcga_z = CPOP::pairwise_col_diff(tcga_x)
 
 tcga_beta = rbeta(ncol(tcga_z), shape1 = 0.1, shape2 = 0.5)
@@ -37,8 +37,8 @@ hist(tcga_beta)
 tcga_y = tcga_z %*% tcga_beta
 ###################################################
 sweden_x = mvtnorm::rmvnorm(n = length(list_melanoma_samples$sweden), 
-                        mean = list_melanoma_means$sweden, 
-                        sigma = list_melanoma_sigma$sweden)
+                            mean = list_melanoma_means$sweden, 
+                            sigma = list_melanoma_sigma$sweden)
 
 sweden_beta = rbeta(ncol(tcga_z), shape1 = 0.1, shape2 = 0.5)
 sweden_z = CPOP::pairwise_col_diff(sweden_x)
@@ -69,18 +69,19 @@ abline(a = 0, b = 1, col = "red")
 
 ```{r}
 w = CPOP::compute_weights(tcga_z, sweden_z)
-tcga_sweden_cpop = CPOP::cpop_model(z1 = tcga_z, 
-                                    z2 = sweden_z, 
-                                    y1 = tcga_y, 
-                                    y2 = sweden_y, w = w, n_features = 100, alpha = 1, 
-                                    family = "gaussian", intercept = FALSE)
+tcga_sweden_cpop = CPOP::cpop_model(
+  z1 = tcga_z, 
+  z2 = sweden_z, 
+  y1 = tcga_y, 
+  y2 = sweden_y, w = w, n_features = 100, alpha = 1, 
+  family = "gaussian", intercept = FALSE)
 
 plot(CPOP::predict_cpop(tcga_sweden_cpop, newz = sweden_z, model_number = 1),
      sweden_y)
 abline(a = 0, b = 1, col = "red")
 
-CPOP::plot_cpop_coef(tcga_sweden_cpop, type = "text")
-CPOP::plot_cpop_coef(tcga_sweden_cpop, type = "bar")
+CPOP::plot_glmnet_coef(tcga_sweden_cpop, type = "text")
+CPOP::plot_glmnet_coef(tcga_sweden_cpop, type = "bar")
 ```
 
 
@@ -125,11 +126,6 @@ CPOP::plot_cpop_coef(tcga_sweden_cpop, type = "bar")
 <!--      sweden_z[,names(newdist_beta2)] %*% newdist_beta2) -->
 <!-- abline(a = 0, b = 1, col = "red") -->
 <!-- ``` -->
-
-
-
-
-
 
 ```{r}
 sessionInfo()

@@ -4,8 +4,8 @@
 \alias{cpop1_iterate}
 \title{Step 1 of the CPOP method, iteratred}
 \usage{
-cpop1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = 1,
-  n_features = 50, family = "gaussian", s = "lambda.min", ...)
+cpop1_iterate(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1,
+  n_features = 50, s = "lambda.min", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -18,13 +18,13 @@ cpop1_iterate(z1, z2, y1, y2, w, nIter = 20, alpha = 1,
 
 \item{w}{A vector}
 
+\item{family}{see glmnet family}
+
 \item{nIter}{Number of iterations}
 
 \item{alpha}{Lasso alpha, vector}
 
 \item{n_features}{n_features desired}
-
-\item{family}{see glmnet family}
 
 \item{s}{CV-Lasso lambda}
 
@@ -38,11 +38,12 @@ Step 1 of the CPOP method, for multiple alpha inputs
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')
+set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-alpha = c(1, 0.1, 0.01)
-cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
-cpop1_result
+alpha = 0.1
+s = "lambda.min"
+cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+family = "binomial", alpha = 0.1)
 }

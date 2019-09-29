@@ -8,12 +8,16 @@ Authors@R: c(
 Description: CPOP aims to construct CPOP methods. 
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 6.1.1
 Depends: R (>= 3.6.0)
 Imports:
+    assertthat,
     caret,
+    e1071,
+    ggplot2,
     glmnet,
+    HDCI,
     magrittr,
     purrr,
     visNetwork,
@@ -23,9 +27,7 @@ Imports:
     proxy,
     Matrix,
     mvtnorm,
-    ggplot2,
-    forcats,
-    assertthat
+    forcats
 Suggests: 
     BiocStyle,
     knitr,
