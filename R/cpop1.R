@@ -21,8 +21,6 @@
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' alpha = 0.1
-#' s = "lambda.min"
 #' cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
 #' family = "binomial", alpha = 0.1)
 cpop1 = function(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
@@ -72,7 +70,13 @@ cpop1 = function(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1, n_features = 
     remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
-  return(selected_features)
+  final_features = rownames(get_lasso_coef(glmnet::cv.glmnet(
+    x = z2[,selected_features],
+    y = y2,
+    family = family,
+    alpha = alpha), s = s))[-1]
+  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
+  return(final_features)
 }
 ###############
 #' @title Step 1 of the CPOP method, iteratred

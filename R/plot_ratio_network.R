@@ -13,7 +13,9 @@
 #' "X1--X9","X1--X10","X2--X3","X2--X4","X2--X5","X2--X6","X2--X7",
 #' "X2--X8","X2--X9","X2--X10","X3--X4","X3--X7","X3--X8","X3--X9",
 #' "X4--X5","X4--X7","X4--X9","X5--X10","X7--X8","X7--X9","X8--X9")
-#' plot_ratio_network(x, nodesData = FALSE)
+#' plot_ratio_network(x, nodesData = FALSE) %>%
+#' visNetwork::visPhysics(solver = "forceAtlas2Based",
+#' forceAtlas2Based = list(gravitationalConstant = -100))
 #' plot_ratio_network(x, nodesData = TRUE)
 plot_ratio_network = function(x, nodesData = FALSE, stat_df = NULL){
   if(is.character(x)){

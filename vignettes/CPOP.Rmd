@@ -73,7 +73,7 @@ tcga_sweden_cpop = CPOP::cpop_model(
   z1 = tcga_z, 
   z2 = sweden_z, 
   y1 = tcga_y, 
-  y2 = sweden_y, w = w, n_features = 100, alpha = 1, 
+  y2 = sweden_y, w = w, n_features = 100, alpha = 0.1, 
   family = "gaussian", intercept = FALSE)
 
 plot(CPOP::predict_cpop(tcga_sweden_cpop, newz = sweden_z, model_number = 1),

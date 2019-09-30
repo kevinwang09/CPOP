@@ -42,8 +42,6 @@ set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-alpha = 0.1
-s = "lambda.min"
 cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
 family = "binomial", alpha = 0.1)
 }
