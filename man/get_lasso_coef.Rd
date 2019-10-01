@@ -4,7 +4,7 @@
 \alias{get_lasso_coef}
 \title{Get cv.glmnet coefficient as a matrix or a tibble}
 \usage{
-get_lasso_coef(lassoObj, s, tibble = FALSE)
+get_lasso_coef(lassoObj, s = "lambda.min", tibble = FALSE)
 }
 \arguments{
 \item{lassoObj}{cv.glmnet object}

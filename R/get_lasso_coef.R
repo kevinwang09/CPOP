@@ -20,7 +20,7 @@
 #' get_lasso_coef(lassoObj = lassoObj, s = "lambda.min")
 #' get_lasso_coef(lassoObj = lassoObj, s = "lambda.min", tibble = TRUE)
 
-get_lasso_coef = function(lassoObj, s, tibble = FALSE){
+get_lasso_coef = function(lassoObj, s = "lambda.min", tibble = FALSE){
   if("cv.glmnet" %in% class(lassoObj)){
     coef_matrix = as.matrix(glmnet::coef.cv.glmnet(lassoObj, s = s))
   } else if("glmnet" %in% class(lassoObj)){

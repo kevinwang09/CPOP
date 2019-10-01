@@ -5,7 +5,7 @@
 #' @param y1 A vector
 #' @param y2 A vector
 #' @param w A vector
-#' @param nIter Number of iterations
+#' @param n_iter Number of iterations
 #' @param alpha Lasso alpha
 #' @param s CV-Lasso lambda
 #' @param n_features n_features desired
@@ -13,7 +13,8 @@
 #' @param family See glmnet family
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
-#' @return A vector
+#' @rdname cpop1
+#' @return A vector of features
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
@@ -22,13 +23,13 @@
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-#' family = "binomial", alpha = 0.1)
-cpop1 = function(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
+#' family = "binomial", alpha = 1)
+cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
 
-  for(i in 1:nIter){
+  for(i in 1:n_iter){
     message("CPOP1 - Step ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
 
     if(length(selected_features) >= n_features) {
@@ -79,22 +80,12 @@ cpop1 = function(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1, n_features = 
   return(final_features)
 }
 ###############
-#' @title Step 1 of the CPOP method, iteratred
+#' @title Step 1 of the CPOP method, iteratred over multiple alpha
 #' @description Step 1 of the CPOP method, for multiple alpha inputs
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
-#' @param w A vector
-#' @param nIter Number of iterations
-#' @param alpha Lasso alpha, vector
-#' @param s CV-Lasso lambda
-#' @param n_features n_features desired
-#' @param family see glmnet family
-#' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
-#' @return A vector
+#' @rdname cpop1
+#' @return A vector of features
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
@@ -102,30 +93,28 @@ cpop1 = function(z1, z2, y1, y2, w, family, nIter = 20, alpha = 1, n_features = 
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' alpha = 0.1
-#' s = "lambda.min"
 #' cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-#' family = "binomial", alpha = 0.1)
+#' family = "binomial", alpha = c(0.5, 1))
 cpop1_iterate = function(z1, z2, y1, y2, w,
-                        family,
-                        nIter = 20, alpha = 1,
-                        n_features = 50,
-                        s = "lambda.min", ...){
+                         family,
+                         n_iter = 20, alpha = 1,
+                         n_features = 50,
+                         s = "lambda.min", ...){
 
-  # remaining_features = colnames(z1)
+  alpha = sort(alpha, decreasing = TRUE)
   all_selected_features = c()
 
   for(this_alpha in alpha){
     message("Fitting CPOP model using alpha = ", this_alpha, "\n")
     updated_w = w
     updated_w[all_selected_features] = 0
-    print(table(sign(updated_w)))
+    message("Based on previous alpha, ", sum(updated_w == 0), " features are kept \n")
 
-    this_cpop1_features = cpop1(z1, z2,
-                              y1, y2,
-                              w = updated_w, nIter = 20,
-                              n_features = n_features, alpha = this_alpha, family = family,
-                              s = "lambda.min")
+    this_cpop1_features = cpop1(
+      z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+      w = updated_w, n_iter = n_iter,
+      n_features = n_features, alpha = this_alpha, family = family,
+      s = "lambda.min")
 
     all_selected_features = unique(c(all_selected_features, this_cpop1_features))
 

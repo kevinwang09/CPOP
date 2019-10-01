@@ -8,13 +8,13 @@ output:
     toc_float: true
 package: BiocStyle
 vignette: >
-%\VignetteIndexEntry{cpop}
+  %\VignetteIndexEntry{cpop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  ---
+---
   
   
-  ```{r}
+```{r}
 library(CPOP)
 ```
 

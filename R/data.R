@@ -6,7 +6,9 @@
 #' n = 1000
 #' p = 10
 #' x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-#' x2 = x1 + 0.1
+#' x2 = x1 + 3
+#' # x2 = x1 + matrix(rnorm(n * p, mean = 1, sd = 0.1), nrow = n, ncol = p)
+#' # x2 = (x1 + matrix(rnorm(n * p, mean = 3, sd = 1), nrow = n, ncol = p))/2
 #' colnames(x1) = colnames(x2) = paste0("X", 1:p)
 #' k = 2
 #' beta = c(rep(1, k), rep(0, p - k))

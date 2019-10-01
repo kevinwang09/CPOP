@@ -1,5 +1,5 @@
 #' @title Step 2 of the CPOP method
-#' @description Step 2 of the CPOP method
+#' @description Step 2 of the CPOP method based on sign
 #' @param cpop1_result cpop1 result
 #' @param z1 A data matrix
 #' @param z2 A data matrix
@@ -11,9 +11,10 @@
 #' @param family see glmnet family
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' differential betas are removed
+#' @rdname cpop2
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
-#' @return A vector
+#' @return A vector of features
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
@@ -27,7 +28,7 @@
 #' family = "binomial", alpha = 0.1)
 #' cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
 #' cpop1_result = cpop1_result, family = "binomial")
-cpop2_sign = function(z1, z2, y1, y2, cpop1_result, family, s = "lambda.min", nIter = 20,
+cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nIter = 20,
                 cpop2_break = TRUE, ...){
   p = length(cpop1_result)
   cpop2_features = cpop1_result
@@ -69,23 +70,12 @@ cpop2_sign = function(z1, z2, y1, y2, cpop1_result, family, s = "lambda.min", nI
   return(cpop2_features)
 }
 ############################################
-#' @title Step 2 of the CPOP method
-#' @description Step 2 of the CPOP method
-#' @param cpop1_result cpop1 result
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
-#' @param nIter Number of iterations
-#' @param s CV-Lasso lambda
-#' @param ... Extra parameter settings for cv.glmnet
-#' @param family see glmnet family
-#' @param cpop2_break If break is needed, logical
-#' @param mag a threshold
-#' differential betas are removed
+#' @title Step 2 of the CPOP method based on scaled magnitude
+#' @description Step 2 of the CPOP method based on scaled magnitude
+#' @param mag a scaled threshold differential betas are removed
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.cv.glmnet
-#' @return A vector
+#' @rdname cpop2
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
