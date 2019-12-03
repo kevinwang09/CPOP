@@ -12,7 +12,7 @@
 #' @param ... Extra parameter settings for cv.glmnet
 #' @param family See glmnet family
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @rdname cpop1
 #' @return A vector of features
 #' @export
@@ -83,7 +83,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
 #' @title Step 1 of the CPOP method, iteratred over multiple alpha
 #' @description Step 1 of the CPOP method, for multiple alpha inputs
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @rdname cpop1
 #' @return A vector of features
 #' @export

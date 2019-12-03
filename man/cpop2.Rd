@@ -5,11 +5,32 @@
 \alias{cpop2_mag}
 \title{Step 2 of the CPOP method}
 \usage{
-cpop2_sign(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min",
-  nIter = 20, cpop2_break = TRUE, ...)
+cpop2_sign(
+  z1,
+  z2,
+  y1,
+  y2,
+  family,
+  cpop1_result,
+  s = "lambda.min",
+  nIter = 20,
+  cpop2_break = TRUE,
+  ...
+)
 
-cpop2_mag(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min",
-  nIter = 20, cpop2_break = FALSE, mag = 1, ...)
+cpop2_mag(
+  z1,
+  z2,
+  y1,
+  y2,
+  family,
+  cpop1_result,
+  s = "lambda.min",
+  nIter = 20,
+  cpop2_break = FALSE,
+  mag = 1,
+  ...
+)
 }
 \arguments{
 \item{z1}{A data matrix}

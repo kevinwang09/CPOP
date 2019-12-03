@@ -5,11 +5,33 @@
 \alias{cpop1_iterate}
 \title{Step 1 of the CPOP method}
 \usage{
-cpop1(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
-  n_features = 50, s = "lambda.min", ...)
+cpop1(
+  z1,
+  z2,
+  y1,
+  y2,
+  w,
+  family,
+  n_iter = 20,
+  alpha = 1,
+  n_features = 50,
+  s = "lambda.min",
+  ...
+)
 
-cpop1_iterate(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
-  n_features = 50, s = "lambda.min", ...)
+cpop1_iterate(
+  z1,
+  z2,
+  y1,
+  y2,
+  w,
+  family,
+  n_iter = 20,
+  alpha = 1,
+  n_features = 50,
+  s = "lambda.min",
+  ...
+)
 }
 \arguments{
 \item{z1}{A data matrix}

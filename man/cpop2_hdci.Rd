@@ -4,8 +4,18 @@
 \alias{cpop2_hdci}
 \title{Step 2 of the CPOP method using HDCI package}
 \usage{
-cpop2_hdci(z1, z2, y1, y2, cpop1_result, family, s = "lambda.min",
-  nIter = 20, cpop2_break = TRUE, ...)
+cpop2_hdci(
+  z1,
+  z2,
+  y1,
+  y2,
+  cpop1_result,
+  family,
+  s = "lambda.min",
+  nIter = 20,
+  cpop2_break = TRUE,
+  ...
+)
 }
 \arguments{
 \item{z1}{A data matrix}

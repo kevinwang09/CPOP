@@ -4,8 +4,13 @@
 \alias{predict_cpop}
 \title{Prediction function for CPOP}
 \usage{
-predict_cpop(cpop_result, newz, s = "lambda.min", model_number = 1L,
-  tibble = FALSE)
+predict_cpop(
+  cpop_result,
+  newz,
+  s = "lambda.min",
+  model_number = 1L,
+  tibble = FALSE
+)
 }
 \arguments{
 \item{cpop_result}{cpop_model result}

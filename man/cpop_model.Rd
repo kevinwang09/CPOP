@@ -4,9 +4,22 @@
 \alias{cpop_model}
 \title{All three steps of CPOP modelling}
 \usage{
-cpop_model(z1, z2, y1, y2, w, n_features = 50, nIter = 20, alpha = 1,
-  family = "binomial", s = "lambda.min", cpop2_break = TRUE,
-  cpop2_type = "sign", cpop2_mag = 1, ...)
+cpop_model(
+  z1,
+  z2,
+  y1,
+  y2,
+  w,
+  n_features = 50,
+  nIter = 20,
+  alpha = 1,
+  family = "binomial",
+  s = "lambda.min",
+  cpop2_break = TRUE,
+  cpop2_type = "sign",
+  cpop2_mag = 1,
+  ...
+)
 }
 \arguments{
 \item{z1}{A data matrix}

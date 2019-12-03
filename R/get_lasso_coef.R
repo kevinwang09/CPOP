@@ -3,7 +3,7 @@
 #' @param lassoObj cv.glmnet object
 #' @param s CV-Lasso lambda
 #' @param tibble Default to FALSE
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @return A matrix or a tibble
 #' @export
 #' @examples
@@ -21,9 +21,7 @@
 #' get_lasso_coef(lassoObj = lassoObj, s = "lambda.min", tibble = TRUE)
 
 get_lasso_coef = function(lassoObj, s = "lambda.min", tibble = FALSE){
-  if("cv.glmnet" %in% class(lassoObj)){
-    coef_matrix = as.matrix(glmnet::coef.cv.glmnet(lassoObj, s = s))
-  } else if("glmnet" %in% class(lassoObj)){
+  if(class(lassoObj) %in% c("glmnet", "cv.glmnet")){
     coef_matrix = as.matrix(glmnet::coef.glmnet(lassoObj, s = s))
   } else {
     stop("Only glmnet and cv.glmnet objects are acceptable")

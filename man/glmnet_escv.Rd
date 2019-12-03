@@ -4,8 +4,7 @@
 \alias{glmnet_escv}
 \title{Step 1 of the CPOP method}
 \usage{
-glmnet_escv(x, y, n_folds = 5, lambda = 10^seq(3, -3, length = 100),
-  ...)
+glmnet_escv(x, y, n_folds = 5, lambda = 10^seq(3, -3, length = 100), ...)
 }
 \arguments{
 \item{x}{A data matrix}
