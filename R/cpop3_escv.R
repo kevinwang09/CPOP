@@ -9,7 +9,7 @@
 #' @param ... Extra parameter settings for cv.glmnet
 #' @param family see glmnet family
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @return A vector
 #' @export
 #' @examples

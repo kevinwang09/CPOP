@@ -15,8 +15,6 @@
 #' @param cpop2_mag a threshold
 #' differential betas are removed
 #' @param ... Extra parameter settings for cv.glmnet in cpop1
-#' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
 #' @return A vector
 #' @export
 #' @examples

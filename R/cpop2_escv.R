@@ -13,7 +13,7 @@
 #' differential betas are removed
 #' differential betas are removed
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @importFrom HDCI escv.glmnet
 #' @return A vector
 #' @export
@@ -45,7 +45,7 @@ cpop2_hdci = function(z1, z2, y1, y2, cpop1_result, family,
       family = family,
       alpha = 0, intercept = FALSE, ...)
 
-    coef1 = glmnet::coef.cv.glmnet(ridge1, s = ridge1$lambda.escv)[-1, , drop = FALSE]
+    coef1 = glmnet::coef.glmnet(ridge1, s = ridge1$lambda.escv)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
 
     ridge2 =  HDCI::escv.glmnet(
@@ -54,7 +54,7 @@ cpop2_hdci = function(z1, z2, y1, y2, cpop1_result, family,
       family = family,
       alpha = 0, intercept = FALSE, ...)
 
-    coef2 = glmnet::coef.cv.glmnet(ridge2, s = ridge2$lambda.escv)[-1, , drop = FALSE]
+    coef2 = glmnet::coef.glmnet(ridge2, s = ridge2$lambda.escv)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
     cpop2_features = cpop2_features[as.matrix(signCoef1 == signCoef2)]

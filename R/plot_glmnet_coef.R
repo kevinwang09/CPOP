@@ -23,8 +23,8 @@
 plot_glmnet_coef = function(cpop_result, s = "lambda.min", type = "point"){
 
   if("cv.glmnet" %in% class(cpop_result$glmnet1)){
-    coef1 = glmnet::coef.cv.glmnet(cpop_result$glmnet1, s = s)
-    coef2 = glmnet::coef.cv.glmnet(cpop_result$glmnet2, s = s)
+    coef1 = glmnet::coef.glmnet(cpop_result$glmnet1, s = s)
+    coef2 = glmnet::coef.glmnet(cpop_result$glmnet2, s = s)
   } else if("glmnet" %in% class(cpop_result$glmnet1)){
     coef1 = glmnet::coef.glmnet(cpop_result$glmnet1, s = s)
     coef2 = glmnet::coef.glmnet(cpop_result$glmnet2, s = s)

@@ -6,8 +6,8 @@
 #' @param model_number 1 or 2 or "both"
 #' @param tibble Logical
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
-#' @importFrom glmnet predict.cv.glmnet
+#' @importFrom glmnet coef.glmnet
+#' @importFrom glmnet predict.glmnet
 #' @importFrom tibble as_tibble
 #' @return A vector
 #' @export
@@ -29,25 +29,25 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min", model_number = 1L, 
   }
 
   if(model_number == 1L){
-    result = glmnet::predict.cv.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
     colnames(result) = c("cpop_model1")
   }
 
   if(model_number == 2){
-    result = glmnet::predict.cv.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
     colnames(result) = c("cpop_model2")
   }
 
   if(model_number == "both"){
-    result1 = glmnet::predict.cv.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
-    result2 = glmnet::predict.cv.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result1 = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result2 = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
     result = cbind(result1, result2)
     colnames(result) = c("cpop_model1", "cpop_model2")
   }
 
   if(model_number == "avg"){
-    result1 = glmnet::predict.cv.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
-    result2 = glmnet::predict.cv.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result1 = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result2 = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
 
     result = cbind(result1, result2, (result1 + result2)/2)
     colnames(result) = c("cpop_model1", "cpop_model2", "cpop_model_avg")

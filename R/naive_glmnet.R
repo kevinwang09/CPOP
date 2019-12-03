@@ -7,7 +7,7 @@
 #' @param s Default to "lambda.min"
 #' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @return A vector
 #' @export
 #' @examples

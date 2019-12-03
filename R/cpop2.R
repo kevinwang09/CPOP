@@ -13,7 +13,7 @@
 #' differential betas are removed
 #' @rdname cpop2
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @return A vector of features
 #' @export
 #' @examples
@@ -43,7 +43,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nI
       family = family,
       alpha = 0, ...)
 
-    coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
+    coef1 = glmnet::coef.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
 
     ridge2 = glmnet::cv.glmnet(
@@ -52,7 +52,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nI
       family = family,
       alpha = 0, ...)
 
-    coef2 = glmnet::coef.cv.glmnet(ridge2, s = s)[-1, , drop = FALSE]
+    coef2 = glmnet::coef.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
     cpop2_features = cpop2_features[as.matrix(signCoef1 == signCoef2)]
@@ -74,7 +74,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nI
 #' @description Step 2 of the CPOP method based on scaled magnitude
 #' @param mag a scaled threshold differential betas are removed
 #' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.cv.glmnet
+#' @importFrom glmnet coef.glmnet
 #' @rdname cpop2
 #' @export
 #' @examples
@@ -102,7 +102,7 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nIt
       family = family,
       alpha = 0, ...)
 
-    coef1 = glmnet::coef.cv.glmnet(ridge1, s = s)[-1, , drop = FALSE]
+    coef1 = glmnet::coef.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
 
     ridge2 = glmnet::cv.glmnet(
@@ -111,7 +111,7 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nIt
       family = family,
       alpha = 0, ...)
 
-    coef2 = glmnet::coef.cv.glmnet(ridge2, s = s)[-1, , drop = FALSE]
+    coef2 = glmnet::coef.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
 
