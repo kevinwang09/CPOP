@@ -25,27 +25,33 @@
 #' cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
 #' family = "binomial", alpha = 1)
 cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
+  ## Initialising the selected feature set
   p = ncol(z1)
   remaining_features = colnames(z1)
   selected_features = c()
 
+  ## For each iteration
   for(i in 1:n_iter){
-    message("CPOP1 - Step ", sprintf("%02d", i), ": Number of selected features: ", length(selected_features), " out of ", p)
-
+    ## Print out the number of selected features in each iteration
+    message("CPOP1 - Step ", sprintf("%02d", i),
+            ": Number of selected features: ", length(selected_features),
+            " out of ", p)
+    ## If we exceed the number of desired features, we will stop the iterations
     if(length(selected_features) >= n_features) {
       message(n_features, " features was reached. ")
       message("A total of ", length(selected_features), " features were selected. \n")
       break
     }
 
-
-    if(length(selected_features) == ncol(z1)) {
+    ## If we exhaust all features, we will stop the iterations
+    if(length(selected_features) == p) {
       message("All features are selected")
       break
     }
 
 
-
+    ## Elastic net model 1 is for the first data.
+    ## We will fit the data with only the remaining features with weights
     en1 = glmnet::cv.glmnet(
       x = z1[,remaining_features],
       y = y1,
@@ -54,6 +60,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
       alpha = alpha,
       ...)
 
+    ## Elastic net model 2 is for the second data.
     en2 = glmnet::cv.glmnet(
       x = z2[,remaining_features],
       y = y2,
@@ -62,15 +69,23 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
       alpha = alpha,
       ...)
 
+    ## The selected feature set is a concatenation of the
+    ## existing selected features withthe common features jointly selected by
+    ## The two elastic net models.
     selected_features = c(selected_features,
                           base::intersect(
                             rownames(get_lasso_coef(en1, s = s)),
                             rownames(get_lasso_coef(en2, s = s)))) %>% unique
     selected_features = selected_features[selected_features != "(Intercept)"]
 
+    ## The remaining features are the features not in the selected feature set
     remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
+
+  ## The final feature set is the collection of features from data 1 or 2
+  ## That are **unweighted**
+  ## Feature request: need to specify this choice.
   final_features = rownames(get_lasso_coef(glmnet::cv.glmnet(
     x = z2[,selected_features],
     y = y2,

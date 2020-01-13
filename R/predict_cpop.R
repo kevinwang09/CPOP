@@ -7,7 +7,6 @@
 #' @param tibble Logical
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet
-#' @importFrom glmnet predict.glmnet
 #' @importFrom tibble as_tibble
 #' @return A vector
 #' @export
@@ -29,25 +28,25 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min", model_number = 1L, 
   }
 
   if(model_number == 1L){
-    result = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
     colnames(result) = c("cpop_model1")
   }
 
   if(model_number == 2){
-    result = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
     colnames(result) = c("cpop_model2")
   }
 
   if(model_number == "both"){
-    result1 = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
-    result2 = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result1 = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result2 = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
     result = cbind(result1, result2)
     colnames(result) = c("cpop_model1", "cpop_model2")
   }
 
   if(model_number == "avg"){
-    result1 = glmnet::predict.glmnet(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
-    result2 = glmnet::predict.glmnet(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
+    result1 = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature], s = s)
+    result2 = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature], s = s)
 
     result = cbind(result1, result2, (result1 + result2)/2)
     colnames(result) = c("cpop_model1", "cpop_model2", "cpop_model_avg")
@@ -56,8 +55,8 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min", model_number = 1L, 
   # rownames(result) = rownames(newz)
 
   if(tibble){
-    result = tibble::as_tibble(data.frame(result))
-    result = tibble::rownames_to_column(result, var = "samples")
+    result = tibble::rownames_to_column(data.frame(result), var = "samples")
+    result = tibble::as_tibble(result)
   }
 
   return(result)
