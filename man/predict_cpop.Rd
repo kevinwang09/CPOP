@@ -9,7 +9,7 @@ predict_cpop(
   newz,
   s = "lambda.min",
   model_number = 1L,
-  tibble = FALSE
+  tibble = TRUE
 )
 }
 \arguments{
@@ -37,7 +37,9 @@ z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 cpop_result = cpop_model(z1, z2, y1, y2, w = w,
 alpha = 1, n_features = 40, s = "lambda.min", family = "binomial")
-head(predict_cpop(cpop_result, newz = z1, model_number = 1))
-head(predict_cpop(cpop_result, newz = z1, model_number = "both", tibble = TRUE))
-head(predict_cpop(cpop_result, newz = z1, model_number = "avg", tibble = TRUE))
+rownames(z1) = paste0("sample",1:nrow(z1))
+newz = z1[sample(1:5, 10, replace = TRUE),]
+head(predict_cpop(cpop_result, newz = newz, model_number = 1))
+head(predict_cpop(cpop_result, newz = newz, model_number = "both"))
+head(predict_cpop(cpop_result, newz = newz, model_number = "avg"))
 }
