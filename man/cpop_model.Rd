@@ -9,7 +9,7 @@ cpop_model(
   z2,
   y1,
   y2,
-  w,
+  w = NULL,
   n_features = 50,
   nIter = 20,
   alpha = 1,

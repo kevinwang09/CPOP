@@ -26,30 +26,33 @@
 #' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
 #' cpop_model_result$feature
-cpop_model = function(z1, z2, y1, y2, w,
-                     n_features = 50, nIter = 20, alpha = 1,
-                     family = "binomial",
-                     s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1, ...){
-
+cpop_model = function(z1, z2, y1, y2, w = NULL,
+                      n_features = 50, nIter = 20, alpha = 1,
+                      family = "binomial",
+                      s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1, ...){
+  if(is.null(w)){
+    w = compute_weights(z1, z2)
+    message("Absolute colMeans difference will be used as the weights for CPOP")
+  }
   cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-                             n_features = n_features, nIter = nIter,
-                             alpha = alpha, s = s,
-                             family = family,
-                             ...)
+                               n_features = n_features, nIter = nIter,
+                               alpha = alpha, s = s,
+                               family = family,
+                               ...)
   if(length(cpop1_result) == 0){return(NULL)}
   if (cpop2_type == "sign"){
     cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                     cpop1_result = cpop1_result, s = s, nIter = nIter, family = family,
-                     cpop2_break = cpop2_break)}
+                              cpop1_result = cpop1_result, s = s, nIter = nIter, family = family,
+                              cpop2_break = cpop2_break)}
   if (cpop2_type == "mag"){
     cpop2_result = cpop2_mag(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                            cpop1_result = cpop1_result, s = s, nIter = nIter, family = family,
-                            cpop2_break = FALSE, mag = cpop2_mag)}
+                             cpop1_result = cpop1_result, s = s, nIter = nIter, family = family,
+                             cpop2_break = FALSE, mag = cpop2_mag)}
 
 
   if(length(cpop2_result) == 0){return(NULL)}
   cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                     cpop2_result = cpop2_result, family = family, intercept = FALSE)
+                       cpop2_result = cpop2_result, family = family, intercept = FALSE)
 
   return(cpop3_result)
 }
