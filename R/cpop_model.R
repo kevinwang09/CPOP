@@ -14,6 +14,7 @@
 #' @param cpop2_type "sign" or "mag"
 #' @param cpop2_mag a threshold
 #' differential betas are removed
+#' @param intercept Default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet in cpop1
 #' @return A vector
 #' @export
@@ -29,7 +30,7 @@
 cpop_model = function(z1, z2, y1, y2, w = NULL,
                       n_features = 50, nIter = 20, alpha = 1,
                       family = "binomial",
-                      s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1, ...){
+                      s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1, intercept = FALSE, ...){
   if(is.null(w)){
     w = compute_weights(z1, z2)
     message("Absolute colMeans difference will be used as the weights for CPOP")
@@ -52,7 +53,7 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
 
   if(length(cpop2_result) == 0){return(NULL)}
   cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                       cpop2_result = cpop2_result, family = family, intercept = FALSE)
+                       cpop2_result = cpop2_result, family = family, intercept = intercept)
 
-  return(cpop3_result)
+  return(c(cpop3_result, step1_features = list(cpop1_result)))
 }

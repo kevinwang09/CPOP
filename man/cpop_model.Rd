@@ -18,6 +18,7 @@ cpop_model(
   cpop2_break = TRUE,
   cpop2_type = "sign",
   cpop2_mag = 1,
+  intercept = FALSE,
   ...
 )
 }
@@ -48,6 +49,8 @@ cpop_model(
 
 \item{cpop2_mag}{a threshold
 differential betas are removed}
+
+\item{intercept}{Default to FALSE}
 
 \item{...}{Extra parameter settings for cv.glmnet in cpop1}
 }
