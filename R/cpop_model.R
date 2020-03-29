@@ -13,6 +13,7 @@
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' @param cpop2_type "sign" or "mag"
 #' @param cpop2_mag a threshold
+#' @param cpop1_step_features default to FALSE
 #' differential betas are removed
 #' @param intercept Default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet in cpop1
@@ -29,7 +30,8 @@
 cpop_model = function(z1, z2, y1, y2, w = NULL,
                       n_features = 50, n_iter = 20, alpha = 1,
                       family = "binomial",
-                      s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1, intercept = FALSE, ...){
+                      s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1,
+                      cpop1_step_features = FALSE, intercept = FALSE, ...){
   if(is.null(w)){
     w = compute_weights(z1, z2)
     message("Absolute colMeans difference will be used as the weights for CPOP")
@@ -39,12 +41,12 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
                                alpha = alpha, s = s,
                                family = family, ...)
 
-  if(length(cpop1_result$cpop1_features) != 0){
-    cpop1_features = cpop1_result$cpop1_features
-  } else {
+  if(cpop1_step_features | length(cpop1_result$cpop1_features) == 0){
     cpop1_features = cpop1_result$step_features %>%
       dplyr::filter(feature_name != "(Intercept)") %>%
       dplyr::pull(feature_name) %>% unique()
+  } else {
+    cpop1_features = cpop1_result$cpop1_features
   }
 
   if (cpop2_type == "sign"){
@@ -64,5 +66,5 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
   return(c(cpop3_result,
            cpop1_features = list(cpop1_features),
            step_features = list(cpop1_result$step_features)
-           ))
+  ))
 }

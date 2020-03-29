@@ -18,6 +18,7 @@ cpop_model(
   cpop2_break = TRUE,
   cpop2_type = "sign",
   cpop2_mag = 1,
+  cpop1_step_features = FALSE,
   intercept = FALSE,
   ...
 )
@@ -47,7 +48,9 @@ cpop_model(
 
 \item{cpop2_type}{"sign" or "mag"}
 
-\item{cpop2_mag}{a threshold
+\item{cpop2_mag}{a threshold}
+
+\item{cpop1_step_features}{default to FALSE
 differential betas are removed}
 
 \item{intercept}{Default to FALSE}
