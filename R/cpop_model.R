@@ -39,9 +39,14 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
                                alpha = alpha, s = s,
                                family = family, ...)
 
-  cpop1_features = cpop1_result$cpop1_features
+  if(length(cpop1_result$cpop1_features) != 0){
+    cpop1_features = cpop1_result$cpop1_features
+  } else {
+    cpop1_features = cpop1_result$step_features %>%
+      dplyr::filter(feature_name != "(Intercept)") %>%
+      dplyr::pull(feature_name) %>% unique()
+  }
 
-  if(length(cpop1_features) == 0){return(NULL)}
   if (cpop2_type == "sign"){
     cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                               cpop1_features = cpop1_features, s = s, n_iter = n_iter, family = family,
@@ -58,6 +63,6 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
 
   return(c(cpop3_result,
            cpop1_features = list(cpop1_features),
-           step_features = cpop1_result$step_features
+           step_features = list(cpop1_result$step_features)
            ))
 }
