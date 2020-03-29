@@ -77,16 +77,32 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
     en1_coef = get_lasso_coef(en1, s = s)
     en2_coef = get_lasso_coef(en2, s = s)
 
-
-    step_features[[i]] = dplyr::bind_rows(
-      tibble::tibble(
+    if(nrow(en1_coef) == 0){
+      en1_coef_tbl = tibble::tibble(
+        coef_model = "1",
+        feature_name = NA,
+        feature_value = NA)
+    } else {
+      en1_coef_tbl = tibble::tibble(
         coef_model = "1",
         feature_name = rownames(en1_coef),
-        feature_value = as.vector(as.matrix(en1_coef))),
-      tibble::tibble(
-        coef_model = "2",
+        feature_value = as.vector(as.matrix(en1_coef)))
+    }
+
+    if(nrow(en2_coef) == 0){
+      en2_coef_tbl = tibble::tibble(
+        coef_model = "1",
+        feature_name = NA,
+        feature_value = NA)
+    } else {
+      en2_coef_tbl = tibble::tibble(
+        coef_model = "1",
         feature_name = rownames(en2_coef),
-        feature_value = as.vector(as.matrix(en2_coef))))
+        feature_value = as.vector(as.matrix(en2_coef)))
+    }
+
+
+    step_features[[i]] = dplyr::bind_rows(en1_coef_tbl, en2_coef_tbl)
 
     selected_features = c(selected_features,
                           base::intersect(
