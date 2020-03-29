@@ -11,7 +11,7 @@ cpop2_sign(
   y1,
   y2,
   family,
-  cpop1_result,
+  cpop1_features,
   s = "lambda.min",
   nIter = 20,
   cpop2_break = TRUE,
@@ -24,7 +24,7 @@ cpop2_mag(
   y1,
   y2,
   family,
-  cpop1_result,
+  cpop1_features,
   s = "lambda.min",
   nIter = 20,
   cpop2_break = FALSE,
@@ -43,7 +43,7 @@ cpop2_mag(
 
 \item{family}{see glmnet family}
 
-\item{cpop1_result}{cpop1 result}
+\item{cpop1_features}{cpop1 result}
 
 \item{s}{CV-Lasso lambda}
 
@@ -72,17 +72,17 @@ z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 alpha = 0.1
 s = "lambda.min"
-cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-family = "binomial", alpha = 0.1)
+cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+family = "binomial", alpha = 0.1)$cpop1_features
 cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-cpop1_result = cpop1_result, family = "binomial")
+cpop1_features = cpop1_features, family = "binomial")
 data(cpop_data_binary, package = 'CPOP')
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
 alpha = c(1, 0.1, 0.01)
-cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
+cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+family = "binomial", alpha = 0.1)$cpop1_features
 cpop2_result = cpop2_mag(z1, z2, y1, y2,
-cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, family = "binomial")
+cpop1_features = cpop1_features, s = "lambda.min", nIter = 20, family = "binomial")
 }

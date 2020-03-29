@@ -19,10 +19,10 @@
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
-#' cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-#'                              family = "binomial", alpha = 1)
+#' cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+#'                              family = "binomial", alpha = 1)$cpop1_features
 #' cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-#'                           cpop1_result = cpop1_result, family = "binomial")
+#'                           cpop1_features = cpop1_features, family = "binomial")
 #' cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
 #'                      cpop2_result = cpop2_result, family = "binomial")
 #' plot(predict_cpop(cpop3_result, newz = z1, model_number = 1),

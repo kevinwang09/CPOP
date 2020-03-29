@@ -26,10 +26,10 @@ cpop1_iterate(
   y2,
   w,
   family,
+  s = "lambda.min",
   n_iter = 20,
   alpha = 1,
   n_features = 50,
-  s = "lambda.min",
   ...
 )
 }
@@ -52,7 +52,7 @@ cpop1_iterate(
 
 \item{n_features}{n_features desired}
 
-\item{s}{CV-Lasso lambda}
+\item{s}{CV lambda}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }
@@ -72,13 +72,11 @@ set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-family = "binomial", alpha = 1)
+cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = 1)
 data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 w = compute_weights(z1, z2)
-cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-family = "binomial", alpha = c(0.5, 1))
+cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = c(0.5, 1))
 }

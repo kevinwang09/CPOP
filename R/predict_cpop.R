@@ -61,6 +61,9 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min", model_number = 1L, 
 
   if(tibble){
     tib_result = tibble::as_tibble(data.frame(result))
+    if(is.null(rownames(result))){
+      rownames(result) = 1:nrow(result)
+    }
     tib_result = dplyr::mutate(tib_result, samples = rownames(result))
     tib_result = dplyr::select(tib_result, samples, dplyr::everything())
     return(tib_result)

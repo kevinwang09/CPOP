@@ -17,6 +17,7 @@ plot_ratio_network(x, nodesData = FALSE, stat_df = NULL)
 Plot ratio network
 }
 \examples{
+library(visNetwork)
 x = c("X1--X10","X1--X3","X2--X4","X1--X4","X1--X8","X1--X9",
 "X10--X2","X2--X5","X2--X7","X2--X6")
 plot_ratio_network(x, nodesData = FALSE) \%>\%

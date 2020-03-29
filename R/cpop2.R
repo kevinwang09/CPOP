@@ -1,6 +1,6 @@
 #' @title Step 2 of the CPOP method
 #' @description Step 2 of the CPOP method based on sign
-#' @param cpop1_result cpop1 result
+#' @param cpop1_features cpop1 result
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -24,14 +24,14 @@
 #' w = compute_weights(z1, z2)
 #' alpha = 0.1
 #' s = "lambda.min"
-#' cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-#' family = "binomial", alpha = 0.1)
+#' cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+#' family = "binomial", alpha = 0.1)$cpop1_features
 #' cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-#' cpop1_result = cpop1_result, family = "binomial")
-cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nIter = 20,
+#' cpop1_features = cpop1_features, family = "binomial")
+cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
                 cpop2_break = TRUE, ...){
-  p = length(cpop1_result)
-  cpop2_features = cpop1_result
+  p = length(cpop1_features)
+  cpop2_features = cpop1_features
 
   for(j in 1:nIter){
     z1_reduced = z1[,cpop2_features]
@@ -83,14 +83,14 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nI
 #' z2 = pairwise_col_diff(x2)
 #' w = compute_weights(z1, z2)
 #' alpha = c(1, 0.1, 0.01)
-#' cpop1_result = cpop1_iterate(z1, z2, y1, y2, w, nIter = 20,
-#' alpha = alpha, n_features = 30, s = "lambda.min", family = "binomial")
+#' cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
+#' family = "binomial", alpha = 0.1)$cpop1_features
 #' cpop2_result = cpop2_mag(z1, z2, y1, y2,
-#' cpop1_result = cpop1_result, s = "lambda.min", nIter = 20, family = "binomial")
-cpop2_mag = function(z1, z2, y1, y2, family, cpop1_result, s = "lambda.min", nIter = 20,
+#' cpop1_features = cpop1_features, s = "lambda.min", nIter = 20, family = "binomial")
+cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
                  cpop2_break = FALSE, mag = 1, ...){
-  p = length(cpop1_result)
-  cpop2_features = cpop1_result
+  p = length(cpop1_features)
+  cpop2_features = cpop1_features
 
   for(j in 1:nIter){
     z1_reduced = z1[,cpop2_features]
