@@ -13,7 +13,7 @@
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' @param cpop2_type "sign" or "mag"
 #' @param cpop2_mag a threshold
-#' @param cpop1_step_features default to FALSE
+#' @param cpop1_step_features default to NULL
 #' differential betas are removed
 #' @param intercept Default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet in cpop1
@@ -27,11 +27,12 @@
 #' w = compute_weights(z1, z2)
 #' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w, alpha = 1, n_features = 40, s = "lambda.min")
 #' cpop_model_result$feature
+#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w, alpha = 1, n_features = 40, s = "lambda.min", cpop1_step_features = "both")
 cpop_model = function(z1, z2, y1, y2, w = NULL,
                       n_features = 50, n_iter = 20, alpha = 1,
                       family = "binomial",
                       s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1,
-                      cpop1_step_features = FALSE, intercept = FALSE, ...){
+                      cpop1_step_features = NULL, intercept = FALSE, ...){
   if(is.null(w)){
     w = compute_weights(z1, z2)
     message("Absolute colMeans difference will be used as the weights for CPOP")
@@ -41,13 +42,30 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
                                alpha = alpha, s = s,
                                family = family, ...)
 
-  if(cpop1_step_features | length(cpop1_result$cpop1_features) == 0){
-    cpop1_features = cpop1_result$step_features %>%
-      dplyr::filter(feature_name != "(Intercept)") %>%
-      dplyr::pull(feature_name) %>% unique()
-  } else {
+
+  if(is.null(cpop1_step_features) & length(cpop1_result$cpop1_features) != 0){
     cpop1_features = cpop1_result$cpop1_features
+  } else {
+    warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
+    if(cpop1_step_features == "both"){
+      message("Features ever selected by both data (after all iterations) will now be pooled")
+      cpop1_features = cpop1_result$step_features %>%
+        dplyr::filter(feature_name != "(Intercept)") %>%
+        dplyr::select(coef_model, feature_name) %>%
+        dplyr::distinct(coef_model, feature_name) %>%
+        dplyr::group_by(feature_name) %>%
+        dplyr::tally() %>%
+        dplyr::filter(n > 1) %>%
+        dplyr::pull(feature_name)
+    } else if(cpop1_step_features == "either"){
+      message("Features ever selected by either data will now be pooled")
+      cpop1_features = cpop1_result$step_features %>%
+        dplyr::filter(feature_name != "(Intercept)") %>%
+        dplyr::pull(feature_name) %>% unique()
+    }
   }
+
+
 
   if (cpop2_type == "sign"){
     cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,

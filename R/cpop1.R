@@ -91,12 +91,12 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
 
     if(nrow(en2_coef) == 0){
       en2_coef_tbl = tibble::tibble(
-        coef_model = "1",
+        coef_model = "2",
         feature_name = NA,
         feature_value = NA)
     } else {
       en2_coef_tbl = tibble::tibble(
-        coef_model = "1",
+        coef_model = "2",
         feature_name = rownames(en2_coef),
         feature_value = as.vector(as.matrix(en2_coef)))
     }
