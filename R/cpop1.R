@@ -114,15 +114,16 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
     remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
-  ## The final feature set is the collection of features from data 1 or 2
-  ## That are **unweighted**
-  ## Feature request: need to specify this choice.
+
+  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
+  if(length(selected_features) != 0){
   final_features = rownames(get_lasso_coef(glmnet::cv.glmnet(
     x = z2[,selected_features],
     y = y2,
     family = family,
     alpha = alpha, ...)))[-1]
-  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
+  }
+
 
   step_features = dplyr::bind_rows(step_features, .id = "step") %>%
     dplyr::mutate(
