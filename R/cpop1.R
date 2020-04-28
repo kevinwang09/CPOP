@@ -122,8 +122,11 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
     y = y2,
     family = family,
     alpha = alpha, ...)))[-1]
-  }
   message("Removing sources of collinearity gives ", length(final_features), " features. \n")
+  } else {
+    final_features = NULL
+  }
+
 
 
   step_features = dplyr::bind_rows(step_features, .id = "step") %>%
