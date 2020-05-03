@@ -24,19 +24,15 @@
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
-#' w = compute_weights(z1, z2)
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w, alpha = 1, n_features = 40, s = "lambda.min")
+#' cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min")
 #' cpop_model_result$feature
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, w = w, alpha = 1, n_features = 40, s = "lambda.min", cpop1_step_features = "both")
+#' cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min", cpop1_step_features = "both")
 cpop_model = function(z1, z2, y1, y2, w = NULL,
                       n_features = 50, n_iter = 20, alpha = 1,
                       family = "binomial",
                       s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1,
                       cpop1_step_features = NULL, intercept = FALSE, ...){
-  if(is.null(w)){
-    w = compute_weights(z1, z2)
-    message("Absolute colMeans difference will be used as the weights for CPOP")
-  }
+
   cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
                                n_features = n_features, n_iter = n_iter,
                                alpha = alpha, s = s,

@@ -24,7 +24,7 @@ cpop1_iterate(
   z2,
   y1,
   y2,
-  w,
+  w = NULL,
   family,
   s = "lambda.min",
   n_iter = 20,
@@ -62,21 +62,9 @@ A vector of features
 A vector of features
 }
 \description{
-Step 1 of the CPOP method, for a single given alpha
+Step 1 of the CPOP method, for a single given alpha.
+Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
+elastic net variable selection.
 
 Step 1 of the CPOP method, for multiple alpha inputs
-}
-\examples{
-data(cpop_data_binary, package = 'CPOP')
-set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-w = compute_weights(z1, z2)
-cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = 1)
-data(cpop_data_binary, package = 'CPOP')
-set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-w = compute_weights(z1, z2)
-cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = c(0.5, 1))
 }

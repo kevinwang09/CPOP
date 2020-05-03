@@ -14,7 +14,7 @@
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
-#' w = compute_weights(z1, z2)
+#' w = colmeans_penalty(z1, z2)
 #' cpop_cpop_result = cpop_model(z1, z2, y1, y2, w = w,
 #' alpha = 1, n_features = 40, s = "lambda.min")
 #' plot_glmnet_coef(cpop_cpop_result, s = "lambda.min", type = "point")

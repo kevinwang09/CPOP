@@ -1,5 +1,7 @@
 #' @title Step 1 of the CPOP method
-#' @description Step 1 of the CPOP method, for a single given alpha
+#' @description Step 1 of the CPOP method, for a single given alpha.
+#' Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
+#' elastic net variable selection.
 #' @param z1 A data matrix
 #' @param z2 A data matrix
 #' @param y1 A vector
@@ -18,13 +20,6 @@
 #' @rdname cpop1
 #' @return A vector of features
 #' @export
-#' @examples
-#' data(cpop_data_binary, package = 'CPOP')
-#' set.seed(1)
-#' z1 = pairwise_col_diff(x1)
-#' z2 = pairwise_col_diff(x2)
-#' w = compute_weights(z1, z2)
-#' cpop1(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = 1)
 cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
   ## Initialising the selected feature set
   p = ncol(z1)
@@ -146,20 +141,18 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
 #' @rdname cpop1
 #' @return A vector of features
 #' @export
-#' @examples
-#' data(cpop_data_binary, package = 'CPOP')
-#' set.seed(1)
-#' z1 = pairwise_col_diff(x1)
-#' z2 = pairwise_col_diff(x2)
-#' w = compute_weights(z1, z2)
-#' cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w, family = "binomial", alpha = c(0.5, 1))
-cpop1_iterate = function(z1, z2, y1, y2, w,
+cpop1_iterate = function(z1, z2, y1, y2, w = NULL,
                          family, s = "lambda.min",
                          n_iter = 20, alpha = 1,
                          n_features = 50, ...){
 
   alpha = sort(alpha, decreasing = TRUE)
   all_selected_features = c()
+
+  if(is.null(w)){
+    w = colmeans_penalty(z1, z2)
+    message("Absolute colMeans difference will be used as the weights for CPOP")
+  }
 
   for(this_alpha in alpha){
     message("Fitting CPOP model using alpha = ", this_alpha, "\n")

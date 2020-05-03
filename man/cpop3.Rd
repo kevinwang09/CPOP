@@ -29,19 +29,3 @@ A vector
 \description{
 Step 3 of the CPOP method
 }
-\examples{
-data(cpop_data_binary, package = 'CPOP')
-set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-w = compute_weights(z1, z2)
-cpop1_features = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
-                             family = "binomial", alpha = 1)$cpop1_features
-cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                          cpop1_features = cpop1_features, family = "binomial")
-cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
-                     cpop2_result = cpop2_result, family = "binomial")
-plot(predict_cpop(cpop3_result, newz = z1, model_number = 1),
-     predict_cpop(cpop3_result, newz = z1, model_number = 2))
-abline(a = 0, b = 1, col = "red")
-}

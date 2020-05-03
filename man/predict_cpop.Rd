@@ -34,8 +34,7 @@ data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
-w = compute_weights(z1, z2)
-cpop_result = cpop_model(z1, z2, y1, y2, w = w,
+cpop_result = cpop_model(z1, z2, y1, y2,
 alpha = 1, n_features = 40, s = "lambda.min", family = "binomial")
 rownames(z1) = paste0("sample",1:nrow(z1))
 newz = z1[sample(1:5, 10, replace = TRUE),]
