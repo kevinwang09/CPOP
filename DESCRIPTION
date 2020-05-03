@@ -15,12 +15,13 @@ Imports:
     assertthat,
     caret,
     e1071,
+    igraph,
     ggplot2,
+    ggraph,
     glmnet (>= 3.0),
-    HDCI,
     magrittr,
     purrr,
-    visNetwork,
+    stringr,
     tibble,
     tidyr,
     dplyr,
@@ -33,5 +34,6 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    visNetwork
 VignetteBuilder: knitr
