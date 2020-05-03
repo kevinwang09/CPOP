@@ -93,6 +93,9 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", n
   cpop2_features = cpop1_features
 
   for(j in 1:nIter){
+    if(length(cpop2_features) <= 10){
+      break
+    }
     z1_reduced = z1[,cpop2_features]
     z2_reduced = z2[,cpop2_features]
 

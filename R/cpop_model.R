@@ -42,30 +42,28 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
                                alpha = alpha, s = s,
                                family = family, ...)
 
-
-  if(is.null(cpop1_step_features) & length(cpop1_result$cpop1_features) != 0){
+  if(length(cpop1_result$cpop1_features) != 0){
     cpop1_features = cpop1_result$cpop1_features
-  } else {
+  } else if(cpop1_step_features == "both"){
     warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
-    if(cpop1_step_features == "both"){
-      message("Features ever selected by both data (after all iterations) will now be pooled")
-      cpop1_features = cpop1_result$step_features %>%
-        dplyr::filter(feature_name != "(Intercept)") %>%
-        dplyr::select(coef_model, feature_name) %>%
-        dplyr::distinct(coef_model, feature_name) %>%
-        dplyr::group_by(feature_name) %>%
-        dplyr::tally() %>%
-        dplyr::filter(n > 1) %>%
-        dplyr::pull(feature_name)
-    } else if(cpop1_step_features == "either"){
+    message("Features ever selected by both data (after all iterations) will now be pooled")
+    cpop1_features = cpop1_result$step_features %>%
+      dplyr::filter(feature_name != "(Intercept)") %>%
+      dplyr::select(coef_model, feature_name) %>%
+      dplyr::distinct(coef_model, feature_name) %>%
+      dplyr::group_by(feature_name) %>%
+      dplyr::tally() %>%
+      dplyr::filter(n > 1) %>%
+      dplyr::pull(feature_name)
+  } else if(cpop1_step_features == "either"){
+      warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
       message("Features ever selected by either data will now be pooled")
       cpop1_features = cpop1_result$step_features %>%
         dplyr::filter(feature_name != "(Intercept)") %>%
         dplyr::pull(feature_name) %>% unique()
     }
-  }
 
-
+  if(length(cpop1_features) == 0){return(NULL)}
 
   if (cpop2_type == "sign"){
     cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
