@@ -11,6 +11,7 @@
 #' @param alpha Lasso alpha
 #' @param n_features n_features desired
 #' @param s CV lambda
+#' @param cpop1_method Default value is "normal". Alternatives are "after" and "either".
 #' @param ... Extra parameter settings for cv.glmnet
 #' @param family See glmnet family
 #' @importFrom glmnet cv.glmnet
@@ -20,7 +21,8 @@
 #' @rdname cpop1
 #' @return A vector of features
 #' @export
-cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features = 50, s = "lambda.min", ...){
+cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
+                 n_features = 50, s = "lambda.min", cpop1_method = "normal", ...){
   ## Initialising the selected feature set
   p = ncol(z1)
   remaining_features = colnames(z1)
@@ -72,68 +74,74 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1, n_features =
     en1_coef = get_lasso_coef(en1, s = s)
     en2_coef = get_lasso_coef(en2, s = s)
 
-    if(nrow(en1_coef) == 0){
-      en1_coef_tbl = tibble::tibble(
-        coef_model = "1",
-        feature_name = NA,
-        feature_value = NA)
-    } else {
-      en1_coef_tbl = tibble::tibble(
-        coef_model = "1",
-        feature_name = rownames(en1_coef),
-        feature_value = as.vector(as.matrix(en1_coef)))
-    }
+    en1_coef_tbl = feature_tibble(en1_coef, coef_model = "1")
+    en2_coef_tbl = feature_tibble(en1_coef, coef_model = "2")
 
-    if(nrow(en2_coef) == 0){
-      en2_coef_tbl = tibble::tibble(
-        coef_model = "2",
-        feature_name = NA,
-        feature_value = NA)
-    } else {
-      en2_coef_tbl = tibble::tibble(
-        coef_model = "2",
-        feature_name = rownames(en2_coef),
-        feature_value = as.vector(as.matrix(en2_coef)))
-    }
-
-
+    ## This collects all the selected features by EN1 and EN2
     step_features[[i]] = dplyr::bind_rows(en1_coef_tbl, en2_coef_tbl)
 
+    ## Features selected in this step of CPOP
     selected_features = c(selected_features,
                           base::intersect(
                             rownames(en1_coef),
                             rownames(en2_coef))) %>% unique
+
     selected_features = selected_features[selected_features != "(Intercept)"]
 
     ## The remaining features are the features not in the selected feature set
     remaining_features = setdiff(colnames(z1), selected_features)
   } ## End i-loop
 
+  ## Finalise the feature set
+  step_features_tbl =  dplyr::bind_rows(step_features, .id = "step")
 
-
-  if(length(selected_features) != 0){
-  final_features = rownames(get_lasso_coef(glmnet::cv.glmnet(
-    x = z2[,selected_features],
-    y = y2,
-    family = family,
-    alpha = alpha, ...)))[-1]
-  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
-  } else {
-    final_features = NULL
+  ## If there are no features selected, then
+  if(length(selected_features) == 0 & cpop1_method == "after"){
+    warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
+    message("Features ever selected by both data (after all iterations) will now be pooled")
+    selected_features = step_features_tbl %>%
+      dplyr::filter(feature_name != "(Intercept)") %>%
+      dplyr::select(coef_model, feature_name) %>%
+      dplyr::distinct(coef_model, feature_name) %>%
+      dplyr::group_by(feature_name) %>%
+      dplyr::tally() %>%
+      dplyr::filter(n == 2) %>%
+      dplyr::pull(feature_name)
+  } else if(length(selected_features) == 0 & cpop1_method == "either") {
+    warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
+    message("Features ever selected by either data will now be pooled")
+    selected_features = step_features_tbl %>%
+      dplyr::filter(feature_name != "(Intercept)") %>%
+      dplyr::pull(feature_name) %>% unique()
   }
 
+  final_features = mst_lratio(selected_features)
+  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
 
-
-  step_features = dplyr::bind_rows(step_features, .id = "step") %>%
+  step_features_tbl = step_features_tbl %>%
     dplyr::mutate(
       ever_selected_features = feature_name %in% selected_features,
-      in_final_features = feature_name %in% final_features
-    )
+      in_final_features = feature_name %in% final_features)
 
-  return(tibble::lst(final_features,
-             step_features))
+
+  return(tibble::lst(final_features, step_features_tbl))
 }
-###############
+###########################################################################
+feature_tibble = function(en_coef, coef_model = NA){
+  if(nrow(en_coef) == 0){
+    en_coef_tbl = tibble::tibble(
+      coef_model = coef_model,
+      feature_name = NA,
+      feature_value = NA)
+  } else {
+    en_coef_tbl = tibble::tibble(
+      coef_model = coef_model,
+      feature_name = rownames(en_coef),
+      feature_value = as.vector(as.matrix(en_coef)))
+  }
+  return(en_coef_tbl)
+}
+###########################################################################
 #' @title Step 1 of the CPOP method, iteratred over multiple alpha
 #' @description Step 1 of the CPOP method, for multiple alpha inputs
 #' @importFrom glmnet cv.glmnet

@@ -18,7 +18,7 @@ cpop_model(
   cpop2_break = TRUE,
   cpop2_type = "sign",
   cpop2_mag = 1,
-  cpop1_step_features = NULL,
+  cpop1_method = "normal",
   intercept = FALSE,
   ...
 )
@@ -50,7 +50,7 @@ cpop_model(
 
 \item{cpop2_mag}{a threshold}
 
-\item{cpop1_step_features}{default to NULL
+\item{cpop1_method}{Default value is "normal". Alternatives are "after" and "either".
 differential betas are removed}
 
 \item{intercept}{Default to FALSE}
@@ -70,5 +70,5 @@ z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min")
 cpop_model_result$feature
-cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min", cpop1_step_features = "both")
+cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min", cpop1_method = "after")
 }

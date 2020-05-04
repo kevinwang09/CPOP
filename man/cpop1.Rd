@@ -16,6 +16,7 @@ cpop1(
   alpha = 1,
   n_features = 50,
   s = "lambda.min",
+  cpop1_method = "normal",
   ...
 )
 
@@ -53,6 +54,8 @@ cpop1_iterate(
 \item{n_features}{n_features desired}
 
 \item{s}{CV lambda}
+
+\item{cpop1_method}{Default value is "normal". Alternatives are "after" and "either".}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }

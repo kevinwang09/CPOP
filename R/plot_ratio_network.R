@@ -92,11 +92,11 @@ lratio_to_network = function(x){
 #' @importFrom igraph graph_from_edgelist mst
 #' @rdname cpop_network
 mst_lratio = function(x){
-  edges = lratio_to_network(x = x)
-  edges_mat = edges %>% as.data.frame %>% as.matrix
+  network = lratio_to_network(x = x)
+  edges_mat = network$edges %>% as.data.frame %>% as.matrix
   ig = igraph::graph_from_edgelist(edges_mat, directed = FALSE)
   ig_mst = igraph::mst(ig) ## minimum spanning tree removes collinearity
-  ig_mst_edges = get.edgelist(ig_mst)
+  ig_mst_edges = igraph::get.edgelist(ig_mst)
   result = paste0(ig_mst_edges[,1], "--", ig_mst_edges[,2])
   return(result)
 }
