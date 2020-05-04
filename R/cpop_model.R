@@ -24,10 +24,10 @@
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min")
-#' cpop_model_result$feature
-#' cpop_model_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 40, s = "lambda.min", cpop1_method = "after")
-cpop_model = function(z1, z2, y1, y2, w = NULL,
+#' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
+#' cpop_result
+#' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10, cpop1_method = "after")
+cpop_model <- function(z1, z2, y1, y2, w = NULL,
                       n_features = 50, n_iter = 20, alpha = 1,
                       family = "binomial",
                       s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1,
@@ -59,8 +59,26 @@ cpop_model = function(z1, z2, y1, y2, w = NULL,
   cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                        cpop2_result = cpop2_result, family = family, intercept = intercept)
 
-  return(c(cpop3_result,
-           cpop1_features = list(cpop1_features),
-           step_features = list(cpop1_result$step_features)
-  ))
+  coef1 = glmnet::coef.glmnet(cpop3_result$glmnet1, s = s)
+  coef2 = glmnet::coef.glmnet(cpop3_result$glmnet2, s = s)
+  coef_tbl = tibble::tibble(coef_name = rownames(coef1),
+                               coef1 = as.vector(coef1),
+                               coef2 = as.vector(coef2))
+
+  result = c(cpop3_result,
+             coef_tbl = list(coef_tbl),
+             cpop1_features = list(cpop1_features),
+             step_features = list(cpop1_result$step_features))
+
+  class(result) = c("cpop", class(result))
+  return(result)
+}
+
+cpop <- function(x, ...) UseMethod("cpop")
+
+
+print.cpop <- function(cpop_result, ...)
+{
+  cat("CPOP model with ", length(cpop_result$feature), "features \n")
+  print(cpop_result$coef_tbl)
 }

@@ -6,6 +6,7 @@
 #' "visNetwork", "igraph", "ggraph"
 #' @import dplyr
 #' @import ggraph
+#' @importFrom igraph graph_from_edgelist
 #' @importFrom stringr str_detect
 #' @rdname cpop_network
 #' @export
@@ -39,7 +40,6 @@ plot_lratio_network = function(x, type = "ggraph"){
   if(type == "igraph"){
     edges_mat = edges %>% as.data.frame %>% as.matrix
     ig = igraph::graph_from_edgelist(edges_mat, directed = FALSE)
-    plot(ig)
     return(ig)
   }
 
@@ -48,14 +48,14 @@ plot_lratio_network = function(x, type = "ggraph"){
                             msg = "You need to install the ggraph package")
     edges_mat = edges %>% as.data.frame %>% as.matrix
     ig = igraph::graph_from_edgelist(edges_mat, directed = FALSE)
-    plot(ig)
+
     p = ggraph(ig, layout = "linear", circular = TRUE) +
       ggraph::geom_edge_arc(aes(
         start_cap = label_rect(node1.name),
         end_cap = label_rect(node2.name))) +
       ggraph::geom_node_text(aes(label = name), size = 6)
 
-    plot(p)
+    return(p)
   }
 
 }
@@ -89,7 +89,7 @@ lratio_to_network = function(x){
 #' @title Make a network from lratio
 #' @param x A character vector representing edges by separating nodes with "--"
 #' i.e. in the form of "e1--e2"
-#' @importFrom igraph graph_from_edgelist mst
+#' @importFrom igraph graph_from_edgelist mst get.edgelist
 #' @rdname cpop_network
 mst_lratio = function(x){
   network = lratio_to_network(x = x)
@@ -97,6 +97,7 @@ mst_lratio = function(x){
   ig = igraph::graph_from_edgelist(edges_mat, directed = FALSE)
   ig_mst = igraph::mst(ig) ## minimum spanning tree removes collinearity
   ig_mst_edges = igraph::get.edgelist(ig_mst)
-  result = paste0(ig_mst_edges[,1], "--", ig_mst_edges[,2])
+  ig_mst_edges = apply(ig_mst_edges, 1, sort)
+  result = paste0(ig_mst_edges[1,], "--", ig_mst_edges[2,])
   return(result)
 }

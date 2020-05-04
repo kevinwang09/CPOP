@@ -30,10 +30,10 @@ data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
-s = "lambda.min"
-naive_glmnet_result = naive_glmnet(z1, z2, y1, y2,
-family = "binomial", alpha = 1, s = "lambda.min")
-plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "point")
-plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "text")
-plot_glmnet_coef(naive_glmnet_result, s = "lambda.min", type = "bar")
+cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
+lasso_result = naive_glmnet(z1, z2, y1, y2, alpha = 1, intercept = FALSE)
+cpop_result
+lasso_result
+plot_cpop(cpop_result)
+plot_cpop(lasso_result)
 }
