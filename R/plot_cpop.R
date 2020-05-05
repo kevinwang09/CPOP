@@ -35,9 +35,8 @@ plot_cpop <- function(cpop_result, type = "point", s = "lambda.min"){
   coef_plotdf = tibble::tibble(coef_name = rownames(coef1),
                        coef1 = as.vector(coef1),
                        coef2 = as.vector(coef2)) %>%
-    dplyr::mutate(
-      coef_name = forcats::fct_reorder(coef_name, coef1)
-    )
+    dplyr::mutate(coef_name = forcats::fct_reorder(coef_name, coef1)) %>%
+    dplyr::filter(coef1 != 0, coef2 != 0)
 
   if(type == "point"){
     g1 = ggplot(coef_plotdf,
