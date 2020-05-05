@@ -4,13 +4,7 @@
 \alias{predict_cpop}
 \title{Prediction function for CPOP}
 \usage{
-predict_cpop(
-  cpop_result,
-  newz,
-  s = "lambda.min",
-  model_number = 1L,
-  tibble = TRUE
-)
+predict_cpop(cpop_result, newz, s = "lambda.min")
 }
 \arguments{
 \item{cpop_result}{cpop_model result}
@@ -18,10 +12,6 @@ predict_cpop(
 \item{newz}{New data}
 
 \item{s}{CV-Lasso lambda}
-
-\item{model_number}{1 or 2 or "both"}
-
-\item{tibble}{Logical}
 }
 \value{
 A vector
@@ -34,11 +24,8 @@ data(cpop_data_binary, package = 'CPOP')
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
-cpop_result = cpop_model(z1, z2, y1, y2,
-alpha = 1, n_features = 40, s = "lambda.min", family = "binomial")
-rownames(z1) = paste0("sample",1:nrow(z1))
-newz = z1[sample(1:5, 10, replace = TRUE),]
-head(predict_cpop(cpop_result, newz = newz, model_number = 1))
-head(predict_cpop(cpop_result, newz = newz, model_number = "both"))
-head(predict_cpop(cpop_result, newz = newz, model_number = "avg"))
+cpop_result = cpop_model(z1, z2, y1, y2, alpha = 0.1, n_features = 10)
+cpop_result
+newz = z1[sample(1:nrow(z1), 10),]
+head(predict_cpop(cpop_result, newz = newz))
 }

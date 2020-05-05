@@ -70,5 +70,4 @@ z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
 cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
 cpop_result
-cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10, cpop1_method = "after")
 }

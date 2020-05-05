@@ -14,118 +14,68 @@ vignette: >
 ---
 
 
-<!-- ```{r} -->
-<!-- library(CPOP) -->
-<!-- ``` -->
+```{r}
+library(CPOP)
+library(tidyverse)
+```
 
-<!-- # Load melanoma data  -->
-<!-- ```{r} -->
-<!-- data(melanoma_example, package = "CPOP") -->
-<!-- ``` -->
+# Loading data
 
+```{r}
+data(cpop_data_binary, package = 'CPOP')
+set.seed(1)
+boxplot(cbind(x1,x2))
 
-<!-- ```{r} -->
-<!-- library(mvtnorm) -->
-<!-- set.seed(1234) -->
-<!-- tcga_x = mvtnorm::rmvnorm(n = length(list_melanoma_samples$tcga),  -->
-<!--                           mean = list_melanoma_means$tcga,  -->
-<!--                           sigma = list_melanoma_sigma$tcga) -->
-<!-- tcga_z = CPOP::pairwise_col_diff(tcga_x) -->
+z1 = pairwise_col_diff(x1)
+z2 = pairwise_col_diff(x2)
 
-<!-- tcga_beta = rbeta(ncol(tcga_z), shape1 = 0.1, shape2 = 0.5) -->
-<!-- hist(tcga_beta) -->
-<!-- tcga_y = tcga_z %*% tcga_beta -->
-<!-- ################################################### -->
-<!-- sweden_x = mvtnorm::rmvnorm(n = length(list_melanoma_samples$sweden),  -->
-<!--                             mean = list_melanoma_means$sweden,  -->
-<!--                             sigma = list_melanoma_sigma$sweden) -->
-
-<!-- sweden_beta = rbeta(ncol(tcga_z), shape1 = 0.1, shape2 = 0.5) -->
-<!-- sweden_z = CPOP::pairwise_col_diff(sweden_x) -->
-<!-- sweden_y = sweden_z %*% sweden_beta -->
-<!-- ``` -->
+boxplot(cbind(z1,z2))
+```
 
 
-<!-- ```{r} -->
-<!-- plot(tcga_beta, sweden_beta) -->
-<!-- ``` -->
+# CPOP
+```{r}
+cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
+cpop_result
+```
+
+# Naive Lasso
+
+```{r}
+lasso_result = naive_glmnet(z1, z2, y1, y2, alpha = 1, intercept = FALSE)
+lasso_result
+```
+
+# Plotting
+```{r}
+plot_cpop(cpop_result)
+plot_cpop(lasso_result)
+
+plot_cpop(cpop_result, type = "ggraph")
+plot_cpop(lasso_result, type = "ggraph")
+```
+
+# Prediction 
+```{r}
+# z3 = pairwise_col_diff(x3)
+# boxplot(y3 ~ predict_cpop(cpop_result, newz = z3)$cpop_model_avg)
+
+predict_cpop(cpop_result, newz = z1) %>% 
+  ggplot(aes(x = cpop_model1, y = cpop_model2)) +
+  geom_point() +
+  geom_abline() 
 
 
-<!-- ```{r} -->
-<!-- naive_lasso = function(x, y, family){ -->
-<!--   glmnet::cv.glmnet(x = x, y = y, family = family) -->
-<!-- } -->
+lasso_pred1 = tibble(
+  lasso_pred1 = predict(lasso_result$glmnet1, newx = z1),
+  lasso_pred2 = predict(lasso_result$glmnet2, newx = z1))
 
-<!-- naive_lasso_tcga = naive_lasso(x = tcga_z, y = tcga_y, family = "gaussian") -->
-<!-- CPOP::get_lasso_coef(naive_lasso_tcga, s = "lambda.min") -->
-<!-- naive_lasso_tcga_pred_sweden = predict(naive_lasso_tcga, newx = sweden_z, s = "lambda.min") -->
+lasso_pred1 %>% 
+  ggplot(aes(x = lasso_pred1, y = lasso_pred2)) +
+  geom_point() +
+  geom_abline()
+```
 
-<!-- plot(sweden_y, naive_lasso_tcga_pred_sweden) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-<!-- #################### -->
-<!-- #################### -->
-<!-- ``` -->
-
-
-<!-- ```{r} -->
-<!-- w = CPOP::compute_weights(tcga_z, sweden_z) -->
-<!-- tcga_sweden_cpop = CPOP::cpop_model( -->
-<!--   z1 = tcga_z,  -->
-<!--   z2 = sweden_z,  -->
-<!--   y1 = tcga_y,  -->
-<!--   y2 = sweden_y, w = w, n_features = 100, alpha = 0.1,  -->
-<!--   family = "gaussian", intercept = FALSE) -->
-
-<!-- plot(CPOP::predict_cpop(tcga_sweden_cpop, newz = sweden_z, model_number = 1), -->
-<!--      sweden_y) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-
-<!-- CPOP::plot_glmnet_coef(tcga_sweden_cpop, type = "text") -->
-<!-- CPOP::plot_glmnet_coef(tcga_sweden_cpop, type = "bar") -->
-<!-- ``` -->
-
-
-<!-- ```{r} -->
-<!-- ridge1_coef = coef(tcga_sweden_cpop$en1, s = tcga_sweden_cpop$en1$lambda) -->
-<!-- ridge2_coef = coef(tcga_sweden_cpop$en2, s = tcga_sweden_cpop$en2$lambda) -->
-
-<!-- which(tcga_sweden_cpop$en1$lambda == tcga_sweden_cpop$en1$lambda.min) -->
-<!-- which(tcga_sweden_cpop$en2$lambda == tcga_sweden_cpop$en2$lambda.min) -->
-
-<!-- new_iden_dist = function(x, y){ -->
-<!--   identityDist(x, y) + -->
-<!--     abs(e1071::skewness(x, y)) + -->
-<!--     (1 - cor(x, y)) -->
-<!-- } -->
-
-<!-- one_vs_mat_newdist = function(x, mat){ -->
-<!--   purrr::map_dbl(1:100, -->
-<!--                  ~ tryCatch(new_iden_dist(x, mat[,.x]), error = function(e){10})) -->
-<!-- } -->
-
-<!-- beta_newdist = purrr::map(1:100, -->
-<!--                            ~ one_vs_mat_newdist(ridge1_coef[,.x], ridge2_coef)) %>% -->
-<!--   do.call(cbind, .) %>% abs -->
-
-<!-- beta_newdist %>% -->
-<!--   d3heatmap::d3heatmap(Rowv = F, Colv = F, colors = "Blues") -->
-<!-- ############################### -->
-<!-- beta_newdist_index = which(beta_newdist == min(beta_newdist), arr.ind = TRUE) -->
-<!-- plot(ridge1_coef[,beta_newdist_index[1]],  -->
-<!--      ridge2_coef[,beta_newdist_index[2]]) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-
-<!-- newdist_beta1 = (ridge1_coef[,beta_newdist_index[1]])[-1] -->
-<!-- newdist_beta2 = (ridge2_coef[,beta_newdist_index[1]])[-1] -->
-
-<!-- plot(tcga_z[,names(newdist_beta1)] %*% newdist_beta1,  -->
-<!--      tcga_z[,names(newdist_beta2)] %*% newdist_beta2) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-
-<!-- plot(sweden_z[,names(newdist_beta1)] %*% newdist_beta1,  -->
-<!--      sweden_z[,names(newdist_beta2)] %*% newdist_beta2) -->
-<!-- abline(a = 0, b = 1, col = "red") -->
-<!-- ``` -->
 
 ```{r}
 sessionInfo()

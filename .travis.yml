@@ -11,12 +11,13 @@ os:
 env:
   - R_BIOC_VERSION: "3.11"
 
-script:
-  - R -e 'install.packages("pkgdown")'
+r_github_packages:
+  - r-lib/covr
+  - r-lib/pkgdown
 
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github(tarball = ".")'
+  script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
   skip_cleanup: true
 
 after_success:
