@@ -11,10 +11,7 @@ os:
 env:
   - R_BIOC_VERSION: "3.11"
 
-r_github_packages:
-  - r-lib/covr
-  - r-lib/pkgdown
-
+before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown")'
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
