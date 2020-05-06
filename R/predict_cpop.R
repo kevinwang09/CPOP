@@ -13,13 +13,14 @@
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
+#' attach(cpop_data_binary)
 #' set.seed(1)
 #' z1 = pairwise_col_diff(x1)
 #' z2 = pairwise_col_diff(x2)
 #' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 0.1, n_features = 10)
 #' cpop_result
-#' newz = z1[sample(1:nrow(z1), 10),]
-#' head(predict_cpop(cpop_result, newz = newz))
+#' z3 = pairwise_col_diff(x3)
+#' head(predict_cpop(cpop_result, newz = z3))
 predict_cpop = function(cpop_result, newz, s = "lambda.min"){
   ## If any discovered featureset is not in newz, then stop
   assertthat::assert_that(all(cpop_result$feature %in% colnames(newz)),

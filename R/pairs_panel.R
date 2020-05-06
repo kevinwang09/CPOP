@@ -3,6 +3,7 @@
 #' @param x a vector
 #' @param y a vector
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5], lower.panel = panel_cor)
@@ -21,6 +22,7 @@ panel_cor <- function(x, y)
 #' @param x a vector
 #' @param y a vector
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5],
@@ -45,6 +47,7 @@ panel_idenDist <- function(x, y)
 #' @param b b for abline
 #' @param col col for abline
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5],
@@ -65,6 +68,7 @@ panel_scatter_abline <- function(x, y, a = 0, b = 1, col = "red")
 #' @param b b for abline
 #' @param col col for abline
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5],
@@ -81,6 +85,7 @@ panel_scatter_abline_smallDots <- function(x, y, a = 0, b = 1, col = "red")
 #' @param x a vector
 #' @param y a vector
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5],
@@ -100,6 +105,7 @@ panel_scatter_abhvline = function(x, y)
 #' @param x a vector
 #' @param y a vector
 #' @author Kevin Wang
+#' @rdname additional_panels
 #' @export
 #' @examples
 #' pairs(iris[,-5],

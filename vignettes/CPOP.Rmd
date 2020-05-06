@@ -23,35 +23,14 @@ library(ggplot2)
 # Loading data
 
 ```{r}
-set.seed(1)
-n = 1000
-p = 10
-x1 = matrix(rnorm(n * p, mean = 0, sd = 1), nrow = n, ncol = p)
-# x2 = x1 + 3
-x2 = matrix(rnorm(n * p, mean = 2, sd = 1), nrow = n, ncol = p)
-# x2 = (x1 + matrix(rnorm(n * p, mean = 3, sd = 1), nrow = n, ncol = p))/2
-colnames(x1) = colnames(x2) = paste0("X", 1:p)
+data(cpop_data_binary, package = 'CPOP')
+attach(cpop_data_binary)
 
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
+z3 = pairwise_col_diff(x3)
 
-k = 5
-q = choose(p, 2)
-# beta = c(rep(0.5, k), rep(0, q - k))
-beta = c(runif(k, -1, 1), rep(0, q - k))
-y1 = rbinom(n, 1, prob = CPOP::expit(z1 %*% beta))
-y2 = rbinom(n, 1, prob = CPOP::expit(z2 %*% beta))
-
-set.seed(1)
 boxplot(cbind(x1,x2))
-
-
-
-boxplot(cbind(z1,z2))
-
-colSd = function(x){apply(x, 2, sd)}
-plot(colSd(z1), colSd(z2))
-abline(a = 0, b = 1)
 ```
 
 
@@ -75,15 +54,16 @@ plot_cpop(lasso_result)
 
 plot_cpop(cpop_result, type = "ggraph")
 plot_cpop(lasso_result, type = "ggraph")
+beta
 ```
 
 # Prediction 
 ```{r}
 # z3 = pairwise_col_diff(x3)
 # boxplot(y3 ~ predict_cpop(cpop_result, newz = z3)$cpop_model_avg)
-x3 = matrix(rnorm(n * p, mean = 3, sd = 1), nrow = n, ncol = p)
-colnames(x3) = colnames(x1)
-z3 = pairwise_col_diff(x3)
+# x3 = matrix(rnorm(n * p, mean = 3, sd = 1), nrow = n, ncol = p)
+# colnames(x3) = colnames(x1)
+# z3 = pairwise_col_diff(x3)
 
 predict_cpop(cpop_result, newz = z3) %>% 
   ggplot(aes(x = cpop_model1, y = cpop_model2)) +
@@ -103,12 +83,6 @@ lasso_pred1 %>%
   geom_point() +
   geom_abline()
 ```
-
-
-```{r}
-
-```
-
 
 ```{r}
 sessionInfo()

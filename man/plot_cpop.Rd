@@ -18,6 +18,7 @@ Plot cpop coefficients
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')
+attach(cpop_data_binary)
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)
