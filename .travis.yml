@@ -6,15 +6,25 @@ dist: trusty
 r: bioc-devel
 cache: packages
 
+env:
+  - R_BIOC_VERSION: "3.11"
+
+r_github_packages:
+  - r-lib/covr
+  - r-lib/pkgdown
+
+script:
+  - Rscript -e 'BiocManager::version()'
+  - Rscript -e 'BiocManager::install(version = "3.11", ask = FALSE)'
+  - Rscript -e 'BiocManager::version()'
+
 jobs:
   include:
   - r: release
-    before_cache:
-    - Rscript -e 'remotes::install_cran("pkgdown")'
     deploy:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-      skip_cleanup: true
+      cleanup: false
 
 after_success:
   - Rscript -e 'covr::codecov()'
