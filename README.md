@@ -1,8 +1,8 @@
 CPOP
 ================
 
-[![Travis build
-status](https://travis-ci.org/kevinwang09/CPOP.svg?branch=master)](https://travis-ci.org/kevinwang09/CPOP)
+[![R build
+status](https://github.com/kevinwang09/CPOP/workflows/R-CMD-check/badge.svg)](https://github.com/kevinwang09/CPOP/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/kevinwang09/CPOP/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinwang09/CPOP?branch=master)
 
