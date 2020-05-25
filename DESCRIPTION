@@ -37,3 +37,4 @@ Suggests:
     testthat (>= 2.1.0),
     visNetwork
 VignetteBuilder: knitr
+BiocViews: GeneExpression
