@@ -13,7 +13,7 @@ identityDist = function(x, y, iqr = FALSE){
   id = stats::median(abs(d))
   if(iqr) {
     result = c("id" = id,
-               "iqr_d" = unname(quantile(d, 0.75) - quantile(d, 0.25)))
+               "iqr_d" = unname(stats::quantile(d, 0.75) - stats::quantile(d, 0.25)))
     return(result)
   } else {
     return(id)

@@ -4,10 +4,8 @@
 #' @examples
 #' curve(logit, from = 0.1, to = 0.9)
 logit = function(x){
-  if(any(x <= 0) | any(x >= 1)){
-    error("x must be strictly between zero and 1")
-  }
-
+  assertthat::assert_that(any(x > 0) | any(x < 1),
+                          msg = "x must be strictly between zero and 1")
   return(log(x) - log(1-x))
 }
 

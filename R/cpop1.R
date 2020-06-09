@@ -18,6 +18,7 @@
 #' @importFrom glmnet coef.glmnet
 #' @importFrom tibble lst
 #' @importFrom dplyr bind_rows mutate %>%
+#' @importFrom rlang .data
 #' @rdname cpop1
 #' @return A vector of features
 #' @export
@@ -52,7 +53,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
     ## Elastic net model 1 is for the first data.
     ## We will fit the data with only the remaining features with weights
     en1 = glmnet::cv.glmnet(
-      x = z1[,remaining_features],
+      x = z1[,remaining_features, drop = FALSE],
       y = y1,
       family = family,
       penalty.factor = w[remaining_features],
@@ -61,7 +62,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
 
     ## Elastic net model 2 is for the second data.
     en2 = glmnet::cv.glmnet(
-      x = z2[,remaining_features],
+      x = z2[,remaining_features, drop = FALSE],
       y = y2,
       family = family,
       penalty.factor = w[remaining_features],
@@ -115,16 +116,19 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
       dplyr::pull(feature_name) %>% unique()
   }
 
-  final_features = mst_lratio(selected_features)
-  message("Removing sources of collinearity gives ", length(final_features), " features. \n")
+  if(length(selected_features) == 0){ ## If there are no features selected, then we return NULL
+    return(NULL)
+  } else { ## If there are selected features, then we perform further processing
+    final_features = mst_lratio(selected_features)
+    message("Removing sources of collinearity gives ", length(final_features), " features. \n")
 
-  step_features_tbl = step_features_tbl %>%
-    dplyr::mutate(
-      ever_selected_features = feature_name %in% selected_features,
-      in_final_features = feature_name %in% final_features)
+    step_features_tbl = step_features_tbl %>%
+      dplyr::mutate(
+        ever_selected_features = feature_name %in% selected_features,
+        in_final_features = feature_name %in% final_features)
 
-
-  return(tibble::lst(final_features, step_features_tbl))
+    return(tibble::lst(final_features, step_features_tbl))
+  }
 }
 ###########################################################################
 feature_tibble = function(en_coef, coef_model = NA){
@@ -186,6 +190,10 @@ cpop1_iterate = function(z1, z2, y1, y2, w = NULL,
     }
   }
 
-  return(tibble::lst(cpop1_features = all_selected_features,
-                     step_features = cpop1_result$step_features))
+  if(length(all_selected_features) == 0){
+    return(NULL)
+  } else {
+    return(tibble::lst(cpop1_features = all_selected_features,
+                       step_features = cpop1_result$step_features))
+  }
 }

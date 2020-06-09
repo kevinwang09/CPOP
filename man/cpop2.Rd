@@ -15,6 +15,7 @@ cpop2_sign(
   s = "lambda.min",
   nIter = 20,
   cpop2_break = TRUE,
+  intercept,
   ...
 )
 
@@ -29,6 +30,7 @@ cpop2_mag(
   nIter = 20,
   cpop2_break = FALSE,
   mag = 1,
+  intercept,
   ...
 )
 }
@@ -49,7 +51,9 @@ cpop2_mag(
 
 \item{nIter}{Number of iterations}
 
-\item{cpop2_break}{Should cpop2 loop be broken the first time
+\item{cpop2_break}{Should cpop2 loop be broken the first time}
+
+\item{intercept}{Intercept term
 differential betas are removed}
 
 \item{...}{Extra parameter settings for cv.glmnet}

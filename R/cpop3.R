@@ -13,7 +13,11 @@
 #' @rdname cpop3
 #' @return A vector
 #' @export
-cpop3 = function(z1, z2, y1, y2, cpop2_result, family, intercept = FALSE, ...){
+cpop3 = function(z1, z2, y1, y2, cpop2_result, family, intercept, ...){
+  if(family == "cox"){
+    intercept = TRUE
+  }
+
   glmnet1 = glmnet::cv.glmnet(
       x = z1[,cpop2_result],
       y = y1,

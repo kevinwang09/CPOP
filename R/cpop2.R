@@ -10,6 +10,7 @@
 #' @param ... Extra parameter settings for cv.glmnet
 #' @param family see glmnet family
 #' @param cpop2_break Should cpop2 loop be broken the first time
+#' @param intercept Intercept term
 #' differential betas are removed
 #' @rdname cpop2
 #' @importFrom glmnet cv.glmnet
@@ -17,19 +18,19 @@
 #' @return A vector of features
 #' @export
 cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
-                cpop2_break = TRUE, ...){
+                cpop2_break = TRUE, intercept, ...){
   p = length(cpop1_features)
   cpop2_features = cpop1_features
 
   for(j in 1:nIter){
-    z1_reduced = z1[,cpop2_features]
-    z2_reduced = z2[,cpop2_features]
+    z1_reduced = z1[,cpop2_features, drop = FALSE]
+    z2_reduced = z2[,cpop2_features, drop = FALSE]
 
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
       family = family,
-      alpha = 0, ...)
+      alpha = 0, intercept = intercept, ...)
 
     coef1 = glmnet::coef.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
@@ -38,7 +39,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", 
       x = z2_reduced,
       y = y2,
       family = family,
-      alpha = 0, ...)
+      alpha = 0, intercept = intercept, ...)
 
     coef2 = glmnet::coef.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
@@ -53,7 +54,11 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", 
     message("CPOP2 - Sign: Step ", sprintf("%02d", j), ": Number of leftover features: ", length(cpop2_features), " out of ", p)
     message("The sign matrix between the two data:")
     print(confTable_diag0)
-    if(cpop2_break & sum(confTable_diag0) == 0){break}
+    if(cpop2_break & sum(confTable_diag0) == 0){break} ## If all features with discorded signs are removed then break
+    if(length(cpop2_features) == 0){
+      warning("CPOP step 2 removed all features, CPOP 1 features will be used without any filtering")
+      return(cpop1_features)
+      }
   } ## End j-loop
   return(cpop2_features)
 }
@@ -66,7 +71,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", 
 #' @rdname cpop2
 #' @export
 cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
-                 cpop2_break = FALSE, mag = 1, ...){
+                 cpop2_break = FALSE, mag = 1, intercept, ...){
   p = length(cpop1_features)
   cpop2_features = cpop1_features
 
@@ -74,14 +79,14 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", n
     if(length(cpop2_features) <= 10){
       break
     }
-    z1_reduced = z1[,cpop2_features]
-    z2_reduced = z2[,cpop2_features]
+    z1_reduced = z1[,cpop2_features, drop = FALSE]
+    z2_reduced = z2[,cpop2_features, drop = FALSE]
 
     ridge1 = glmnet::cv.glmnet(
       x = z1_reduced,
       y = y1,
       family = family,
-      alpha = 0, ...)
+      alpha = 0, intercept = intercept, ...)
 
     coef1 = glmnet::coef.glmnet(ridge1, s = s)[-1, , drop = FALSE]
     signCoef1 = sign(coef1)
@@ -90,7 +95,7 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", n
       x = z2_reduced,
       y = y2,
       family = family,
-      alpha = 0, ...)
+      alpha = 0, intercept = intercept, ...)
 
     coef2 = glmnet::coef.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)

@@ -48,11 +48,11 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
   if (cpop2_type == "sign"){
     cpop2_result = cpop2_sign(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                               cpop1_features = cpop1_features, s = s, n_iter = n_iter, family = family,
-                              cpop2_break = cpop2_break)}
+                              cpop2_break = cpop2_break, intercept = intercept)}
   if (cpop2_type == "mag"){
     cpop2_result = cpop2_mag(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                              cpop1_features = cpop1_features, s = s, n_iter = n_iter, family = family,
-                             cpop2_break = FALSE, mag = cpop2_mag)}
+                             cpop2_break = FALSE, mag = cpop2_mag, intercept = intercept)}
 
 
   if(length(cpop2_result) == 0){return(NULL)}
@@ -82,3 +82,6 @@ print.cpop <- function(cpop_result, ...)
   cat("CPOP model with ", length(cpop_result$feature), "features \n")
   print(cpop_result$coef_tbl)
 }
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))

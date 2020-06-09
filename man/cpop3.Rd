@@ -4,7 +4,7 @@
 \alias{cpop3}
 \title{Step 3 of the CPOP method}
 \usage{
-cpop3(z1, z2, y1, y2, cpop2_result, family, intercept = FALSE, ...)
+cpop3(z1, z2, y1, y2, cpop2_result, family, intercept, ...)
 }
 \arguments{
 \item{z1}{A data matrix}

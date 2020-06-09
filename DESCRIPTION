@@ -28,7 +28,8 @@ Imports:
     proxy,
     Matrix,
     mvtnorm,
-    forcats
+    forcats,
+    rlang
 Suggests: 
     BiocStyle,
     knitr,
