@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prediction function for CPOP — predict_cpop • CPOP</title>
+<title>Imputing gene expression values using CPOP model — impute_cpop • CPOP</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Prediction function for CPOP — predict_cpop" />
-<meta property="og:description" content="Prediction function for CPOP" />
+<meta property="og:title" content="Imputing gene expression values using CPOP model — impute_cpop" />
+<meta property="og:description" content="Imputing gene expression values using CPOP model" />
 
 
 
@@ -106,16 +106,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prediction function for CPOP</h1>
+    <h1>Imputing gene expression values using CPOP model</h1>
     
-    <div class="hidden name"><code>predict_cpop.Rd</code></div>
+    <div class="hidden name"><code>impute_cpop.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Prediction function for CPOP</p>
+    <p>Imputing gene expression values using CPOP model</p>
     </div>
 
-    <pre class="usage"><span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='no'>newz</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</pre>
+    <pre class="usage"><span class='fu'>impute_cpop</span>(<span class='no'>cpop_result</span>, <span class='no'>x1</span>, <span class='no'>x2</span>, <span class='no'>newx</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -125,12 +125,16 @@
       <td><p>cpop_model result</p></td>
     </tr>
     <tr>
-      <th>newz</th>
-      <td><p>New data</p></td>
+      <th>x1</th>
+      <td><p>gene data 1</p></td>
     </tr>
     <tr>
-      <th>s</th>
-      <td><p>CV-Lasso lambda</p></td>
+      <th>x2</th>
+      <td><p>gene data 2</p></td>
+    </tr>
+    <tr>
+      <th>newx</th>
+      <td><p>gene gene data</p></td>
     </tr>
     </table>
 
@@ -145,12 +149,6 @@
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 4):</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 5):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 6):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 7):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 8):</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
 <span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
@@ -228,7 +226,7 @@
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "cpop" "list"</div><div class='input'><span class='no'>z3</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x3</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z3</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='predict_cpop.html'>predict_cpop</a></span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z3</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   samples cpop_model1 cpop_model2 cpop_model_avg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1             0.437     -</span><span style='color: #BB0000;'>0.107</span><span>          0.165 
@@ -236,7 +234,21 @@
 #&gt; </span><span style='color: #555555;'>3</span><span> 3             0.248     -</span><span style='color: #BB0000;'>0.115</span><span>          0.066</span><span style='text-decoration: underline;'>4</span><span>
 #&gt; </span><span style='color: #555555;'>4</span><span> 4            -</span><span style='color: #BB0000;'>0.877</span><span>     -</span><span style='color: #BB0000;'>0.198</span><span>         -</span><span style='color: #BB0000;'>0.537</span><span> 
 #&gt; </span><span style='color: #555555;'>5</span><span> 5             0.955      0.671          0.813 
-#&gt; </span><span style='color: #555555;'>6</span><span> 6            -</span><span style='color: #BB0000;'>0.623</span><span>     -</span><span style='color: #BB0000;'>1.05</span><span>          -</span><span style='color: #BB0000;'>0.836</span><span> </div></span></pre>
+#&gt; </span><span style='color: #555555;'>6</span><span> 6            -</span><span style='color: #BB0000;'>0.623</span><span>     -</span><span style='color: #BB0000;'>1.05</span><span>          -</span><span style='color: #BB0000;'>0.836</span><span> </div><div class='input'><span class='no'>x4</span> <span class='kw'>=</span> <span class='no'>x3</span>
+<span class='no'>x4</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='fl'>NA</span>
+<span class='no'>z4</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x4</span>)
+<span class='co'>## head(predict_cpop(cpop_result, newz = z4))</span>
+<span class='no'>x4_imp</span> <span class='kw'>=</span> <span class='fu'>impute_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>x1</span> <span class='kw'>=</span> <span class='no'>x1</span>, <span class='kw'>x2</span> <span class='kw'>=</span> <span class='no'>x2</span>, <span class='kw'>newx</span> <span class='kw'>=</span> <span class='no'>x4</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='predict_cpop.html'>predict_cpop</a></span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='kw pkg'>CPOP</span><span class='kw ns'>::</span><span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x4_imp</span>)))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
+#&gt;   samples cpop_model1 cpop_model2 cpop_model_avg
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 1              5.63        3.85           4.74
+#&gt; </span><span style='color: #555555;'>2</span><span> 2              3.59        3.29           3.44
+#&gt; </span><span style='color: #555555;'>3</span><span> 3              4.68        3.26           3.97
+#&gt; </span><span style='color: #555555;'>4</span><span> 4              2.75        2.57           2.66
+#&gt; </span><span style='color: #555555;'>5</span><span> 5              4.99        3.75           4.37
+#&gt; </span><span style='color: #555555;'>6</span><span> 6              5.86        3.89           4.88</div><div class='input'><span class='co'>## plot(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))$cpop_model_avg,</span>
+<span class='co'>## predict_cpop(cpop_result, newz = z3)$cpop_model_avg)</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

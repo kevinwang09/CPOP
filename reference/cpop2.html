@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Step 1 of the CPOP method — cpop1 • CPOP</title>
+<title>Step 2 of the CPOP method — cpop2_sign • CPOP</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,9 @@
 
 
 
-<meta property="og:title" content="Step 1 of the CPOP method — cpop1" />
-<meta property="og:description" content="Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.
-Step 1 of the CPOP method, for multiple alpha inputs" />
+<meta property="og:title" content="Step 2 of the CPOP method — cpop2_sign" />
+<meta property="og:description" content="Step 2 of the CPOP method based on sign
+Step 2 of the CPOP method based on scaled magnitude" />
 
 
 
@@ -109,44 +107,42 @@ Step 1 of the CPOP method, for multiple alpha inputs" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Step 1 of the CPOP method</h1>
+    <h1>Step 2 of the CPOP method</h1>
     
-    <div class="hidden name"><code>cpop1.Rd</code></div>
+    <div class="hidden name"><code>cpop2.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.</p>
-<p>Step 1 of the CPOP method, for multiple alpha inputs</p>
+    <p>Step 2 of the CPOP method based on sign</p>
+<p>Step 2 of the CPOP method based on scaled magnitude</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cpop1</span>(
+    <pre class="usage"><span class='fu'>cpop2_sign</span>(
   <span class='no'>z1</span>,
   <span class='no'>z2</span>,
   <span class='no'>y1</span>,
   <span class='no'>y2</span>,
-  <span class='no'>w</span>,
   <span class='no'>family</span>,
-  <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='no'>cpop1_features</span>,
   <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
-  <span class='kw'>cpop1_method</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
+  <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>cpop2_break</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>intercept</span>,
   <span class='no'>...</span>
 )
 
-<span class='fu'>cpop1_iterate</span>(
+<span class='fu'>cpop2_mag</span>(
   <span class='no'>z1</span>,
   <span class='no'>z2</span>,
   <span class='no'>y1</span>,
   <span class='no'>y2</span>,
-  <span class='kw'>w</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>family</span>,
+  <span class='no'>cpop1_features</span>,
   <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
-  <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>cpop2_break</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>mag</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>intercept</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -170,43 +166,43 @@ elastic net variable selection.</p>
       <td><p>A vector</p></td>
     </tr>
     <tr>
-      <th>w</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
       <th>family</th>
-      <td><p>See glmnet family</p></td>
+      <td><p>see glmnet family</p></td>
     </tr>
     <tr>
-      <th>n_iter</th>
-      <td><p>Number of iterations</p></td>
-    </tr>
-    <tr>
-      <th>alpha</th>
-      <td><p>Lasso alpha</p></td>
-    </tr>
-    <tr>
-      <th>n_features</th>
-      <td><p>n_features desired</p></td>
+      <th>cpop1_features</th>
+      <td><p>cpop1 result</p></td>
     </tr>
     <tr>
       <th>s</th>
-      <td><p>CV lambda</p></td>
+      <td><p>CV-Lasso lambda</p></td>
     </tr>
     <tr>
-      <th>cpop1_method</th>
-      <td><p>Default value is "normal". Alternatives are "after" and "either".</p></td>
+      <th>nIter</th>
+      <td><p>Number of iterations</p></td>
+    </tr>
+    <tr>
+      <th>cpop2_break</th>
+      <td><p>Should cpop2 loop be broken the first time</p></td>
+    </tr>
+    <tr>
+      <th>intercept</th>
+      <td><p>Intercept term
+differential betas are removed</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Extra parameter settings for cv.glmnet</p></td>
+    </tr>
+    <tr>
+      <th>mag</th>
+      <td><p>a scaled threshold differential betas are removed</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of features</p>
-<p>A vector of features</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

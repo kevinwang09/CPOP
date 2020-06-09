@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Step 1 of the CPOP method — cpop1 • CPOP</title>
+<title>Compute feature-wise concordance penalty — colmeans_penalty • CPOP</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,8 @@
 
 
 
-<meta property="og:title" content="Step 1 of the CPOP method — cpop1" />
-<meta property="og:description" content="Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.
-Step 1 of the CPOP method, for multiple alpha inputs" />
+<meta property="og:title" content="Compute feature-wise concordance penalty — colmeans_penalty" />
+<meta property="og:description" content="Compute feature-wise concordance penalty" />
 
 
 
@@ -109,105 +106,47 @@ Step 1 of the CPOP method, for multiple alpha inputs" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Step 1 of the CPOP method</h1>
+    <h1>Compute feature-wise concordance penalty</h1>
     
-    <div class="hidden name"><code>cpop1.Rd</code></div>
+    <div class="hidden name"><code>penalties.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.</p>
-<p>Step 1 of the CPOP method, for multiple alpha inputs</p>
+    <p>Compute feature-wise concordance penalty</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cpop1</span>(
-  <span class='no'>z1</span>,
-  <span class='no'>z2</span>,
-  <span class='no'>y1</span>,
-  <span class='no'>y2</span>,
-  <span class='no'>w</span>,
-  <span class='no'>family</span>,
-  <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
-  <span class='kw'>cpop1_method</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>colmeans_penalty</span>(<span class='no'>x1</span>, <span class='no'>x2</span>)
 
-<span class='fu'>cpop1_iterate</span>(
-  <span class='no'>z1</span>,
-  <span class='no'>z2</span>,
-  <span class='no'>y1</span>,
-  <span class='no'>y2</span>,
-  <span class='kw'>w</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>family</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
-  <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>p_transform</span>(<span class='no'>penalty</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>z1</th>
+      <th>x1</th>
       <td><p>A data matrix</p></td>
     </tr>
     <tr>
-      <th>z2</th>
+      <th>x2</th>
       <td><p>A data matrix</p></td>
     </tr>
     <tr>
-      <th>y1</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
-      <th>y2</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
-      <th>w</th>
-      <td><p>A vector</p></td>
-    </tr>
-    <tr>
-      <th>family</th>
-      <td><p>See glmnet family</p></td>
-    </tr>
-    <tr>
-      <th>n_iter</th>
-      <td><p>Number of iterations</p></td>
-    </tr>
-    <tr>
-      <th>alpha</th>
-      <td><p>Lasso alpha</p></td>
-    </tr>
-    <tr>
-      <th>n_features</th>
-      <td><p>n_features desired</p></td>
-    </tr>
-    <tr>
-      <th>s</th>
-      <td><p>CV lambda</p></td>
-    </tr>
-    <tr>
-      <th>cpop1_method</th>
-      <td><p>Default value is "normal". Alternatives are "after" and "either".</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Extra parameter settings for cv.glmnet</p></td>
+      <th>penalty</th>
+      <td><p>A vector of penalties to be transformed</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of features</p>
-<p>A vector of features</p>
+    <p>A vector</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>x2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span> * <span class='no'>p</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='fu'>colmeans_penalty</span>(<span class='no'>x1</span>, <span class='no'>x2</span>)</div><div class='output co'>#&gt;  [1] 0.8236404 1.2599340 1.3849807 1.7834853 0.6810144 0.6335384 0.6399791
+#&gt;  [8] 0.2126798 1.0025180 1.5782300</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

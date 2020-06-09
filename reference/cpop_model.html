@@ -8,23 +8,29 @@
 
 <title>All three steps of CPOP modelling — cpop_model • CPOP</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="All three steps of CPOP modelling — cpop_model" />
 
+<meta property="og:title" content="All three steps of CPOP modelling — cpop_model" />
 <meta property="og:description" content="All three steps of CPOP modelling" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -66,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CPOP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.24</span>
       </span>
     </div>
 
@@ -85,7 +91,6 @@
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -107,15 +112,28 @@
     </div>
 
     <div class="ref-description">
-    
     <p>All three steps of CPOP modelling</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>cpop_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='no'>w</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>nIter</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>, <span class='kw'>cpop2_break</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cpop2_type</span> <span class='kw'>=</span> <span class='st'>"sign"</span>, <span class='kw'>cpop2_mag</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>cpop_model</span>(
+  <span class='no'>z1</span>,
+  <span class='no'>z2</span>,
+  <span class='no'>y1</span>,
+  <span class='no'>y2</span>,
+  <span class='kw'>w</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
+  <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
+  <span class='kw'>cpop2_break</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cpop2_type</span> <span class='kw'>=</span> <span class='st'>"sign"</span>,
+  <span class='kw'>cpop2_mag</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>cpop1_method</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
+  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -144,7 +162,7 @@
       <td><p>n_features desired</p></td>
     </tr>
     <tr>
-      <th>nIter</th>
+      <th>n_iter</th>
       <td><p>Number of iterations</p></td>
     </tr>
     <tr>
@@ -169,80 +187,114 @@
     </tr>
     <tr>
       <th>cpop2_mag</th>
-      <td><p>a threshold
+      <td><p>a threshold</p></td>
+    </tr>
+    <tr>
+      <th>cpop1_method</th>
+      <td><p>Default value is "normal". Alternatives are "after" and "either".
 differential betas are removed</p></td>
+    </tr>
+    <tr>
+      <th>intercept</th>
+      <td><p>Default to FALSE</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Extra parameter settings for cv.glmnet in cpop1</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cpop_data_binary</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'CPOP'</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span>(<span class='no'>cpop_data_binary</span>)</div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 3):</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 4):</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
 <span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
 <span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
-<span class='no'>w</span> <span class='kw'>=</span> <span class='fu'><a href='compute_weights.html'>compute_weights</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>)
-<span class='no'>cpop_model_result</span> <span class='kw'>=</span> <span class='fu'>cpop_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
-<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
-#&gt;  0  1 
-#&gt; 13 32 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 05: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 06: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 07: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 08: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 09: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 10: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 11: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 12: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 13: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 14: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 15: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 16: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 17: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 18: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 19: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 20: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>40 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 29 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 0
-#&gt;   0   0 0 0
-#&gt;   1   5 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 02: Number of leftover features: 26 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+<span class='no'>cpop_result</span> <span class='kw'>=</span> <span class='fu'>cpop_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Absolute colMeans difference will be used as the weights for CPOP</span></div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; <span class='message'>Based on previous alpha, 0 features are kept </span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 190</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 9 out of 190</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 03: Number of selected features: 16 out of 190</span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 16 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>Removing sources of collinearity gives 13 features. </span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 13 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 9 out of 13</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 1
 #&gt;   0   0 0 0
-#&gt;   1   2 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 03: Number of leftover features: 25 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 1
-#&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 04: Number of leftover features: 25 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;   1   3 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 02: Number of leftover features: 8 out of 13</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='input'><span class='no'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>)
-<span class='no'>cpop_model_result</span> <span class='kw'>=</span> <span class='fu'>cpop_model</span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>w</span> <span class='kw'>=</span> <span class='no'>w</span>,
-<span class='kw'>cpop1_iterate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>alpha</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>,
-<span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)</div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 1</span></div><div class='output co'>#&gt; 
-#&gt;  0  1 
-#&gt; 13 32 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 14 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 03: Number of selected features: 23 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 05: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 06: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 07: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 08: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 09: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 10: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 11: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 12: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 13: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 14: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 15: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 16: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 17: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 18: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 19: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 20: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>40 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 0.1</span></div><div class='output co'>#&gt; 
-#&gt;  0  1 
-#&gt; 34 11 </div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 03: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 04: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 05: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 06: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 07: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 08: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 09: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 10: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 11: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 12: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 13: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 14: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 15: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 16: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 17: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 18: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 19: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 20: Number of selected features: 34 out of 45</span></div><div class='output co'>#&gt; <span class='message'>40 features was not reached. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 29 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+#&gt;   1   1 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 03: Number of leftover features: 8 out of 13</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   5 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 02: Number of leftover features: 26 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 1
-#&gt;   0   0 0 0
-#&gt;   1   2 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 03: Number of leftover features: 25 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 1
-#&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 04: Number of leftover features: 25 out of 34</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 0
-#&gt;   0   0 0 0
-#&gt;   1   0 0 0</div></pre>
+#&gt;   1   0 0 0</div><div class='input'><span class='no'>cpop_result</span></div><div class='output co'>#&gt; $glmnet1
+#&gt; 
+#&gt; Call:  glmnet::cv.glmnet(x = z1[, cpop2_result], y = y1, family = family,      alpha = 0, intercept = intercept) 
+#&gt; 
+#&gt; Measure: Binomial Deviance 
+#&gt; 
+#&gt;      Lambda Measure      SE Nonzero
+#&gt; min 0.02761  0.7775 0.06786       8
+#&gt; 1se 0.07000  0.8416 0.06030       8
+#&gt; 
+#&gt; $glmnet2
+#&gt; 
+#&gt; Call:  glmnet::cv.glmnet(x = z2[, cpop2_result], y = y2, family = family,      alpha = 0, intercept = intercept) 
+#&gt; 
+#&gt; Measure: Binomial Deviance 
+#&gt; 
+#&gt;      Lambda Measure      SE Nonzero
+#&gt; min 0.03676  0.9288 0.09282       8
+#&gt; 1se 0.25935  1.0137 0.05566       8
+#&gt; 
+#&gt; $feature
+#&gt; [1] "X01--X10" "X09--X17" "X11--X14" "X12--X20" "X01--X07" "X01--X15" "X01--X17"
+#&gt; [8] "X04--X12"
+#&gt; 
+#&gt; $coef_tbl
+#&gt; <span style='color: #555555;'># A tibble: 9 x 3</span><span>
+#&gt;   coef_name    coef1    coef2
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> (Intercept)  0      0      
+#&gt; </span><span style='color: #555555;'>2</span><span> X01--X10    -</span><span style='color: #BB0000;'>0.322</span><span> -</span><span style='color: #BB0000;'>0.246</span><span>  
+#&gt; </span><span style='color: #555555;'>3</span><span> X09--X17     0.722  0.521  
+#&gt; </span><span style='color: #555555;'>4</span><span> X11--X14     0.130  0.002</span><span style='text-decoration: underline;'>92</span><span>
+#&gt; </span><span style='color: #555555;'>5</span><span> X12--X20     0.404  0.170  
+#&gt; </span><span style='color: #555555;'>6</span><span> X01--X07    -</span><span style='color: #BB0000;'>0.437</span><span> -</span><span style='color: #BB0000;'>0.408</span><span>  
+#&gt; </span><span style='color: #555555;'>7</span><span> X01--X15    -</span><span style='color: #BB0000;'>0.158</span><span> -</span><span style='color: #BB0000;'>0.334</span><span>  
+#&gt; </span><span style='color: #555555;'>8</span><span> X01--X17    -</span><span style='color: #BB0000;'>0.901</span><span> -</span><span style='color: #BB0000;'>0.644</span><span>  
+#&gt; </span><span style='color: #555555;'>9</span><span> X04--X12     0.353  0.431  
+#&gt; 
+#&gt; $cpop1_features
+#&gt;  [1] "X01--X10" "X05--X06" "X05--X09" "X09--X17" "X11--X14" "X12--X20"
+#&gt;  [7] "X16--X19" "X01--X07" "X01--X15" "X01--X17" "X04--X12" "X06--X16"
+#&gt; [13] "X08--X19"
+#&gt; 
+#&gt; $step_features
+#&gt; </span><span style='color: #555555;'># A tibble: 78 x 6</span><span>
+#&gt;    step  coef_model feature_name feature_value ever_selected_f… in_final_featur…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span> 1     1          (Intercept)         0.232  FALSE            FALSE           
+#&gt; </span><span style='color: #555555;'> 2</span><span> 1     1          X01--X10           -</span><span style='color: #BB0000;'>2.34</span><span>   TRUE             TRUE            
+#&gt; </span><span style='color: #555555;'> 3</span><span> 1     1          X03--X07            0.321  FALSE            FALSE           
+#&gt; </span><span style='color: #555555;'> 4</span><span> 1     1          X04--X20            0.429  TRUE             FALSE           
+#&gt; </span><span style='color: #555555;'> 5</span><span> 1     1          X05--X06            0.417  TRUE             TRUE            
+#&gt; </span><span style='color: #555555;'> 6</span><span> 1     1          X05--X09           -</span><span style='color: #BB0000;'>0.270</span><span>  TRUE             TRUE            
+#&gt; </span><span style='color: #555555;'> 7</span><span> 1     1          X05--X16            0.062</span><span style='text-decoration: underline;'>7</span><span> FALSE            FALSE           
+#&gt; </span><span style='color: #555555;'> 8</span><span> 1     1          X06--X08            0.175  FALSE            FALSE           
+#&gt; </span><span style='color: #555555;'> 9</span><span> 1     1          X06--X16            0.417  TRUE             TRUE            
+#&gt; </span><span style='color: #555555;'>10</span><span> 1     1          X06--X19            0.095</span><span style='text-decoration: underline;'>0</span><span> FALSE            FALSE           
+#&gt; </span><span style='color: #555555;'># … with 68 more rows</span><span>
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cpop" "list"</div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -253,7 +305,7 @@ differential betas are removed</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
