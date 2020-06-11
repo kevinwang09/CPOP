@@ -8,17 +8,13 @@
 #' @importFrom purrr imap
 #' @export
 #' @examples
-#' n = 4
+#' n = 1
 #' p = 4
 #' x = matrix(rep(1:p, n), nrow = n, ncol = p, byrow = TRUE)
 #' colnames(x) = paste0("X", 1:p)
-#' identical(pairwise_col_diff(x),
-#' pairwise_col_diff(x[,4:1]))
-#'
-
-
+#' pairwise_col_diff(x)
 pairwise_col_diff = function(x){
-  x = x[,sort(colnames(x))]
+  x = x[,sort(colnames(x)), drop = FALSE]
 
   p = ncol(x)
   list_mat = purrr::map(

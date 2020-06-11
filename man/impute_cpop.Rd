@@ -33,10 +33,10 @@ z3 = pairwise_col_diff(x3)
 head(predict_cpop(cpop_result, newz = z3))
 x4 = x3
 x4[,1] = NA
-z4 = pairwise_col_diff(x4)
+# z4 = pairwise_col_diff(x4)
 ## head(predict_cpop(cpop_result, newz = z4))
 x4_imp = impute_cpop(cpop_result, x1 = x1, x2 = x2, newx = x4)
-head(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp)))
+# head(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp)))
 ## plot(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))$cpop_model_avg,
 ## predict_cpop(cpop_result, newz = z3)$cpop_model_avg)
 }
