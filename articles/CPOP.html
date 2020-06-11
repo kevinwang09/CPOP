@@ -98,27 +98,27 @@
 <pre><code>## Based on previous alpha, 0 features are kept</code></pre>
 <pre><code>## CPOP1 - Step 01: Number of selected features: 0 out of 190</code></pre>
 <pre><code>## CPOP1 - Step 02: Number of selected features: 9 out of 190</code></pre>
-<pre><code>## CPOP1 - Step 03: Number of selected features: 16 out of 190</code></pre>
+<pre><code>## CPOP1 - Step 03: Number of selected features: 17 out of 190</code></pre>
 <pre><code>## 10 features was reached.</code></pre>
-<pre><code>## A total of 16 features were selected.</code></pre>
-<pre><code>## Removing sources of collinearity gives 13 features.</code></pre>
+<pre><code>## A total of 17 features were selected.</code></pre>
+<pre><code>## Removing sources of collinearity gives 14 features.</code></pre>
 <pre><code>## 10 features was reached.</code></pre>
-<pre><code>## A total of 13 features were selected.</code></pre>
-<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 9 out of 13</code></pre>
+<pre><code>## A total of 14 features were selected.</code></pre>
+<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 10 out of 14</code></pre>
 <pre><code>## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 1
 ##   0   0 0 0
 ##   1   3 0 0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 8 out of 13
+<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 8 out of 14
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 0
 ##   0   0 0 0
-##   1   1 0 0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 8 out of 13
+##   1   2 0 0</code></pre>
+<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 8 out of 14
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
@@ -131,16 +131,16 @@
 <pre><code>## 
 ## $data
 ## # A tibble: 8 x 3
-##   coef_name  coef1    coef2
-##   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-## 1 X01--X10  -0.322 -0.246  
-## 2 X09--X17   0.722  0.521  
-## 3 X11--X14   0.130  0.00292
-## 4 X12--X20   0.404  0.170  
-## 5 X01--X07  -0.437 -0.408  
-## 6 X01--X15  -0.158 -0.334  
-## 7 X01--X17  -0.901 -0.644  
-## 8 X04--X12   0.353  0.431</code></pre>
+##   coef_name   coef1   coef2
+##   &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+## 1 X01--X10  -0.313  -0.243 
+## 2 X09--X17   0.705   0.585 
+## 3 X12--X20   0.396   0.207 
+## 4 X01--X07  -0.461  -0.425 
+## 5 X01--X15  -0.134  -0.352 
+## 6 X01--X17  -0.892  -0.729 
+## 7 X04--X12   0.343   0.475 
+## 8 X13--X14   0.0405  0.0551</code></pre>
 </div>
 <div id="naive-lasso" class="section level1">
 <h1 class="hasAnchor">
@@ -153,9 +153,9 @@
 ## 
 ## Measure: Mean-Squared Error 
 ## 
-##      Lambda Measure      SE Nonzero
-## min 0.09523  0.3907 0.04071       4
-## 1se 0.20999  0.4282 0.04976       2
+##     Lambda Measure      SE Nonzero
+## min 0.1147  0.4008 0.03522       3
+## 1se 0.2004  0.4322 0.03445       2
 ## 
 ## $glmnet2
 ## 
@@ -164,8 +164,8 @@
 ## Measure: Mean-Squared Error 
 ## 
 ##     Lambda Measure      SE Nonzero
-## min 0.1218  0.4677 0.04577       5
-## 1se 0.2565  0.5088 0.06176       2
+## min 0.1337  0.4675 0.06465       4
+## 1se 0.3089  0.5285 0.08333       0
 ## 
 ## $coef_tbl
 ## $coef_tbl[[1]]
@@ -175,12 +175,12 @@
 ##  1 (Intercept)  0      0     
 ##  2 X01--X02     0      0     
 ##  3 X01--X03     0      0     
-##  4 X01--X04    -0.129 -0.0739
+##  4 X01--X04    -0.121 -0.0705
 ##  5 X01--X05     0      0     
 ##  6 X01--X06     0      0     
 ##  7 X01--X07     0      0     
-##  8 X01--X08     0     -0.0275
-##  9 X01--X09    -0.121 -0.0727
+##  8 X01--X08     0     -0.0235
+##  9 X01--X09    -0.118 -0.0704
 ## 10 X01--X10     0      0     
 ## # … with 181 more rows
 ## 
@@ -197,16 +197,16 @@
 <pre><code>## 
 ## $data
 ## # A tibble: 8 x 3
-##   coef_name  coef1    coef2
-##   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-## 1 X01--X10  -0.322 -0.246  
-## 2 X09--X17   0.722  0.521  
-## 3 X11--X14   0.130  0.00292
-## 4 X12--X20   0.404  0.170  
-## 5 X01--X07  -0.437 -0.408  
-## 6 X01--X15  -0.158 -0.334  
-## 7 X01--X17  -0.901 -0.644  
-## 8 X04--X12   0.353  0.431</code></pre>
+##   coef_name   coef1   coef2
+##   &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+## 1 X01--X10  -0.313  -0.243 
+## 2 X09--X17   0.705   0.585 
+## 3 X12--X20   0.396   0.207 
+## 4 X01--X07  -0.461  -0.425 
+## 5 X01--X15  -0.134  -0.352 
+## 6 X01--X17  -0.892  -0.729 
+## 7 X04--X12   0.343   0.475 
+## 8 X13--X14   0.0405  0.0551</code></pre>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="no">lasso_result</span>)</pre></body></html></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
@@ -215,24 +215,24 @@
 ## # A tibble: 2 x 3
 ##   coef_name  coef1   coef2
 ##   &lt;fct&gt;      &lt;dbl&gt;   &lt;dbl&gt;
-## 1 X01--X04  -0.129 -0.0739
-## 2 X01--X09  -0.121 -0.0727</code></pre>
+## 1 X01--X04  -0.121 -0.0705
+## 2 X01--X09  -0.118 -0.0704</code></pre>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="no">cpop_result</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"ggraph"</span>)</pre></body></html></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
 <pre><code>## 
 ## $data
 ## # A tibble: 8 x 7
-##   from  to     coef1    coef2 coef_avg coef_abs sign_coef1
-##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
-## 1 X01   X10   -0.322 -0.246    -0.284    0.284  Negative  
-## 2 X09   X17    0.722  0.521     0.621    0.621  Positive  
-## 3 X11   X14    0.130  0.00292   0.0666   0.0666 Positive  
-## 4 X12   X20    0.404  0.170     0.287    0.287  Positive  
-## 5 X01   X07   -0.437 -0.408    -0.423    0.423  Negative  
-## 6 X01   X15   -0.158 -0.334    -0.246    0.246  Negative  
-## 7 X01   X17   -0.901 -0.644    -0.773    0.773  Negative  
-## 8 X04   X12    0.353  0.431     0.392    0.392  Positive</code></pre>
+##   from  to      coef1   coef2 coef_avg coef_abs sign_coef1
+##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
+## 1 X01   X10   -0.313  -0.243   -0.278    0.278  Negative  
+## 2 X09   X17    0.705   0.585    0.645    0.645  Positive  
+## 3 X12   X20    0.396   0.207    0.302    0.302  Positive  
+## 4 X01   X07   -0.461  -0.425   -0.443    0.443  Negative  
+## 5 X01   X15   -0.134  -0.352   -0.243    0.243  Negative  
+## 6 X01   X17   -0.892  -0.729   -0.811    0.811  Negative  
+## 7 X04   X12    0.343   0.475    0.409    0.409  Positive  
+## 8 X13   X14    0.0405  0.0551   0.0478   0.0478 Positive</code></pre>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="no">lasso_result</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"ggraph"</span>)</pre></body></html></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-4.png" width="700"></p>
@@ -241,8 +241,8 @@
 ## # A tibble: 2 x 7
 ##   from  to     coef1   coef2 coef_avg coef_abs sign_coef1
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
-## 1 X01   X04   -0.129 -0.0739  -0.101    0.101  Negative  
-## 2 X01   X09   -0.121 -0.0727  -0.0968   0.0968 Negative</code></pre>
+## 1 X01   X04   -0.121 -0.0705  -0.0958   0.0958 Negative  
+## 2 X01   X09   -0.118 -0.0704  -0.0942   0.0942 Negative</code></pre>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">beta</span></pre></body></html></div>
 <pre><code>##    X01--X02    X01--X03    X01--X04    X01--X05    X01--X06    X01--X07 
 ## -0.49258985 -0.14860754 -0.82375058  0.07058263 -0.55084665  0.03776694 
@@ -325,22 +325,23 @@
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span>(<span class="no">cpop_result</span>, <span class="kw">newz</span> <span class="kw">=</span> <span class="no">z3</span>)[,<span class="fl">2</span>:<span class="fl">3</span>] <span class="kw">%&gt;%</span> <span class="no">cor</span></pre></body></html></div>
 <pre><code>##             cpop_model1 cpop_model2
-## cpop_model1   1.0000000   0.9573995
-## cpop_model2   0.9573995   1.0000000</code></pre>
+## cpop_model1   1.0000000   0.9658353
+## cpop_model2   0.9658353   1.0000000</code></pre>
 <div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">lasso_pred1</span> <span class="kw">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
   <span class="kw">lasso_pred1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">lasso_result</span>$<span class="no">glmnet1</span>, <span class="kw">newx</span> <span class="kw">=</span> <span class="no">z3</span>),
   <span class="kw">lasso_pred2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">lasso_result</span>$<span class="no">glmnet2</span>, <span class="kw">newx</span> <span class="kw">=</span> <span class="no">z3</span>))
 
 <span class="no">lasso_pred1</span> <span class="kw">%&gt;%</span> <span class="no">cor</span></pre></body></html></div>
+<pre><code>## Warning in cor(.): the standard deviation is zero</code></pre>
 <pre><code>##             lasso_pred1 lasso_pred2
-## lasso_pred1   1.0000000   0.9967798
-## lasso_pred2   0.9967798   1.0000000</code></pre>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="no">lasso_pred1</span> <span class="kw">%&gt;%</span>
+## lasso_pred1           1          NA
+## lasso_pred2          NA           1</code></pre>
+<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="no">lasso_pred1</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">lasso_pred1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lasso_pred2</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>()</pre></body></html></div>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</pre></body></html></div>
 <pre><code>## R version 4.0.1 (2020-06-06)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.5
