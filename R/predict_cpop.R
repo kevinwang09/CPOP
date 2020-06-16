@@ -58,6 +58,7 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
 #' @importFrom tibble as_tibble
 #' @importFrom stringr str_split
 #' @importFrom magrittr %>%
+#' @importFrom assertthat assert_that
 #' @return A vector
 #' @export
 #' @examples
@@ -80,13 +81,22 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
 #' ## predict_cpop(cpop_result, newz = z3)$cpop_model_avg)
 impute_cpop = function(cpop_result, x1, x2, newx){
   cpop_lr2genes = stringr::str_split(cpop_result$feature, "--") %>% unlist %>% unique %>% sort
+
+  assertthat::assert_that(identical(colnames(x1), colnames(x2)),
+                          msg = "The columns of x1 must be the same as x2")
+  cols_intersect_x1x2_newx = intersect(colnames(x1), colnames(newx))
+
+  x1_intersect_newx = x1[,cols_intersect_x1x2_newx, drop = FALSE]
+  x2_intersect_newx = x2[,cols_intersect_x1x2_newx, drop = FALSE]
+
   miss_data = newx
-  which_col_missing = colSums(is.na(miss_data)) > 0 ## Which column has any missing values
-  miss_names = colnames(newx)[which_col_missing, drop = FALSE]
+  miss_data_intersect_x1x2 = miss_data[,cols_intersect_x1x2_newx, drop = FALSE]
+  which_col_missing = colSums(is.na(miss_data_intersect_x1x2)) > 0 ## Which column has any missing values
+  miss_names = colnames(miss_data_intersect_x1x2)[which_col_missing, drop = FALSE]
 
   for(this_miss_col in miss_names){
-    x1_without_miss = x1[,!which_col_missing, drop = FALSE] ## Complete data
-    x2_without_miss = x2[,!which_col_missing, drop = FALSE]
+    x1_without_miss = x1_intersect_newx[,!which_col_missing, drop = FALSE] ## Complete data
+    x2_without_miss = x2_intersect_newx[,!which_col_missing, drop = FALSE]
 
     g_x1 = glmnet::cv.glmnet(x = x1_without_miss,
                              y = x1[,this_miss_col, drop = FALSE],
@@ -95,10 +105,10 @@ impute_cpop = function(cpop_result, x1, x2, newx){
     g_x2 = glmnet::cv.glmnet(x = x2_without_miss,
                              y = x2[,this_miss_col, drop = FALSE],
                              family = "gaussian", nfolds = 5)
-    x1_pred = predict(g_x1, newx = cbind(miss_data[,!which_col_missing, drop = FALSE]))
-    x2_pred = predict(g_x2, newx = cbind(miss_data[,!which_col_missing, drop = FALSE]))
-    miss_data[,this_miss_col] = as.numeric(x1_pred + x2_pred)/2
+    x1_pred = predict(g_x1, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
+    x2_pred = predict(g_x2, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
+    miss_data_intersect_x1x2[,this_miss_col] = as.numeric(x1_pred + x2_pred)/2
   }
 
-  return(miss_data)
+  return(miss_data_intersect_x1x2)
 }
