@@ -115,7 +115,7 @@
     <p>Identity Distance for a matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calcIdenDist</span>(<span class='no'>matrix</span>)</pre>
+    <pre class="usage"><span class='fu'>calcIdenDist</span>(<span class='kw'>matrix</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,8 +129,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>calcIdenDist</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;            1         2         3         4         5         6         7
+<span class='kw'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), ncol = <span class='fl'>10</span>)
+<span class='fu'>calcIdenDist</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt;            1         2         3         4         5         6         7
 #&gt; 2  0.7538007                                                            
 #&gt; 3  0.6478848 0.6729787                                                  
 #&gt; 4  1.0394306 0.4692932 1.0660719                                        

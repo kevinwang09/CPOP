@@ -115,7 +115,7 @@
     <p>Prediction function for CPOP</p>
     </div>
 
-    <pre class="usage"><span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='no'>newz</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"lambda.min"</span>)</pre>
+    <pre class="usage"><span class='fu'>predict_cpop</span>(<span class='kw'>cpop_result</span>, <span class='kw'>newz</span>, s = <span class='st'>"lambda.min"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,8 +139,8 @@
     <p>A vector</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cpop_data_binary</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'CPOP'</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span>(<span class='no'>cpop_data_binary</span>)</div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 3):</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>cpop_data_binary</span>, package = <span class='st'>'CPOP'</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span>(<span class='kw'>cpop_data_binary</span>)</div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 3):</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 4):</span>
 #&gt; <span class='message'></span>
@@ -153,9 +153,9 @@
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 8):</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>z1</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x1</span>)
-<span class='no'>z2</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x2</span>)
-<span class='no'>cpop_result</span> <span class='kw'>=</span> <span class='fu'><a href='cpop_model.html'>cpop_model</a></span>(<span class='no'>z1</span>, <span class='no'>z2</span>, <span class='no'>y1</span>, <span class='no'>y2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>n_features</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Absolute colMeans difference will be used as the weights for CPOP</span></div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 0.1</span></div><div class='output co'>#&gt; <span class='message'>Based on previous alpha, 0 features are kept </span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 190</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 43 out of 190</span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 43 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>Removing sources of collinearity gives 18 features. </span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 18 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 12 out of 18</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
+<span class='kw'>z1</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x1</span>)
+<span class='kw'>z2</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x2</span>)
+<span class='kw'>cpop_result</span> <span class='op'>=</span> <span class='fu'>cpop_model</span>(<span class='kw'>z1</span>, <span class='kw'>z2</span>, <span class='kw'>y1</span>, <span class='kw'>y2</span>, alpha = <span class='fl'>0.1</span>, n_features = <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Absolute colMeans difference will be used as the weights for CPOP</span></div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 0.1</span></div><div class='output co'>#&gt; <span class='message'>Based on previous alpha, 0 features are kept </span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 190</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 43 out of 190</span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 43 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>Removing sources of collinearity gives 18 features. </span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 18 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 12 out of 18</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
 #&gt;      -1 0 1
 #&gt;   -1  0 0 3
 #&gt;   0   0 0 0
@@ -163,7 +163,7 @@
 #&gt;      -1 0 1
 #&gt;   -1  0 0 0
 #&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='input'><span class='no'>cpop_result</span></div><div class='output co'>#&gt; $glmnet1
+#&gt;   1   0 0 0</div><div class='input'><span class='kw'>cpop_result</span></div><div class='output co'>#&gt; $glmnet1
 #&gt; 
 #&gt; Call:  glmnet::cv.glmnet(x = z1[, cpop2_result], y = y1, family = family,      alpha = 0, intercept = intercept) 
 #&gt; 
@@ -227,8 +227,8 @@
 #&gt; </span><span style='color: #555555;'># … with 138 more rows</span><span>
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "cpop" "list"</div><div class='input'><span class='no'>z3</span> <span class='kw'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span>(<span class='no'>x3</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='no'>cpop_result</span>, <span class='kw'>newz</span> <span class='kw'>=</span> <span class='no'>z3</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
+#&gt; [1] "cpop" "list"</div><div class='input'><span class='kw'>z3</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x3</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='kw'>cpop_result</span>, newz = <span class='kw'>z3</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   samples cpop_model1 cpop_model2 cpop_model_avg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1             0.437     -</span><span style='color: #BB0000;'>0.107</span><span>          0.165 

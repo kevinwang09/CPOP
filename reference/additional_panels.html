@@ -121,17 +121,17 @@ panel_scatter_smallDots with h and v lines at zero" />
 <p>panel_scatter_smallDots with h and v lines at zero</p>
     </div>
 
-    <pre class="usage"><span class='fu'>panel_cor</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <pre class="usage"><span class='fu'>panel_cor</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
 
-<span class='fu'>panel_idenDist</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='fu'>panel_idenDist</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
 
-<span class='fu'>panel_scatter_abline</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='fu'>panel_scatter_abline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, a = <span class='fl'>0</span>, b = <span class='fl'>1</span>, col = <span class='st'>"red"</span>)
 
-<span class='fu'>panel_scatter_abline_smallDots</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='fu'>panel_scatter_abline_smallDots</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, a = <span class='fl'>0</span>, b = <span class='fl'>1</span>, col = <span class='st'>"red"</span>)
 
-<span class='fu'>panel_scatter_abhvline</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='fu'>panel_scatter_abhvline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
 
-<span class='fu'>panel_scatter_smallDots_abhvline</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+<span class='fu'>panel_scatter_smallDots_abhvline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,17 +168,17 @@ panel_scatter_smallDots with h and v lines at zero" />
 <p>Kevin Wang</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_cor</span>)</div><div class='img'><img src='additional_panels-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>],
-<span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>panel_scatter_abline</span>,
-<span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_idenDist</span>)</div><div class='img'><img src='additional_panels-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>],
-<span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_cor</span>,
-<span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>panel_scatter_abline</span>)</div><div class='img'><img src='additional_panels-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>],
-<span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_cor</span>,
-<span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>panel_scatter_abline_smallDots</span>)</div><div class='img'><img src='additional_panels-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>],
-<span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_cor</span>,
-<span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>panel_scatter_abhvline</span>)</div><div class='img'><img src='additional_panels-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>],
-<span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>panel_cor</span>,
-<span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>panel_scatter_smallDots_abhvline</span>)</div><div class='img'><img src='additional_panels-6.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>], lower.panel = <span class='kw'>panel_cor</span>)</div><div class='img'><img src='additional_panels-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
+upper.panel = <span class='kw'>panel_scatter_abline</span>,
+lower.panel = <span class='kw'>panel_idenDist</span>)</div><div class='img'><img src='additional_panels-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
+lower.panel = <span class='kw'>panel_cor</span>,
+upper.panel = <span class='kw'>panel_scatter_abline</span>)</div><div class='img'><img src='additional_panels-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
+lower.panel = <span class='kw'>panel_cor</span>,
+upper.panel = <span class='kw'>panel_scatter_abline_smallDots</span>)</div><div class='img'><img src='additional_panels-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
+lower.panel = <span class='kw'>panel_cor</span>,
+upper.panel = <span class='kw'>panel_scatter_abhvline</span>)</div><div class='img'><img src='additional_panels-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
+lower.panel = <span class='kw'>panel_cor</span>,
+upper.panel = <span class='kw'>panel_scatter_smallDots_abhvline</span>)</div><div class='img'><img src='additional_panels-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

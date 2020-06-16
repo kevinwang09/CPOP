@@ -115,7 +115,7 @@
     <p>Identity distance between two vectors</p>
     </div>
 
-    <pre class="usage"><span class='fu'>identityDist</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>iqr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>identityDist</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, iqr = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,8 +137,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
-<span class='fu'>identityDist</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>*<span class='no'>x</span>, <span class='kw'>iqr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] 0.839935</div><div class='input'><span class='fu'>identityDist</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>*<span class='no'>x</span>, <span class='kw'>iqr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;       id    iqr_d 
+<span class='kw'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
+<span class='fu'>identityDist</span>(x = <span class='kw'>x</span>, y = <span class='fl'>3</span><span class='op'>*</span><span class='kw'>x</span>, iqr = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] 0.839935</div><div class='input'><span class='fu'>identityDist</span>(x = <span class='kw'>x</span>, y = <span class='fl'>3</span><span class='op'>*</span><span class='kw'>x</span>, iqr = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;       id    iqr_d 
 #&gt; 0.839935 1.676957 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
