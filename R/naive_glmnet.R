@@ -22,6 +22,9 @@
 #' lasso_result
 #' plot_cpop(cpop_result)
 #' plot_cpop(lasso_result)
+#' plot(predict_cpop(cpop_result, newz = z1)$cpop_model_avg,
+#' predict_naive_glmnet(lasso_result, newz = z1)$naive_glmnet_avg)
+#' abline(a = 0, b = 1, col = "red")
 naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
   glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, ...)
   glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, ...)
@@ -39,7 +42,36 @@ naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
                 glmnet2 = glmnet2,
                 coef_tbl = list(coef_tbl))
 
-  class(result) = c("cpop", class(result))
+  class(result) = c("naive_glmnet", class(result))
   return(result)
 }
 
+#' @title Prediction method for naive glmnet
+#' @param glmnet_result glmnet_result
+#' @param newz matrix
+#' @export
+#' @import glmnet
+#' @importFrom tibble as_tibble
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr select
+#' @importFrom dplyr mutate
+#' @importFrom dplyr everything
+predict_naive_glmnet = function(glmnet_result, newz){
+  result1 = predict(object = glmnet_result$glmnet1, newx = newz, s = s)
+  result2 = predict(object = glmnet_result$glmnet2, newx = newz, s = s)
+
+  as.numeric((result1 + result2)/2)
+
+  result_mat = cbind(result1, result2, (result1 + result2)/2)
+  colnames(result_mat) = c("naive_glmnet1", "naive_glmnet2", "naive_glmnet_avg")
+
+  if(is.null(rownames(result_mat))){
+    rownames(result_mat) = 1:nrow(result_mat)
+  }
+
+  tib_result = tibble::as_tibble(data.frame(result_mat))
+  tib_result = dplyr::mutate(tib_result, samples = rownames(result_mat))
+  tib_result = dplyr::select(tib_result, samples, dplyr::everything())
+
+return(tib_result)
+}

@@ -37,4 +37,7 @@ cpop_result
 lasso_result
 plot_cpop(cpop_result)
 plot_cpop(lasso_result)
+plot(predict_cpop(cpop_result, newz = z1)$cpop_model_avg,
+predict_naive_glmnet(lasso_result, newz = z1)$naive_glmnet_avg)
+abline(a = 0, b = 1, col = "red")
 }
