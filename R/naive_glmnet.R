@@ -49,6 +49,7 @@ naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
 #' @title Prediction method for naive glmnet
 #' @param glmnet_result glmnet_result
 #' @param newz matrix
+#' @param s Default to "lambda.min"
 #' @export
 #' @import glmnet
 #' @importFrom tibble as_tibble
@@ -56,7 +57,7 @@ naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
 #' @importFrom dplyr everything
-predict_naive_glmnet = function(glmnet_result, newz){
+predict_naive_glmnet = function(glmnet_result, newz, s = "lambda.min"){
   result1 = predict(object = glmnet_result$glmnet1, newx = newz, s = s)
   result2 = predict(object = glmnet_result$glmnet2, newx = newz, s = s)
 

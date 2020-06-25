@@ -4,12 +4,14 @@
 \alias{predict_naive_glmnet}
 \title{Prediction method for naive glmnet}
 \usage{
-predict_naive_glmnet(glmnet_result, newz)
+predict_naive_glmnet(glmnet_result, newz, s = "lambda.min")
 }
 \arguments{
 \item{glmnet_result}{glmnet_result}
 
 \item{newz}{matrix}
+
+\item{s}{Default to "lambda.min"}
 }
 \description{
 Prediction method for naive glmnet
