@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot ratio network — plot_lratio_network • CPOP</title>
+<title>Prediction method for naive glmnet — predict_naive_glmnet • CPOP</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot ratio network — plot_lratio_network" />
-<meta property="og:description" content="Plot ratio network" />
+<meta property="og:title" content="Prediction method for naive glmnet — predict_naive_glmnet" />
+<meta property="og:description" content="Prediction method for naive glmnet" />
 
 
 
@@ -106,44 +106,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot ratio network</h1>
+    <h1>Prediction method for naive glmnet</h1>
     
-    <div class="hidden name"><code>cpop_network.Rd</code></div>
+    <div class="hidden name"><code>predict_naive_glmnet.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot ratio network</p>
+    <p>Prediction method for naive glmnet</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_lratio_network</span>(<span class='kw'>x</span>, type = <span class='st'>"ggraph"</span>)
-
-<span class='fu'>lratio_to_network</span>(<span class='kw'>x</span>)
-
-<span class='fu'>mst_lratio</span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>predict_naive_glmnet</span>(<span class='kw'>glmnet_result</span>, <span class='kw'>newz</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A character vector representing edges by separating nodes with "--"
-i.e. in the form of "e1--e2"</p></td>
+      <th>glmnet_result</th>
+      <td><p>glmnet_result</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Type of graphical visualisation, currently only support one of
-"visNetwork", "igraph", "ggraph"</p></td>
+      <th>newz</th>
+      <td><p>matrix</p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X1--X10"</span>,<span class='st'>"X1--X3"</span>, <span class='st'>"X1--X4"</span>,<span class='st'>"X1--X8"</span>,<span class='st'>"X1--X9"</span>,<span class='st'>"X2--X5"</span>,<span class='st'>"X2--X7"</span>,<span class='st'>"X2--X6"</span>, <span class='st'>"X8--X10"</span>)
-<span class='fu'>plot_lratio_network</span>(<span class='kw'>x</span>, type = <span class='st'>"ggraph"</span>)</div><div class='img'><img src='cpop_network-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_lratio_network</span>(<span class='kw'>x</span>, type = <span class='st'>"igraph"</span>)</div><div class='output co'>#&gt; IGRAPH 3739f34 UN-- 10 9 -- 
-#&gt; + attr: name (v/c)
-#&gt; + edges from 3739f34 (vertex names):
-#&gt; [1] X1 --X10 X1 --X3  X1 --X4  X1 --X8  X1 --X9  X2 --X5  X2 --X7  X2 --X6 
-#&gt; [9] X10--X8 </div><div class='input'><span class='fu'>plot_lratio_network</span>(<span class='kw'>x</span>, type = <span class='st'>"visNetwork"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: visNetwork</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
