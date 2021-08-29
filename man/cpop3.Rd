@@ -7,13 +7,14 @@
 cpop3(z1, z2, y1, y2, cpop2_result, family, intercept, ...)
 }
 \arguments{
-\item{z1}{A data matrix}
+\item{z1}{A data matrix, columns are pairwise-differences between the original data columns.}
 
-\item{z2}{A data matrix}
+\item{z2}{A data matrix, columns are pairwise-differences between the original data columns.
+Column names should be identical to z1.}
 
-\item{y1}{A vector}
+\item{y1}{A vector of response variable. Same length as the number of rows of z1.}
 
-\item{y2}{A vector}
+\item{y2}{A vector of response variable. Same length as the number of rows of z2.}
 
 \item{cpop2_result}{cpop2 result}
 

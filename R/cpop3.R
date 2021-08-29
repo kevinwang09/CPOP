@@ -1,9 +1,10 @@
 #' @title Step 3 of the CPOP method
 #' @description Step 3 of the CPOP method
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
+#' @param z1 A data matrix, columns are pairwise-differences between the original data columns.
+#' @param z2 A data matrix, columns are pairwise-differences between the original data columns.
+#' Column names should be identical to z1.
+#' @param y1 A vector of response variable. Same length as the number of rows of z1.
+#' @param y2 A vector of response variable. Same length as the number of rows of z2.
 #' @param cpop2_result cpop2 result
 #' @param intercept default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet

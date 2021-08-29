@@ -52,6 +52,8 @@ Column names should be identical to z1.}
 \item{cpop2_mag}{a threshold
 differential betas are removed}
 
+\item{cpop1_method}{See documentation on `cpop1`}
+
 \item{intercept}{Default to FALSE}
 
 \item{...}{Extra parameter settings for cv.glmnet in cpop1}

@@ -14,6 +14,7 @@
 #' @param n_features Breaking the CPOP-Step 1 loop if a certain number of features is reached.
 #' @param s CV-Lasso lambda
 #' @param family family of glmnet
+#' @param cpop1_method See documentation on `cpop1`
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' @param cpop2_type "sign" or "mag"
 #' @param cpop2_mag a threshold
