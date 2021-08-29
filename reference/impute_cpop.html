@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
 <li>
@@ -115,7 +117,7 @@
     <p>Imputing gene expression values using CPOP model</p>
     </div>
 
-    <pre class="usage"><span class='fu'>impute_cpop</span>(<span class='kw'>cpop_result</span>, <span class='kw'>x1</span>, <span class='kw'>x2</span>, <span class='kw'>newx</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>impute_cpop</span><span class='op'>(</span><span class='va'>cpop_result</span>, <span class='va'>x1</span>, <span class='va'>x2</span>, <span class='va'>newx</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,105 +145,131 @@
     <p>A vector</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>cpop_data_binary</span>, package = <span class='st'>'CPOP'</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span>(<span class='kw'>cpop_data_binary</span>)</div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 3):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 4):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from cpop_data_binary (pos = 5):</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    beta, x1, x2, x3, y1, y2, y3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='kw'>z1</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x1</span>)
-<span class='kw'>z2</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x2</span>)
-<span class='kw'>cpop_result</span> <span class='op'>=</span> <span class='fu'>cpop_model</span>(<span class='kw'>z1</span>, <span class='kw'>z2</span>, <span class='kw'>y1</span>, <span class='kw'>y2</span>, alpha = <span class='fl'>0.1</span>, n_features = <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Absolute colMeans difference will be used as the weights for CPOP</span></div><div class='output co'>#&gt; <span class='message'>Fitting CPOP model using alpha = 0.1</span></div><div class='output co'>#&gt; <span class='message'>Based on previous alpha, 0 features are kept </span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 01: Number of selected features: 0 out of 190</span></div><div class='output co'>#&gt; <span class='message'>CPOP1 - Step 02: Number of selected features: 43 out of 190</span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 43 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>Removing sources of collinearity gives 18 features. </span></div><div class='output co'>#&gt; <span class='message'>10 features was reached. </span></div><div class='output co'>#&gt; <span class='message'>A total of 18 features were selected. </span></div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 01: Number of leftover features: 12 out of 18</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 3
-#&gt;   0   0 0 0
-#&gt;   1   3 0 0</div><div class='output co'>#&gt; <span class='message'>CPOP2 - Sign: Step 02: Number of leftover features: 12 out of 18</span></div><div class='output co'>#&gt; <span class='message'>The sign matrix between the two data:</span></div><div class='output co'>#&gt;     
-#&gt;      -1 0 1
-#&gt;   -1  0 0 0
-#&gt;   0   0 0 0
-#&gt;   1   0 0 0</div><div class='input'><span class='kw'>cpop_result</span></div><div class='output co'>#&gt; $glmnet1
-#&gt; 
-#&gt; Call:  glmnet::cv.glmnet(x = z1[, cpop2_result], y = y1, family = family,      alpha = 0, intercept = intercept) 
-#&gt; 
-#&gt; Measure: Binomial Deviance 
-#&gt; 
-#&gt;      Lambda Measure      SE Nonzero
-#&gt; min 0.03254  0.6195 0.07887      12
-#&gt; 1se 0.19058  0.6938 0.05963      12
-#&gt; 
-#&gt; $glmnet2
-#&gt; 
-#&gt; Call:  glmnet::cv.glmnet(x = z2[, cpop2_result], y = y2, family = family,      alpha = 0, intercept = intercept) 
-#&gt; 
-#&gt; Measure: Binomial Deviance 
-#&gt; 
-#&gt;     Lambda Measure      SE Nonzero
-#&gt; min 0.0875  0.7582 0.06179      12
-#&gt; 1se 0.3217  0.8169 0.04027      12
-#&gt; 
-#&gt; $feature
-#&gt;  [1] "X01--X02" "X01--X03" "X01--X06" "X01--X07" "X01--X09" "X01--X11"
-#&gt;  [7] "X01--X13" "X01--X14" "X01--X17" "X01--X18" "X01--X19" "X04--X20"
-#&gt; 
-#&gt; $coef_tbl
-#&gt; <span style='color: #555555;'># A tibble: 13 x 3</span><span>
-#&gt;    coef_name     coef1   coef2
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> (Intercept)  0       0     
-#&gt; </span><span style='color: #555555;'> 2</span><span> X01--X02    -</span><span style='color: #BB0000;'>0.305</span><span>  -</span><span style='color: #BB0000;'>0.216</span><span> 
-#&gt; </span><span style='color: #555555;'> 3</span><span> X01--X03    -</span><span style='color: #BB0000;'>0.139</span><span>  -</span><span style='color: #BB0000;'>0.109</span><span> 
-#&gt; </span><span style='color: #555555;'> 4</span><span> X01--X06    -</span><span style='color: #BB0000;'>0.284</span><span>  -</span><span style='color: #BB0000;'>0.193</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span> X01--X07    -</span><span style='color: #BB0000;'>0.216</span><span>  -</span><span style='color: #BB0000;'>0.150</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> X01--X09    -</span><span style='color: #BB0000;'>0.745</span><span>  -</span><span style='color: #BB0000;'>0.382</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> X01--X11    -</span><span style='color: #BB0000;'>0.372</span><span>  -</span><span style='color: #BB0000;'>0.264</span><span> 
-#&gt; </span><span style='color: #555555;'> 8</span><span> X01--X13    -</span><span style='color: #BB0000;'>0.319</span><span>  -</span><span style='color: #BB0000;'>0.205</span><span> 
-#&gt; </span><span style='color: #555555;'> 9</span><span> X01--X14    -</span><span style='color: #BB0000;'>0.048</span><span style='color: #BB0000;text-decoration: underline;'>8</span><span> -</span><span style='color: #BB0000;'>0.138</span><span> 
-#&gt; </span><span style='color: #555555;'>10</span><span> X01--X17    -</span><span style='color: #BB0000;'>0.176</span><span>  -</span><span style='color: #BB0000;'>0.096</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'>11</span><span> X01--X18    -</span><span style='color: #BB0000;'>0.338</span><span>  -</span><span style='color: #BB0000;'>0.260</span><span> 
-#&gt; </span><span style='color: #555555;'>12</span><span> X01--X19    -</span><span style='color: #BB0000;'>0.021</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> -</span><span style='color: #BB0000;'>0.247</span><span> 
-#&gt; </span><span style='color: #555555;'>13</span><span> X04--X20     0.481   0.286 
-#&gt; 
-#&gt; $cpop1_features
-#&gt;  [1] "X01--X02" "X01--X03" "X01--X05" "X01--X06" "X01--X07" "X01--X08"
-#&gt;  [7] "X01--X09" "X01--X10" "X01--X11" "X01--X13" "X01--X14" "X01--X15"
-#&gt; [13] "X01--X16" "X01--X17" "X01--X18" "X01--X19" "X04--X12" "X04--X20"
-#&gt; 
-#&gt; $step_features
-#&gt; </span><span style='color: #555555;'># A tibble: 148 x 6</span><span>
-#&gt;    step  coef_model feature_name feature_value ever_selected_f… in_final_featur…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span> 1     1          (Intercept)         0.217  FALSE            FALSE           
-#&gt; </span><span style='color: #555555;'> 2</span><span> 1     1          X01--X02           -</span><span style='color: #BB0000;'>0.026</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 3</span><span> 1     1          X01--X03           -</span><span style='color: #BB0000;'>0.121</span><span>  TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 4</span><span> 1     1          X01--X05           -</span><span style='color: #BB0000;'>0.089</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 5</span><span> 1     1          X01--X06           -</span><span style='color: #BB0000;'>0.103</span><span>  TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 6</span><span> 1     1          X01--X07           -</span><span style='color: #BB0000;'>0.209</span><span>  TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 7</span><span> 1     1          X01--X08           -</span><span style='color: #BB0000;'>0.108</span><span>  TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 8</span><span> 1     1          X01--X09           -</span><span style='color: #BB0000;'>0.098</span><span style='color: #BB0000;text-decoration: underline;'>8</span><span> TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'> 9</span><span> 1     1          X01--X10           -</span><span style='color: #BB0000;'>0.386</span><span>  TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'>10</span><span> 1     1          X01--X11           -</span><span style='color: #BB0000;'>0.053</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> TRUE             TRUE            
-#&gt; </span><span style='color: #555555;'># … with 138 more rows</span><span>
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "cpop" "list"</div><div class='input'><span class='kw'>z3</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x3</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>predict_cpop</span>(<span class='kw'>cpop_result</span>, newz = <span class='kw'>z3</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
-#&gt;   samples cpop_model1 cpop_model2 cpop_model_avg
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 1             0.437     -</span><span style='color: #BB0000;'>0.107</span><span>          0.165 
-#&gt; </span><span style='color: #555555;'>2</span><span> 2            -</span><span style='color: #BB0000;'>0.824</span><span>     -</span><span style='color: #BB0000;'>0.071</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>        -</span><span style='color: #BB0000;'>0.448</span><span> 
-#&gt; </span><span style='color: #555555;'>3</span><span> 3             0.248     -</span><span style='color: #BB0000;'>0.115</span><span>          0.066</span><span style='text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> 4            -</span><span style='color: #BB0000;'>0.877</span><span>     -</span><span style='color: #BB0000;'>0.198</span><span>         -</span><span style='color: #BB0000;'>0.537</span><span> 
-#&gt; </span><span style='color: #555555;'>5</span><span> 5             0.955      0.671          0.813 
-#&gt; </span><span style='color: #555555;'>6</span><span> 6            -</span><span style='color: #BB0000;'>0.623</span><span>     -</span><span style='color: #BB0000;'>1.05</span><span>          -</span><span style='color: #BB0000;'>0.836</span><span> </div><div class='input'><span class='kw'>x4</span> <span class='op'>=</span> <span class='kw'>x3</span>
-<span class='kw'>x4</span>[,<span class='fl'>1</span>] <span class='op'>=</span> <span class='fl'>NA</span>
-<span class='co'># z4 = pairwise_col_diff(x4)</span>
-<span class='co'>## head(predict_cpop(cpop_result, newz = z4))</span>
-<span class='kw'>x4_imp</span> <span class='op'>=</span> <span class='fu'>impute_cpop</span>(<span class='kw'>cpop_result</span>, x1 = <span class='kw'>x1</span>, x2 = <span class='kw'>x2</span>, newx = <span class='kw'>x4</span>)
-<span class='co'># head(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp)))</span>
-<span class='co'>## plot(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))$cpop_model_avg,</span>
-<span class='co'>## predict_cpop(cpop_result, newz = z3)$cpop_model_avg)</span></div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cpop_data_binary</span>, package <span class='op'>=</span> <span class='st'>'CPOP'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span><span class='op'>(</span><span class='va'>cpop_data_binary</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from cpop_data_binary (pos = 3):</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     beta, x1, x2, x3, y1, y2, y3</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from cpop_data_binary (pos = 4):</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     beta, x1, x2, x3, y1, y2, y3</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from cpop_data_binary (pos = 5):</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     beta, x1, x2, x3, y1, y2, y3</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>z1</span> <span class='op'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span><span class='op'>(</span><span class='va'>x1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>z2</span> <span class='op'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>cpop_result</span> <span class='op'>=</span> <span class='fu'><a href='cpop_model.html'>cpop_model</a></span><span class='op'>(</span><span class='va'>z1</span>, <span class='va'>z2</span>, <span class='va'>y1</span>, <span class='va'>y2</span>, alpha <span class='op'>=</span> <span class='fl'>0.1</span>, n_features <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Absolute colMeans difference will be used as the weights for CPOP</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Fitting CPOP model using alpha = 0.1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Based on previous alpha, 0 features are kept </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> CPOP1 - Step 01: Number of selected features: 0 out of 190</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> CPOP1 - Step 02: Number of selected features: 43 out of 190</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 10 features was reached. </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> A total of 43 features were selected. </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing sources of collinearity gives 18 features. </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 10 features was reached. </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> A total of 18 features were selected. </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> CPOP2 - Sign: Step 01: Number of leftover features: 12 out of 18</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The sign matrix between the two data:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      -1 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -1  0 0 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   0   0 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3 0 0</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> CPOP2 - Sign: Step 02: Number of leftover features: 12 out of 18</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The sign matrix between the two data:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      -1 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -1  0 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   0   0 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   0 0 0</span>
+<span class='r-in'><span class='va'>cpop_result</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $glmnet1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glmnet::cv.glmnet(x = z1[, cpop2_result], y = y1, family = family,      alpha = 0, intercept = intercept) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Measure: Binomial Deviance </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Lambda Index Measure      SE Nonzero</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min 0.03254   100  0.6195 0.07887      12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1se 0.19058    81  0.6938 0.05963      12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $glmnet2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glmnet::cv.glmnet(x = z2[, cpop2_result], y = y2, family = family,      alpha = 0, intercept = intercept) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Measure: Binomial Deviance </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Lambda Index Measure      SE Nonzero</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min 0.0875    88  0.7582 0.06179      12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1se 0.3217    74  0.8169 0.04027      12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $feature</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "X01--X02" "X01--X03" "X01--X06" "X01--X07" "X01--X09" "X01--X11"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "X01--X13" "X01--X14" "X01--X17" "X01--X18" "X01--X19" "X04--X20"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $coef_tbl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    coef_name     coef1   coef2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> (Intercept)  0       0     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> X01--X02    -<span style='color: #BB0000;'>0.305</span>  -<span style='color: #BB0000;'>0.216</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> X01--X03    -<span style='color: #BB0000;'>0.139</span>  -<span style='color: #BB0000;'>0.109</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> X01--X06    -<span style='color: #BB0000;'>0.284</span>  -<span style='color: #BB0000;'>0.193</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> X01--X07    -<span style='color: #BB0000;'>0.216</span>  -<span style='color: #BB0000;'>0.150</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> X01--X09    -<span style='color: #BB0000;'>0.745</span>  -<span style='color: #BB0000;'>0.382</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> X01--X11    -<span style='color: #BB0000;'>0.372</span>  -<span style='color: #BB0000;'>0.264</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> X01--X13    -<span style='color: #BB0000;'>0.319</span>  -<span style='color: #BB0000;'>0.205</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> X01--X14    -<span style='color: #BB0000;'>0.048</span><span style='color: #BB0000; text-decoration: underline;'>8</span> -<span style='color: #BB0000;'>0.138</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> X01--X17    -<span style='color: #BB0000;'>0.176</span>  -<span style='color: #BB0000;'>0.096</span><span style='color: #BB0000; text-decoration: underline;'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> X01--X18    -<span style='color: #BB0000;'>0.338</span>  -<span style='color: #BB0000;'>0.260</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> X01--X19    -<span style='color: #BB0000;'>0.021</span><span style='color: #BB0000; text-decoration: underline;'>9</span> -<span style='color: #BB0000;'>0.247</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> X04--X20     0.481   0.286 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $cpop1_features</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "X01--X02" "X01--X03" "X01--X05" "X01--X06" "X01--X07" "X01--X08"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "X01--X09" "X01--X10" "X01--X11" "X01--X13" "X01--X14" "X01--X15"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "X01--X16" "X01--X17" "X01--X18" "X01--X19" "X04--X12" "X04--X20"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $step_features</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 148 × 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    step  coef_model feature_name feature_value ever_selected_f… in_final_featur…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 1     1          (Intercept)         0.217  FALSE            FALSE           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 1     1          X01--X02           -<span style='color: #BB0000;'>0.026</span><span style='color: #BB0000; text-decoration: underline;'>9</span> TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 1     1          X01--X03           -<span style='color: #BB0000;'>0.121</span>  TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 1     1          X01--X05           -<span style='color: #BB0000;'>0.089</span><span style='color: #BB0000; text-decoration: underline;'>5</span> TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 1     1          X01--X06           -<span style='color: #BB0000;'>0.103</span>  TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 1     1          X01--X07           -<span style='color: #BB0000;'>0.209</span>  TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 1     1          X01--X08           -<span style='color: #BB0000;'>0.108</span>  TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 1     1          X01--X09           -<span style='color: #BB0000;'>0.098</span><span style='color: #BB0000; text-decoration: underline;'>8</span> TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 1     1          X01--X10           -<span style='color: #BB0000;'>0.386</span>  TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 1     1          X01--X11           -<span style='color: #BB0000;'>0.053</span><span style='color: #BB0000; text-decoration: underline;'>2</span> TRUE             TRUE            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 138 more rows</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"class")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "cpop" "list"</span>
+<span class='r-in'><span class='va'>z3</span> <span class='op'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span><span class='op'>(</span><span class='va'>x3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='predict_cpop.html'>predict_cpop</a></span><span class='op'>(</span><span class='va'>cpop_result</span>, newz <span class='op'>=</span> <span class='va'>z3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   samples cpop_model1 cpop_model2 cpop_model_avg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 1             0.437     -<span style='color: #BB0000;'>0.107</span>          0.165 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2            -<span style='color: #BB0000;'>0.824</span>     -<span style='color: #BB0000;'>0.071</span><span style='color: #BB0000; text-decoration: underline;'>9</span>        -<span style='color: #BB0000;'>0.448</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 3             0.248     -<span style='color: #BB0000;'>0.115</span>          0.066<span style='text-decoration: underline;'>4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 4            -<span style='color: #BB0000;'>0.877</span>     -<span style='color: #BB0000;'>0.198</span>         -<span style='color: #BB0000;'>0.537</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 5             0.955      0.671          0.813 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> 6            -<span style='color: #BB0000;'>0.623</span>     -<span style='color: #BB0000;'>1.05</span>          -<span style='color: #BB0000;'>0.836</span> </span>
+<span class='r-in'><span class='va'>x4</span> <span class='op'>=</span> <span class='va'>x3</span></span>
+<span class='r-in'><span class='va'>x4</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span> <span class='op'>=</span> <span class='cn'>NA</span></span>
+<span class='r-in'><span class='co'># z4 = pairwise_col_diff(x4)</span></span>
+<span class='r-in'><span class='co'>## head(predict_cpop(cpop_result, newz = z4))</span></span>
+<span class='r-in'><span class='va'>x4_imp</span> <span class='op'>=</span> <span class='fu'>impute_cpop</span><span class='op'>(</span><span class='va'>cpop_result</span>, x1 <span class='op'>=</span> <span class='va'>x1</span>, x2 <span class='op'>=</span> <span class='va'>x2</span>, newx <span class='op'>=</span> <span class='va'>x4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># head(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp)))</span></span>
+<span class='r-in'><span class='co'>## plot(predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))$cpop_model_avg,</span></span>
+<span class='r-in'><span class='co'>## predict_cpop(cpop_result, newz = z3)$cpop_model_avg)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -253,11 +281,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p><p>Developed by Kevin Wang.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -265,6 +293,8 @@
 
   
 
+
+  
 
   </body>
 </html>

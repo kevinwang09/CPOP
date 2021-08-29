@@ -40,10 +40,10 @@
 
 
 <meta property="og:title" content="Step 1 of the CPOP method — cpop1" />
-<meta property="og:description" content="Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.
+<meta property="og:description" content="Step 1 of the CPOP method, aiming to select features agreed by both data.
 Step 1 of the CPOP method, for multiple alpha inputs" />
+
+
 
 
 
@@ -59,9 +59,15 @@ Step 1 of the CPOP method, for multiple alpha inputs" />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,12 +88,6 @@ Step 1 of the CPOP method, for multiple alpha inputs" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
 <li>
@@ -115,67 +115,66 @@ Step 1 of the CPOP method, for multiple alpha inputs" />
     </div>
 
     <div class="ref-description">
-    <p>Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.</p>
+    <p>Step 1 of the CPOP method, aiming to select features agreed by both data.</p>
 <p>Step 1 of the CPOP method, for multiple alpha inputs</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cpop1</span>(
-  <span class='kw'>z1</span>,
-  <span class='kw'>z2</span>,
-  <span class='kw'>y1</span>,
-  <span class='kw'>y2</span>,
-  <span class='kw'>w</span>,
-  <span class='kw'>family</span>,
-  n_iter = <span class='fl'>20</span>,
-  alpha = <span class='fl'>1</span>,
-  n_features = <span class='fl'>50</span>,
-  s = <span class='st'>"lambda.min"</span>,
-  cpop1_method = <span class='st'>"normal"</span>,
-  <span class='kw'>...</span>
-)
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cpop1</span><span class='op'>(</span>
+  <span class='va'>z1</span>,
+  <span class='va'>z2</span>,
+  <span class='va'>y1</span>,
+  <span class='va'>y2</span>,
+  <span class='va'>w</span>,
+  <span class='va'>family</span>,
+  n_iter <span class='op'>=</span> <span class='fl'>20</span>,
+  alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  n_features <span class='op'>=</span> <span class='fl'>50</span>,
+  s <span class='op'>=</span> <span class='st'>"lambda.min"</span>,
+  cpop1_method <span class='op'>=</span> <span class='st'>"normal"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>cpop1_iterate</span>(
-  <span class='kw'>z1</span>,
-  <span class='kw'>z2</span>,
-  <span class='kw'>y1</span>,
-  <span class='kw'>y2</span>,
-  w = <span class='kw'>NULL</span>,
-  <span class='kw'>family</span>,
-  s = <span class='st'>"lambda.min"</span>,
-  n_iter = <span class='fl'>20</span>,
-  alpha = <span class='fl'>1</span>,
-  n_features = <span class='fl'>50</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>cpop1_iterate</span><span class='op'>(</span>
+  <span class='va'>z1</span>,
+  <span class='va'>z2</span>,
+  <span class='va'>y1</span>,
+  <span class='va'>y2</span>,
+  w <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>family</span>,
+  s <span class='op'>=</span> <span class='st'>"lambda.min"</span>,
+  n_iter <span class='op'>=</span> <span class='fl'>20</span>,
+  alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  n_features <span class='op'>=</span> <span class='fl'>50</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>z1</th>
-      <td><p>A data matrix</p></td>
+      <td><p>A data matrix, columns are pairwise-differences between the original data columns.</p></td>
     </tr>
     <tr>
       <th>z2</th>
-      <td><p>A data matrix</p></td>
+      <td><p>A data matrix, columns are pairwise-differences between the original data columns.
+Column names should be identical to z1.</p></td>
     </tr>
     <tr>
       <th>y1</th>
-      <td><p>A vector</p></td>
+      <td><p>A vector of response variable. Same length as the number of rows of z1.</p></td>
     </tr>
     <tr>
       <th>y2</th>
-      <td><p>A vector</p></td>
+      <td><p>A vector of response variable. Same length as the number of rows of z2.</p></td>
     </tr>
     <tr>
       <th>w</th>
-      <td><p>A vector</p></td>
+      <td><p>A vector of weights.</p></td>
     </tr>
     <tr>
       <th>family</th>
-      <td><p>See glmnet family</p></td>
+      <td><p>See family in glmnet::glmnet function.</p></td>
     </tr>
     <tr>
       <th>n_iter</th>
@@ -183,29 +182,36 @@ elastic net variable selection.</p>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>Lasso alpha</p></td>
+      <td><p>The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.</p></td>
     </tr>
     <tr>
       <th>n_features</th>
-      <td><p>n_features desired</p></td>
+      <td><p>Breaking the CPOP-Step 1 loop if a certain number of features is reached.</p></td>
     </tr>
     <tr>
       <th>s</th>
-      <td><p>CV lambda</p></td>
+      <td><p>Method to select a lambda estimate, either "lambda.min" (default) or "lambda.1se".</p></td>
     </tr>
     <tr>
       <th>cpop1_method</th>
-      <td><p>Default value is "normal". Alternatives are "after" and "either".</p></td>
+      <td><p>Default value is "normal". Alternatives are "after" and "either".</p><ul>
+<li><p>"normal": meaning that the features selected by **both** data1 (consisted of z1 and y1) and
+data2 (consisted of z2 and y2) will be used to construct the final feature set in the first step of CPOP.</p></li>
+<li><p>"after": In case that no predictive features were found to be commonly predictive in both data,
+features ever found by **both** data will be pooled to construct the final feature set in the first step of CPOP.</p></li>
+<li><p>"either": In case that no predictive features were found to be commonly predictive in both data,
+features ever selected by **either** data will now be pooled</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra parameter settings for cv.glmnet</p></td>
+      <td><p>Extra parameter settings for glmnet::cv.glmnet</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of features</p>
+    <p>A list. Consisted of a vector of features and a tibble of features selected in each step.</p>
 <p>A vector of features</p>
 
   </div>
@@ -219,11 +225,11 @@ elastic net variable selection.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p><p>Developed by Kevin Wang.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -231,6 +237,8 @@ elastic net variable selection.</p>
 
   
 
+
+  
 
   </body>
 </html>

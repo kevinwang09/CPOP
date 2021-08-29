@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,12 +39,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
@@ -64,7 +60,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to the cpop package</h1>
-                        <h4 class="author">Kevin Y.X. Wang</h4>
+                        <h4 data-toc-skip class="author">Kevin Y.X. Wang</h4>
             <address class="author_afil">
       School of Mathematics and Statistics, The University of Sydney, Australia<br><div class="hidden name"><code>CPOP.Rmd</code></div>
 
@@ -73,99 +69,94 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">CPOP</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://tibble.tidyverse.org">tibble</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">CPOP</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></code></pre></div>
 <div id="loading-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#loading-data" class="anchor"></a>Loading data</h1>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">cpop_data_binary</span>, package = <span class="st">'CPOP'</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/attach.html">attach</a></span>(<span class="kw">cpop_data_binary</span>)
+<a href="#loading-data" class="anchor" aria-hidden="true"></a>Loading data</h1>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cpop_data_binary</span>, package <span class="op">=</span> <span class="st">'CPOP'</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/attach.html" class="external-link">attach</a></span><span class="op">(</span><span class="va">cpop_data_binary</span><span class="op">)</span>
 
-<span class="kw">z1</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span>(<span class="kw">x1</span>)
-<span class="kw">z2</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span>(<span class="kw">x2</span>)
-<span class="kw">z3</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span>(<span class="kw">x3</span>)
+<span class="va">z1</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>
+<span class="va">z2</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span>
+<span class="va">z3</span> <span class="op">=</span> <span class="fu"><a href="../reference/pairwise_col_diff.html">pairwise_col_diff</a></span><span class="op">(</span><span class="va">x3</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">x1</span>,<span class="kw">x2</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">x1</span>,<span class="va">x2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="cpop" class="section level1">
 <h1 class="hasAnchor">
-<a href="#cpop" class="anchor"></a>CPOP</h1>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">cpop_result</span> <span class="op">=</span> <span class="fu"><a href="../reference/cpop_model.html">cpop_model</a></span>(<span class="kw">z1</span>, <span class="kw">z2</span>, <span class="kw">y1</span>, <span class="kw">y2</span>, alpha = <span class="fl">1</span>, n_features = <span class="fl">10</span>)
-</pre></div>
+<a href="#cpop" class="anchor" aria-hidden="true"></a>CPOP</h1>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cpop_result</span> <span class="op">=</span> <span class="fu"><a href="../reference/cpop_model.html">cpop_model</a></span><span class="op">(</span><span class="va">z1</span>, <span class="va">z2</span>, <span class="va">y1</span>, <span class="va">y2</span>, alpha <span class="op">=</span> <span class="fl">1</span>, n_features <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <pre><code>## Absolute colMeans difference will be used as the weights for CPOP</code></pre>
 <pre><code>## Fitting CPOP model using alpha = 1</code></pre>
 <pre><code>## Based on previous alpha, 0 features are kept</code></pre>
 <pre><code>## CPOP1 - Step 01: Number of selected features: 0 out of 190</code></pre>
-<pre><code>## CPOP1 - Step 02: Number of selected features: 8 out of 190</code></pre>
-<pre><code>## CPOP1 - Step 03: Number of selected features: 15 out of 190</code></pre>
+<pre><code>## CPOP1 - Step 02: Number of selected features: 9 out of 190</code></pre>
+<pre><code>## CPOP1 - Step 03: Number of selected features: 16 out of 190</code></pre>
 <pre><code>## 10 features was reached.</code></pre>
-<pre><code>## A total of 15 features were selected.</code></pre>
-<pre><code>## Removing sources of collinearity gives 12 features.</code></pre>
+<pre><code>## A total of 16 features were selected.</code></pre>
+<pre><code>## Removing sources of collinearity gives 13 features.</code></pre>
 <pre><code>## 10 features was reached.</code></pre>
-<pre><code>## A total of 12 features were selected.</code></pre>
-<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 9 out of 12</code></pre>
+<pre><code>## A total of 13 features were selected.</code></pre>
+<pre><code>## CPOP2 - Sign: Step 01: Number of leftover features: 9 out of 13</code></pre>
 <pre><code>## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
-##   -1  0 0 0
+##   -1  0 0 1
 ##   0   0 0 0
 ##   1   3 0 0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 8 out of 12
+<pre><code>## CPOP2 - Sign: Step 02: Number of leftover features: 8 out of 13
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 0
 ##   0   0 0 0
 ##   1   1 0 0</code></pre>
-<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 8 out of 12
+<pre><code>## CPOP2 - Sign: Step 03: Number of leftover features: 8 out of 13
 ## The sign matrix between the two data:</code></pre>
 <pre><code>##     
 ##      -1 0 1
 ##   -1  0 0 0
 ##   0   0 0 0
 ##   1   0 0 0</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="kw">cpop_result</span>, <span class="st">"text"</span>)
-</pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, <span class="st">"text"</span><span class="op">)</span></code></pre></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <pre><code>## 
 ## $data
-## # A tibble: 8 x 3
+## # A tibble: 8 × 3
 ##   coef_name  coef1    coef2
 ##   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 X01--X10  -0.322 -0.246  
-## 2 X09--X17   0.722  0.521  
-## 3 X11--X14   0.130  0.00292
-## 4 X12--X20   0.404  0.170  
-## 5 X01--X07  -0.437 -0.408  
-## 6 X01--X15  -0.158 -0.334  
-## 7 X01--X17  -0.901 -0.644  
-## 8 X04--X12   0.353  0.431</code></pre>
+## 2 X09--X17   0.722  0.556  
+## 3 X11--X14   0.130  0.00393
+## 4 X12--X20   0.404  0.187  
+## 5 X01--X07  -0.437 -0.415  
+## 6 X01--X15  -0.158 -0.345  
+## 7 X01--X17  -0.901 -0.690  
+## 8 X04--X12   0.353  0.455</code></pre>
 </div>
 <div id="naive-lasso" class="section level1">
 <h1 class="hasAnchor">
-<a href="#naive-lasso" class="anchor"></a>Naive Lasso</h1>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="kw">lasso_result</span> <span class="op">=</span> <span class="fu"><a href="../reference/naive_glmnet.html">naive_glmnet</a></span>(<span class="kw">z1</span>, <span class="kw">z2</span>, <span class="kw">y1</span>, <span class="kw">y2</span>, alpha = <span class="fl">1</span>, intercept = <span class="fl">FALSE</span>)
-<span class="kw">lasso_result</span>
-</pre></div>
+<a href="#naive-lasso" class="anchor" aria-hidden="true"></a>Naive Lasso</h1>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lasso_result</span> <span class="op">=</span> <span class="fu"><a href="../reference/naive_glmnet.html">naive_glmnet</a></span><span class="op">(</span><span class="va">z1</span>, <span class="va">z2</span>, <span class="va">y1</span>, <span class="va">y2</span>, alpha <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">lasso_result</span></code></pre></div>
 <pre><code>## $glmnet1
 ## 
 ## Call:  glmnet::cv.glmnet(x = z1, y = y1, alpha = 1, intercept = FALSE) 
 ## 
 ## Measure: Mean-Squared Error 
 ## 
-##     Lambda Measure      SE Nonzero
-## min 0.0909  0.3969 0.03805       4
-## 1se 0.2100  0.4313 0.03175       2
+##     Lambda Index Measure      SE Nonzero
+## min 0.1319    25  0.4081 0.03730       3
+## 1se 0.2305    13  0.4399 0.03554       2
 ## 
 ## $glmnet2
 ## 
@@ -173,24 +164,24 @@
 ## 
 ## Measure: Mean-Squared Error 
 ## 
-##     Lambda Measure      SE Nonzero
-## min 0.1337  0.4689 0.03682       4
-## 1se 0.2448  0.5014 0.04425       2
+##     Lambda Index Measure      SE Nonzero
+## min 0.1337    19  0.4681 0.04475       4
+## 1se 0.2565     5  0.5068 0.05371       2
 ## 
 ## $coef_tbl
 ## $coef_tbl[[1]]
-## # A tibble: 191 x 3
+## # A tibble: 191 × 3
 ##    coef_name    coef1   coef2
 ##    &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;
 ##  1 (Intercept)  0      0     
 ##  2 X01--X02     0      0     
 ##  3 X01--X03     0      0     
-##  4 X01--X04    -0.131 -0.0705
+##  4 X01--X04    -0.116 -0.0705
 ##  5 X01--X05     0      0     
 ##  6 X01--X06     0      0     
 ##  7 X01--X07     0      0     
 ##  8 X01--X08     0     -0.0235
-##  9 X01--X09    -0.120 -0.0704
+##  9 X01--X09    -0.111 -0.0704
 ## 10 X01--X10     0      0     
 ## # … with 181 more rows
 ## 
@@ -200,70 +191,65 @@
 </div>
 <div id="plotting" class="section level1">
 <h1 class="hasAnchor">
-<a href="#plotting" class="anchor"></a>Plotting</h1>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="kw">cpop_result</span>)
-</pre></div>
+<a href="#plotting" class="anchor" aria-hidden="true"></a>Plotting</h1>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span><span class="op">)</span></code></pre></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <pre><code>## 
 ## $data
-## # A tibble: 8 x 3
+## # A tibble: 8 × 3
 ##   coef_name  coef1    coef2
 ##   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 X01--X10  -0.322 -0.246  
-## 2 X09--X17   0.722  0.521  
-## 3 X11--X14   0.130  0.00292
-## 4 X12--X20   0.404  0.170  
-## 5 X01--X07  -0.437 -0.408  
-## 6 X01--X15  -0.158 -0.334  
-## 7 X01--X17  -0.901 -0.644  
-## 8 X04--X12   0.353  0.431</code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="kw">lasso_result</span>)
-</pre></div>
+## 2 X09--X17   0.722  0.556  
+## 3 X11--X14   0.130  0.00393
+## 4 X12--X20   0.404  0.187  
+## 5 X01--X07  -0.437 -0.415  
+## 6 X01--X15  -0.158 -0.345  
+## 7 X01--X17  -0.901 -0.690  
+## 8 X04--X12   0.353  0.455</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">lasso_result</span><span class="op">)</span></code></pre></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 <pre><code>## 
 ## $data
-## # A tibble: 2 x 3
+## # A tibble: 2 × 3
 ##   coef_name  coef1   coef2
 ##   &lt;fct&gt;      &lt;dbl&gt;   &lt;dbl&gt;
-## 1 X01--X04  -0.131 -0.0705
-## 2 X01--X09  -0.120 -0.0704</code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="kw">cpop_result</span>, type = <span class="st">"ggraph"</span>)
-</pre></div>
+## 1 X01--X04  -0.116 -0.0705
+## 2 X01--X09  -0.111 -0.0704</code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, type <span class="op">=</span> <span class="st">"ggraph"</span><span class="op">)</span></code></pre></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
 <pre><code>## 
 ## $data
-## # A tibble: 8 x 7
+## # A tibble: 8 × 7
 ##   from  to     coef1    coef2 coef_avg coef_abs sign_coef1
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
 ## 1 X01   X10   -0.322 -0.246    -0.284    0.284  Negative  
-## 2 X09   X17    0.722  0.521     0.621    0.621  Positive  
-## 3 X11   X14    0.130  0.00292   0.0666   0.0666 Positive  
-## 4 X12   X20    0.404  0.170     0.287    0.287  Positive  
-## 5 X01   X07   -0.437 -0.408    -0.423    0.423  Negative  
-## 6 X01   X15   -0.158 -0.334    -0.246    0.246  Negative  
-## 7 X01   X17   -0.901 -0.644    -0.773    0.773  Negative  
-## 8 X04   X12    0.353  0.431     0.392    0.392  Positive</code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span>(<span class="kw">lasso_result</span>, type = <span class="st">"ggraph"</span>)
-</pre></div>
+## 2 X09   X17    0.722  0.556     0.639    0.639  Positive  
+## 3 X11   X14    0.130  0.00393   0.0671   0.0671 Positive  
+## 4 X12   X20    0.404  0.187     0.296    0.296  Positive  
+## 5 X01   X07   -0.437 -0.415    -0.426    0.426  Negative  
+## 6 X01   X15   -0.158 -0.345    -0.252    0.252  Negative  
+## 7 X01   X17   -0.901 -0.690    -0.796    0.796  Negative  
+## 8 X04   X12    0.353  0.455     0.404    0.404  Positive</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">lasso_result</span>, type <span class="op">=</span> <span class="st">"ggraph"</span><span class="op">)</span></code></pre></div>
 <pre><code>## $plot</code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-4.png" width="700"></p>
 <pre><code>## 
 ## $data
-## # A tibble: 2 x 7
+## # A tibble: 2 × 7
 ##   from  to     coef1   coef2 coef_avg coef_abs sign_coef1
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
-## 1 X01   X04   -0.131 -0.0705  -0.100    0.100  Negative  
-## 2 X01   X09   -0.120 -0.0704  -0.0954   0.0954 Negative</code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="kw">beta</span>
-</pre></div>
+## 1 X01   X04   -0.116 -0.0705  -0.0932   0.0932 Negative  
+## 2 X01   X09   -0.111 -0.0704  -0.0908   0.0908 Negative</code></pre>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">beta</span></code></pre></div>
 <pre><code>##    X01--X02    X01--X03    X01--X04    X01--X05    X01--X06    X01--X07 
 ## -0.49258985 -0.14860754 -0.82375058  0.07058263 -0.55084665  0.03776694 
 ##    X01--X08    X01--X09    X01--X10    X01--X11    X01--X12    X01--X13 
@@ -331,53 +317,48 @@
 </div>
 <div id="prediction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#prediction" class="anchor"></a>Prediction</h1>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="co"># z3 = pairwise_col_diff(x3)</span>
+<a href="#prediction" class="anchor" aria-hidden="true"></a>Prediction</h1>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># z3 = pairwise_col_diff(x3)</span>
 <span class="co"># boxplot(y3 ~ predict_cpop(cpop_result, newz = z3)$cpop_model_avg)</span>
 <span class="co"># x3 = matrix(rnorm(n * p, mean = 3, sd = 1), nrow = n, ncol = p)</span>
 <span class="co"># colnames(x3) = colnames(x1)</span>
 <span class="co"># z3 = pairwise_col_diff(x3)</span>
 
-<span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span>(<span class="kw">cpop_result</span>, newz = <span class="kw">z3</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">cpop_model1</span>, y = <span class="kw">cpop_model2</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>() 
-</pre></div>
+<span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newz <span class="op">=</span> <span class="va">z3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cpop_model1</span>, y <span class="op">=</span> <span class="va">cpop_model2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span>(<span class="kw">cpop_result</span>, newz = <span class="kw">z3</span>)[,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span>] <span class="op">%&gt;%</span> <span class="kw">cor</span>
-</pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newz <span class="op">=</span> <span class="va">z3</span><span class="op">)</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">cor</span></code></pre></div>
 <pre><code>##             cpop_model1 cpop_model2
-## cpop_model1   1.0000000   0.9573995
-## cpop_model2   0.9573995   1.0000000</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="kw">lasso_pred1</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
-  lasso_pred1 = <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">lasso_result</span><span class="op">$</span><span class="kw">glmnet1</span>, newx = <span class="kw">z3</span>),
-  lasso_pred2 = <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">lasso_result</span><span class="op">$</span><span class="kw">glmnet2</span>, newx = <span class="kw">z3</span>))
+## cpop_model1   1.0000000   0.9588061
+## cpop_model2   0.9588061   1.0000000</code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lasso_pred1</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+  lasso_pred1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">lasso_result</span><span class="op">$</span><span class="va">glmnet1</span>, newx <span class="op">=</span> <span class="va">z3</span><span class="op">)</span>,
+  lasso_pred2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">lasso_result</span><span class="op">$</span><span class="va">glmnet2</span>, newx <span class="op">=</span> <span class="va">z3</span><span class="op">)</span><span class="op">)</span>
 
-<span class="kw">lasso_pred1</span> <span class="op">%&gt;%</span> <span class="kw">cor</span>
-</pre></div>
+<span class="va">lasso_pred1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">cor</span></code></pre></div>
 <pre><code>##             lasso_pred1 lasso_pred2
-## lasso_pred1   1.0000000   0.9970606
-## lasso_pred2   0.9970606   1.0000000</code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit">
-<span class="kw">lasso_pred1</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">lasso_pred1</span>, y = <span class="kw">lasso_pred2</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>()
-</pre></div>
+## lasso_pred1   1.0000000   0.9958743
+## lasso_pred2   0.9958743   1.0000000</code></pre>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lasso_pred1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lasso_pred1</span>, y <span class="op">=</span> <span class="va">lasso_pred2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb47"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
-</pre></div>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.5
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -386,33 +367,36 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.2    tibble_3.0.1     CPOP_0.0.24      BiocStyle_2.16.0
+## [1] ggplot2_3.3.5    tibble_3.1.4     CPOP_0.0.24      BiocStyle_2.20.2
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] shape_1.4.4         tidyselect_1.1.0    xfun_0.15          
-##  [4] purrr_0.3.4         graphlayouts_0.7.0  splines_4.0.2      
-##  [7] lattice_0.20-41     colorspace_1.4-1    vctrs_0.3.1        
-## [10] generics_0.0.2      htmltools_0.5.0     viridisLite_0.3.0  
-## [13] yaml_2.2.1          utf8_1.1.4          survival_3.1-12    
-## [16] rlang_0.4.6         pkgdown_1.5.1.9000  pillar_1.4.4       
-## [19] withr_2.2.0         glue_1.4.1          tweenr_1.0.1       
-## [22] RColorBrewer_1.1-2  foreach_1.5.0       lifecycle_0.2.0    
-## [25] stringr_1.4.0       munsell_0.5.0       gtable_0.3.0       
-## [28] codetools_0.2-16    memoise_1.1.0       evaluate_0.14      
-## [31] labeling_0.3        forcats_0.5.0       knitr_1.29         
-## [34] fansi_0.4.1         tidygraph_1.2.0     Rcpp_1.0.4.6       
-## [37] scales_1.1.1        backports_1.1.8     BiocManager_1.30.10
-## [40] desc_1.2.0          farver_2.0.3        fs_1.4.1           
-## [43] gridExtra_2.3       ggforce_0.3.2       digest_0.6.25      
-## [46] stringi_1.4.6       bookdown_0.20       dplyr_1.0.0        
-## [49] ggrepel_0.8.2       polyclip_1.10-0     grid_4.0.2         
-## [52] rprojroot_1.3-2     cli_2.0.2           tools_4.0.2        
-## [55] magrittr_1.5        proxy_0.4-24        glmnet_4.0-2       
-## [58] ggraph_2.0.3        crayon_1.3.4        tidyr_1.1.0        
-## [61] pkgconfig_2.0.3     ellipsis_0.3.1      MASS_7.3-51.6      
-## [64] Matrix_1.2-18       assertthat_0.2.1    rmarkdown_2.3.1    
-## [67] viridis_0.5.1       iterators_1.0.12    R6_2.4.1           
-## [70] igraph_1.2.5        compiler_4.0.2</code></pre>
+##  [1] viridis_0.6.1       sass_0.4.0          tidyr_1.1.3        
+##  [4] tidygraph_1.2.0     jsonlite_1.7.2      viridisLite_0.4.0  
+##  [7] splines_4.1.1       foreach_1.5.1       ggraph_2.0.5       
+## [10] bslib_0.2.5.1       assertthat_0.2.1    BiocManager_1.30.16
+## [13] highr_0.9           yaml_2.2.1          ggrepel_0.9.1      
+## [16] pillar_1.6.2        lattice_0.20-44     glue_1.4.2         
+## [19] digest_0.6.27       RColorBrewer_1.1-2  polyclip_1.10-0    
+## [22] colorspace_2.0-2    htmltools_0.5.2     Matrix_1.3-4       
+## [25] pkgconfig_2.0.3     bookdown_0.23       purrr_0.3.4        
+## [28] scales_1.1.1        tweenr_1.0.2        ggforce_0.3.3      
+## [31] proxy_0.4-26        generics_0.1.0      farver_2.1.0       
+## [34] ellipsis_0.3.2      cachem_1.0.6        withr_2.4.2        
+## [37] cli_3.0.1           survival_3.2-11     magrittr_2.0.1     
+## [40] crayon_1.4.1        memoise_2.0.0       evaluate_0.14      
+## [43] fs_1.5.0            fansi_0.5.0         MASS_7.3-54        
+## [46] forcats_0.5.1       textshaping_0.3.5   tools_4.1.1        
+## [49] lifecycle_1.0.0     stringr_1.4.0       munsell_0.5.0      
+## [52] glmnet_4.1-2        compiler_4.1.1      pkgdown_1.6.1.9001 
+## [55] jquerylib_0.1.4     systemfonts_1.0.2   rlang_0.4.11       
+## [58] grid_4.1.1          iterators_1.0.13    igraph_1.2.6       
+## [61] labeling_0.4.2      rmarkdown_2.10      gtable_0.3.0       
+## [64] codetools_0.2-18    graphlayouts_0.7.1  R6_2.5.1           
+## [67] gridExtra_2.3       knitr_1.33          dplyr_1.0.7        
+## [70] fastmap_1.1.0       utf8_1.2.2          rprojroot_2.0.2    
+## [73] ragg_1.1.3          shape_1.4.6         desc_1.3.0         
+## [76] stringi_1.7.4       Rcpp_1.0.7          vctrs_0.3.8        
+## [79] tidyselect_1.1.1    xfun_0.25</code></pre>
 </div>
   </div>
 
@@ -427,11 +411,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p></p>
+<p>Developed by Kevin Wang.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -439,6 +425,8 @@
 
   
 
+
+  
 
   </body>
 </html>

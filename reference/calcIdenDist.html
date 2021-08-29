@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
 <li>
@@ -115,7 +117,7 @@
     <p>Identity Distance for a matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calcIdenDist</span>(<span class='kw'>matrix</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>calcIdenDist</span><span class='op'>(</span><span class='va'>matrix</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,28 +130,30 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='kw'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), ncol = <span class='fl'>10</span>)
-<span class='fu'>calcIdenDist</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt;            1         2         3         4         5         6         7
-#&gt; 2  0.7538007                                                            
-#&gt; 3  0.6478848 0.6729787                                                  
-#&gt; 4  1.0394306 0.4692932 1.0660719                                        
-#&gt; 5  0.7769452 0.4411357 0.9018636 0.9153595                              
-#&gt; 6  0.7340166 0.3950996 0.4165648 1.1033254 0.6696763                    
-#&gt; 7  0.7738067 0.3620306 0.5269016 1.0397342 0.7198726 0.6388056          
-#&gt; 8  0.6608335 0.4475043 1.0138233 0.6336239 0.9811230 0.8515384 0.4879885
-#&gt; 9  0.4853060 0.4559019 0.5375503 0.9422311 0.6221941 0.5166489 0.4280521
-#&gt; 10 0.3990431 0.3415338 0.5095512 1.0480312 0.7891986 0.6762961 0.4960032
-#&gt;            8         9
-#&gt; 2                     
-#&gt; 3                     
-#&gt; 4                     
-#&gt; 5                     
-#&gt; 6                     
-#&gt; 7                     
-#&gt; 8                     
-#&gt; 9  0.5498045          
-#&gt; 10 0.4588003 0.5147689</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>calcIdenDist</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            1         2         3         4         5         6         7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  0.7538007                                                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  0.6478848 0.6729787                                                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  1.0394306 0.4692932 1.0660719                                        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  0.7769452 0.4411357 0.9018636 0.9153595                              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  0.7340166 0.3950996 0.4165648 1.1033254 0.6696763                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  0.7738067 0.3620306 0.5269016 1.0397342 0.7198726 0.6388056          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  0.6608335 0.4475043 1.0138233 0.6336239 0.9811230 0.8515384 0.4879885</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  0.4853060 0.4559019 0.5375503 0.9422311 0.6221941 0.5166489 0.4280521</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 0.3990431 0.3415338 0.5095512 1.0480312 0.7891986 0.6762961 0.4960032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            8         9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  0.5498045          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 0.4588003 0.5147689</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -161,11 +165,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p><p>Developed by Kevin Wang.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -173,6 +177,8 @@
 
   
 
+
+  
 
   </body>
 </html>

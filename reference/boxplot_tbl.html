@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
 <li>
@@ -115,7 +117,7 @@
     <p>Make a simple boxplot plotting tbl</p>
     </div>
 
-    <pre class="usage"><span class='fu'>boxplot_tbl</span>(<span class='kw'>x</span>, index = <span class='fl'>2</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>boxplot_tbl</span><span class='op'>(</span><span class='va'>x</span>, index <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,47 +137,51 @@
     <p>A tibble</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>cpop_data_binary</span>, package = <span class='st'>'CPOP'</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span>(<span class='kw'>cpop_data_binary</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='kw'>z1</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x1</span>)
-<span class='kw'>z2</span> <span class='op'>=</span> <span class='fu'>pairwise_col_diff</span>(<span class='kw'>x2</span>)
-<span class='fu'>boxplot_tbl</span>(x = <span class='kw'>x1</span>, index = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 6</span><span>
-#&gt;    object means medians      q1    q3  n_na
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> 001    0.959   0.897  0.332   1.64     0
-#&gt; </span><span style='color: #555555;'> 2</span><span> 002    0.724   0.725  0.082</span><span style='text-decoration: underline;'>4</span><span>  1.47     0
-#&gt; </span><span style='color: #555555;'> 3</span><span> 003    1.14    1.15   0.747   1.69     0
-#&gt; </span><span style='color: #555555;'> 4</span><span> 004    0.953   0.882  0.171   1.35     0
-#&gt; </span><span style='color: #555555;'> 5</span><span> 005    0.908   0.761 -</span><span style='color: #BB0000;'>0.049</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  1.61     0
-#&gt; </span><span style='color: #555555;'> 6</span><span> 006    1.15    1.21   0.538   1.54     0
-#&gt; </span><span style='color: #555555;'> 7</span><span> 007    0.671   0.644 -</span><span style='color: #BB0000;'>0.042</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  1.44     0
-#&gt; </span><span style='color: #555555;'> 8</span><span> 008    1.30    1.38   0.455   2.05     0
-#&gt; </span><span style='color: #555555;'> 9</span><span> 009    0.772   0.800  0.146   1.22     0
-#&gt; </span><span style='color: #555555;'>10</span><span> 010    0.902   0.848  0.162   1.46     0
-#&gt; </span><span style='color: #555555;'># … with 90 more rows</span><span></div><div class='input'><span class='fu'>boxplot_tbl</span>(x = <span class='kw'>x1</span>, index = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 20 x 6</span><span>
-#&gt;    object means medians     q1    q3  n_na
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> X01    0.938   0.921 0.244   1.56     0
-#&gt; </span><span style='color: #555555;'> 2</span><span> X02    1.03    0.999 0.248   1.73     0
-#&gt; </span><span style='color: #555555;'> 3</span><span> X03    0.817   0.807 0.084</span><span style='text-decoration: underline;'>8</span><span>  1.50     0
-#&gt; </span><span style='color: #555555;'> 4</span><span> X04    1.20    1.19  0.515   1.93     0
-#&gt; </span><span style='color: #555555;'> 5</span><span> X05    1.03    1.11  0.423   1.64     0
-#&gt; </span><span style='color: #555555;'> 6</span><span> X06    0.978   1.00  0.303   1.66     0
-#&gt; </span><span style='color: #555555;'> 7</span><span> X07    0.965   0.985 0.318   1.76     0
-#&gt; </span><span style='color: #555555;'> 8</span><span> X08    1.01    0.880 0.340   1.71     0
-#&gt; </span><span style='color: #555555;'> 9</span><span> X09    1.10    1.03  0.481   1.78     0
-#&gt; </span><span style='color: #555555;'>10</span><span> X10    0.897   0.784 0.303   1.40     0
-#&gt; </span><span style='color: #555555;'>11</span><span> X11    1.09    0.995 0.411   1.85     0
-#&gt; </span><span style='color: #555555;'>12</span><span> X12    1.04    0.925 0.385   1.71     0
-#&gt; </span><span style='color: #555555;'>13</span><span> X13    0.980   0.975 0.259   1.69     0
-#&gt; </span><span style='color: #555555;'>14</span><span> X14    0.959   0.978 0.175   1.60     0
-#&gt; </span><span style='color: #555555;'>15</span><span> X15    1.01    1.00  0.505   1.56     0
-#&gt; </span><span style='color: #555555;'>16</span><span> X16    1.03    1.08  0.405   1.62     0
-#&gt; </span><span style='color: #555555;'>17</span><span> X17    0.920   0.922 0.196   1.61     0
-#&gt; </span><span style='color: #555555;'>18</span><span> X18    1.02    0.912 0.428   1.72     0
-#&gt; </span><span style='color: #555555;'>19</span><span> X19    0.890   0.996 0.246   1.42     0
-#&gt; </span><span style='color: #555555;'>20</span><span> X20    1.07    0.948 0.510   1.77     0</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cpop_data_binary</span>, package <span class='op'>=</span> <span class='st'>'CPOP'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/attach.html'>attach</a></span><span class='op'>(</span><span class='va'>cpop_data_binary</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>z1</span> <span class='op'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span><span class='op'>(</span><span class='va'>x1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>z2</span> <span class='op'>=</span> <span class='fu'><a href='pairwise_col_diff.html'>pairwise_col_diff</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>boxplot_tbl</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x1</span>, index <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 100 × 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    object means medians      q1    q3  n_na</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 001    0.959   0.897  0.332   1.64     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 002    0.724   0.725  0.082<span style='text-decoration: underline;'>4</span>  1.47     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 003    1.14    1.15   0.747   1.69     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 004    0.953   0.882  0.171   1.35     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 005    0.908   0.761 -<span style='color: #BB0000;'>0.049</span><span style='color: #BB0000; text-decoration: underline;'>6</span>  1.61     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 006    1.15    1.21   0.538   1.54     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 007    0.671   0.644 -<span style='color: #BB0000;'>0.042</span><span style='color: #BB0000; text-decoration: underline;'>6</span>  1.44     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 008    1.30    1.38   0.455   2.05     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 009    0.772   0.800  0.146   1.22     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 010    0.902   0.848  0.162   1.46     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 90 more rows</span></span>
+<span class='r-in'><span class='fu'>boxplot_tbl</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x1</span>, index <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 × 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    object means medians     q1    q3  n_na</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> X01    0.938   0.921 0.244   1.56     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> X02    1.03    0.999 0.248   1.73     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> X03    0.817   0.807 0.084<span style='text-decoration: underline;'>8</span>  1.50     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> X04    1.20    1.19  0.515   1.93     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> X05    1.03    1.11  0.423   1.64     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> X06    0.978   1.00  0.303   1.66     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> X07    0.965   0.985 0.318   1.76     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> X08    1.01    0.880 0.340   1.71     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> X09    1.10    1.03  0.481   1.78     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> X10    0.897   0.784 0.303   1.40     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> X11    1.09    0.995 0.411   1.85     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> X12    1.04    0.925 0.385   1.71     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> X13    0.980   0.975 0.259   1.69     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span> X14    0.959   0.978 0.175   1.60     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span> X15    1.01    1.00  0.505   1.56     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span> X16    1.03    1.08  0.405   1.62     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span> X17    0.920   0.922 0.196   1.61     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span> X18    1.02    0.912 0.428   1.72     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span> X19    0.890   0.996 0.246   1.42     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span> X20    1.07    0.948 0.510   1.77     0</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -187,11 +193,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p><p>Developed by Kevin Wang.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -199,6 +205,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -48,6 +48,8 @@ panel_scatter_smallDots with h and v lines at zero" />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -59,9 +61,15 @@ panel_scatter_smallDots with h and v lines at zero" />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,12 +90,6 @@ panel_scatter_smallDots with h and v lines at zero" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/CPOP.html">Get started</a>
 </li>
 <li>
@@ -121,17 +123,17 @@ panel_scatter_smallDots with h and v lines at zero" />
 <p>panel_scatter_smallDots with h and v lines at zero</p>
     </div>
 
-    <pre class="usage"><span class='fu'>panel_cor</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>panel_cor</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>panel_idenDist</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
+<span class='fu'>panel_idenDist</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>panel_scatter_abline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, a = <span class='fl'>0</span>, b = <span class='fl'>1</span>, col = <span class='st'>"red"</span>)
+<span class='fu'>panel_scatter_abline</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, a <span class='op'>=</span> <span class='fl'>0</span>, b <span class='op'>=</span> <span class='fl'>1</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 
-<span class='fu'>panel_scatter_abline_smallDots</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, a = <span class='fl'>0</span>, b = <span class='fl'>1</span>, col = <span class='st'>"red"</span>)
+<span class='fu'>panel_scatter_abline_smallDots</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, a <span class='op'>=</span> <span class='fl'>0</span>, b <span class='op'>=</span> <span class='fl'>1</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 
-<span class='fu'>panel_scatter_abhvline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)
+<span class='fu'>panel_scatter_abhvline</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>panel_scatter_smallDots_abhvline</span>(<span class='kw'>x</span>, <span class='kw'>y</span>)</pre>
+<span class='fu'>panel_scatter_smallDots_abhvline</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,17 +170,29 @@ panel_scatter_smallDots with h and v lines at zero" />
 <p>Kevin Wang</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>], lower.panel = <span class='kw'>panel_cor</span>)</div><div class='img'><img src='additional_panels-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
-upper.panel = <span class='kw'>panel_scatter_abline</span>,
-lower.panel = <span class='kw'>panel_idenDist</span>)</div><div class='img'><img src='additional_panels-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
-lower.panel = <span class='kw'>panel_cor</span>,
-upper.panel = <span class='kw'>panel_scatter_abline</span>)</div><div class='img'><img src='additional_panels-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
-lower.panel = <span class='kw'>panel_cor</span>,
-upper.panel = <span class='kw'>panel_scatter_abline_smallDots</span>)</div><div class='img'><img src='additional_panels-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
-lower.panel = <span class='kw'>panel_cor</span>,
-upper.panel = <span class='kw'>panel_scatter_abhvline</span>)</div><div class='img'><img src='additional_panels-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='kw'>iris</span>[,<span class='op'>-</span><span class='fl'>5</span>],
-lower.panel = <span class='kw'>panel_cor</span>,
-upper.panel = <span class='kw'>panel_scatter_smallDots_abhvline</span>)</div><div class='img'><img src='additional_panels-6.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>, lower.panel <span class='op'>=</span> <span class='va'>panel_cor</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>,</span>
+<span class='r-in'>upper.panel <span class='op'>=</span> <span class='va'>panel_scatter_abline</span>,</span>
+<span class='r-in'>lower.panel <span class='op'>=</span> <span class='va'>panel_idenDist</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>,</span>
+<span class='r-in'>lower.panel <span class='op'>=</span> <span class='va'>panel_cor</span>,</span>
+<span class='r-in'>upper.panel <span class='op'>=</span> <span class='va'>panel_scatter_abline</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>,</span>
+<span class='r-in'>lower.panel <span class='op'>=</span> <span class='va'>panel_cor</span>,</span>
+<span class='r-in'>upper.panel <span class='op'>=</span> <span class='va'>panel_scatter_abline_smallDots</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>,</span>
+<span class='r-in'>lower.panel <span class='op'>=</span> <span class='va'>panel_cor</span>,</span>
+<span class='r-in'>upper.panel <span class='op'>=</span> <span class='va'>panel_scatter_abhvline</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-5.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>,</span>
+<span class='r-in'>lower.panel <span class='op'>=</span> <span class='va'>panel_cor</span>,</span>
+<span class='r-in'>upper.panel <span class='op'>=</span> <span class='va'>panel_scatter_smallDots_abhvline</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='additional_panels-6.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -190,11 +204,11 @@ upper.panel = <span class='kw'>panel_scatter_smallDots_abhvline</span>)</div><di
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kevin Wang.</p>
+  <p><p>Developed by Kevin Wang.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -202,6 +216,8 @@ upper.panel = <span class='kw'>panel_scatter_smallDots_abhvline</span>)</div><di
 
   
 
+
+  
 
   </body>
 </html>
