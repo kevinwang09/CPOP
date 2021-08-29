@@ -100,8 +100,6 @@ cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", n
     coef2 = glmnet::coef.glmnet(ridge2, s = s)[-1, , drop = FALSE]
     signCoef2 = sign(coef2)
 
-
-    # criterion = 0.5*abs(coef1 - coef2)/abs(coef1 + coef2)
     criterion = (1/sqrt(2))*abs(coef1 - coef2)
     cpop2_features = cpop2_features[as.vector(criterion <= mag)]
     message("CPOP2 - Mag: Step ", sprintf("%02d", j), ": Number of leftover features: ", length(cpop2_features), " out of ", p)

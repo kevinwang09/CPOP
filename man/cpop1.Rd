@@ -35,39 +35,46 @@ cpop1_iterate(
 )
 }
 \arguments{
-\item{z1}{A data matrix}
+\item{z1}{A data matrix, columns are pairwise-differences between the original data columns.}
 
-\item{z2}{A data matrix}
+\item{z2}{A data matrix, columns are pairwise-differences between the original data columns.
+Column names should be identical to z1.}
 
-\item{y1}{A vector}
+\item{y1}{A vector of response variable. Same length as the number of rows of z1.}
 
-\item{y2}{A vector}
+\item{y2}{A vector of response variable. Same length as the number of rows of z2.}
 
-\item{w}{A vector}
+\item{w}{A vector of weights.}
 
-\item{family}{See glmnet family}
+\item{family}{See family in glmnet::glmnet function.}
 
 \item{n_iter}{Number of iterations}
 
-\item{alpha}{Lasso alpha}
+\item{alpha}{The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.}
 
-\item{n_features}{n_features desired}
+\item{n_features}{Breaking the CPOP-Step 1 loop if a certain number of features is reached.}
 
-\item{s}{CV lambda}
+\item{s}{Method to select a lambda estimate, either "lambda.min" (default) or "lambda.1se".}
 
-\item{cpop1_method}{Default value is "normal". Alternatives are "after" and "either".}
+\item{cpop1_method}{Default value is "normal". Alternatives are "after" and "either".
+\itemize{
+\item "normal": meaning that the features selected by **both** data1 (consisted of z1 and y1) and
+data2 (consisted of z2 and y2) will be used to construct the final feature set in the first step of CPOP.
+\item "after": In case that no predictive features were found to be commonly predictive in both data,
+features ever found by **both** data will be pooled to construct the final feature set in the first step of CPOP.
+\item "either": In case that no predictive features were found to be commonly predictive in both data,
+features ever selected by **either** data will now be pooled
+}}
 
-\item{...}{Extra parameter settings for cv.glmnet}
+\item{...}{Extra parameter settings for glmnet::cv.glmnet}
 }
 \value{
-A vector of features
+A list. Consisted of a vector of features and a tibble of features selected in each step.
 
 A vector of features
 }
 \description{
-Step 1 of the CPOP method, for a single given alpha.
-Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-elastic net variable selection.
+Step 1 of the CPOP method, aiming to select features agreed by both data.
 
 Step 1 of the CPOP method, for multiple alpha inputs
 }

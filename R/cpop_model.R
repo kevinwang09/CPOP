@@ -1,19 +1,22 @@
-#' @title All three steps of CPOP modelling
-#' @description All three steps of CPOP modelling
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
-#' @param w A vector
-#' @param n_features n_features desired
-#' @param n_iter Number of iterations
-#' @param alpha Lasso alpha
+#' @title CPOP modelling
+#' @description CPOP is consisted of three steps. Step 1 is to select features common to
+#' two transformed data. Note the input must be pairwise-differences between the original data columns.
+#' Step 2 is to select features in constructed models that shared similar characteristics. Step 3 is to
+#' construct a final model used for prediction.
+#' @param z1 A data matrix, columns are pairwise-differences between the original data columns.
+#' @param z2 A data matrix, columns are pairwise-differences between the original data columns.
+#' Column names should be identical to z1.
+#' @param y1 A vector of response variable. Same length as the number of rows of z1.
+#' @param y2 A vector of response variable. Same length as the number of rows of z2.
+#' @param w A vector of weights.
+#' @param n_iter Number of iterations in Step 1 and 2.
+#' @param alpha The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.
+#' @param n_features Breaking the CPOP-Step 1 loop if a certain number of features is reached.
 #' @param s CV-Lasso lambda
 #' @param family family of glmnet
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' @param cpop2_type "sign" or "mag"
 #' @param cpop2_mag a threshold
-#' @param cpop1_method Default value is "normal". Alternatives are "after" and "either".
 #' differential betas are removed
 #' @param intercept Default to FALSE
 #' @param ... Extra parameter settings for cv.glmnet in cpop1
@@ -41,7 +44,7 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
   cpop1_features = cpop1_result$cpop1_features
 
   if(length(cpop1_features) == 0){
-    warning("No predictive features were selected. Return NULL.")
+    warning("No predictive features were selected in Step 1. Return NULL.")
     return(NULL)
     }
 
@@ -55,7 +58,11 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
                              cpop2_break = FALSE, mag = cpop2_mag, intercept = intercept)}
 
 
-  if(length(cpop2_result) == 0){return(NULL)}
+  if(length(cpop2_result) == 0){
+    warning("No predictive features were selected in Step 2. Return NULL.")
+    return(NULL)
+  }
+
   cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                        cpop2_result = cpop2_result, family = family, intercept = intercept)
 
@@ -76,12 +83,8 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
 
 cpop <- function(x, ...) UseMethod("cpop")
 
-
 print.cpop <- function(cpop_result, ...)
 {
   cat("CPOP model with ", length(cpop_result$feature), "features \n")
   print(cpop_result$coef_tbl)
 }
-
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))

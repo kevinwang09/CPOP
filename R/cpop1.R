@@ -1,26 +1,33 @@
 #' @title Step 1 of the CPOP method
-#' @description Step 1 of the CPOP method, for a single given alpha.
-#' Step 1 of CPOP takes in two training data (x1, y1) and (x2, y2) and performed weighted
-#' elastic net variable selection.
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
-#' @param w A vector
+#' @description Step 1 of the CPOP method, aiming to select features agreed by both data.
+#' @param z1 A data matrix, columns are pairwise-differences between the original data columns.
+#' @param z2 A data matrix, columns are pairwise-differences between the original data columns.
+#' Column names should be identical to z1.
+#' @param y1 A vector of response variable. Same length as the number of rows of z1.
+#' @param y2 A vector of response variable. Same length as the number of rows of z2.
+#' @param w A vector of weights.
 #' @param n_iter Number of iterations
-#' @param alpha Lasso alpha
-#' @param n_features n_features desired
-#' @param s CV lambda
+#' @param alpha The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.
+#' @param n_features Breaking the CPOP-Step 1 loop if a certain number of features is reached.
+#' @param s Method to select a lambda estimate, either "lambda.min" (default) or "lambda.1se".
 #' @param cpop1_method Default value is "normal". Alternatives are "after" and "either".
-#' @param ... Extra parameter settings for cv.glmnet
-#' @param family See glmnet family
+#' \itemize{
+#' \item "normal": meaning that the features selected by **both** data1 (consisted of z1 and y1) and
+#' data2 (consisted of z2 and y2) will be used to construct the final feature set in the first step of CPOP.
+#' \item "after": In case that no predictive features were found to be commonly predictive in both data,
+#' features ever found by **both** data will be pooled to construct the final feature set in the first step of CPOP.
+#' \item "either": In case that no predictive features were found to be commonly predictive in both data,
+#' features ever selected by **either** data will now be pooled
+#' }
+#' @param ... Extra parameter settings for glmnet::cv.glmnet
+#' @param family See family in glmnet::glmnet function.
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet
 #' @importFrom tibble lst
 #' @importFrom dplyr bind_rows mutate %>%
 #' @importFrom rlang .data
 #' @rdname cpop1
-#' @return A vector of features
+#' @return A list. Consisted of a vector of features and a tibble of features selected in each step.
 #' @export
 cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
                  n_features = 50, s = "lambda.min", cpop1_method = "normal", ...){
@@ -70,7 +77,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
       ...)
 
     ## The selected feature set is a concatenation of the
-    ## existing selected features withthe common features jointly selected by
+    ## existing selected features with the common features jointly selected by
     ## The two elastic net models.
     en1_coef = get_lasso_coef(en1, s = s)
     en2_coef = get_lasso_coef(en2, s = s)

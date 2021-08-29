@@ -2,7 +2,7 @@
 % Please edit documentation in R/cpop_model.R
 \name{cpop_model}
 \alias{cpop_model}
-\title{All three steps of CPOP modelling}
+\title{CPOP modelling}
 \usage{
 cpop_model(
   z1,
@@ -24,21 +24,22 @@ cpop_model(
 )
 }
 \arguments{
-\item{z1}{A data matrix}
+\item{z1}{A data matrix, columns are pairwise-differences between the original data columns.}
 
-\item{z2}{A data matrix}
+\item{z2}{A data matrix, columns are pairwise-differences between the original data columns.
+Column names should be identical to z1.}
 
-\item{y1}{A vector}
+\item{y1}{A vector of response variable. Same length as the number of rows of z1.}
 
-\item{y2}{A vector}
+\item{y2}{A vector of response variable. Same length as the number of rows of z2.}
 
-\item{w}{A vector}
+\item{w}{A vector of weights.}
 
-\item{n_features}{n_features desired}
+\item{n_features}{Breaking the CPOP-Step 1 loop if a certain number of features is reached.}
 
-\item{n_iter}{Number of iterations}
+\item{n_iter}{Number of iterations in Step 1 and 2.}
 
-\item{alpha}{Lasso alpha}
+\item{alpha}{The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.}
 
 \item{family}{family of glmnet}
 
@@ -48,9 +49,7 @@ cpop_model(
 
 \item{cpop2_type}{"sign" or "mag"}
 
-\item{cpop2_mag}{a threshold}
-
-\item{cpop1_method}{Default value is "normal". Alternatives are "after" and "either".
+\item{cpop2_mag}{a threshold
 differential betas are removed}
 
 \item{intercept}{Default to FALSE}
@@ -61,7 +60,10 @@ differential betas are removed}
 A vector
 }
 \description{
-All three steps of CPOP modelling
+CPOP is consisted of three steps. Step 1 is to select features common to
+two transformed data. Note the input must be pairwise-differences between the original data columns.
+Step 2 is to select features in constructed models that shared similar characteristics. Step 3 is to
+construct a final model used for prediction.
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')
