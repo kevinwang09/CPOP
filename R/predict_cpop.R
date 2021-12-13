@@ -32,18 +32,35 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
 
   if(is.null(cpop_result)) return(NULL)
 
-  result1 = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature, drop = FALSE], s = s)
-  result2 = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature, drop = FALSE], s = s)
+  result1_link = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                    type = "link")
+  result2_link = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                    type = "link")
 
-  result_mat = cbind(result1, result2, (result1 + result2)/2)
+  result_mat = cbind(result1_link, result2_link, (result1_link + result2_link)/2)
   colnames(result_mat) = c("cpop_model1", "cpop_model2", "cpop_model_avg")
+
   if(is.null(rownames(result_mat))){
     rownames(result_mat) = 1:nrow(result_mat)
   }
 
-
   tib_result = tibble::as_tibble(data.frame(result_mat))
   tib_result = dplyr::mutate(tib_result, samples = rownames(result_mat))
+
+  if(cpop_result$family_params$family == "binomial"){
+    result1_prob = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                               type = "response")
+    result2_prob = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                               type = "response")
+    cpop_model_avg_prob = (as.vector(result1_prob) + as.vector(result2_prob))/2
+    cpop_model_avg_class = dplyr::case_when(
+      cpop_model_avg_prob < 0.5 ~ cpop_result$family_params$factor_levels[1],
+      cpop_model_avg_prob > 0.5 ~ cpop_result$family_params$factor_levels[2],
+      TRUE ~ NA_character_)
+    tib_result = dplyr::mutate(tib_result,
+                       cpop_model_avg_prob = cpop_model_avg_prob,
+                       cpop_model_avg_class = cpop_model_avg_class)
+  }
   tib_result = dplyr::select(tib_result, samples, dplyr::everything())
   return(tib_result)
 }

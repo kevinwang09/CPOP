@@ -37,6 +37,15 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
                       s = "lambda.min", cpop2_break = TRUE, cpop2_type = "sign", cpop2_mag = 1,
                       cpop1_method = "normal", intercept = FALSE, ...){
 
+  if(family == "binomial"){
+    assertthat::assert_that(is.factor(y1))
+    assertthat::assert_that(is.factor(y2))
+    assertthat::assert_that(identical(levels(y1), levels(y2)))
+    factor_levels = levels(y1)
+  } else {
+    factor_levels = NULL
+  }
+
   cpop1_result = cpop1_iterate(z1 = z1, z2 = z2, y1 = y1, y2 = y2, w = w,
                                n_features = n_features, n_iter = n_iter,
                                alpha = alpha, s = s,
@@ -76,7 +85,9 @@ cpop_model <- function(z1, z2, y1, y2, w = NULL,
   result = c(cpop3_result,
              coef_tbl = list(coef_tbl),
              cpop1_features = list(cpop1_features),
-             step_features = list(cpop1_result$step_features))
+             step_features = list(cpop1_result$step_features),
+             family_params = list(list(family = family,
+                                       factor_levels = factor_levels)))
 
   class(result) = c("cpop", class(result))
   return(result)

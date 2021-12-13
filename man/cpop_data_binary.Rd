@@ -40,9 +40,9 @@ k = 10
 q = choose(p, 2)
 beta = c(runif(k, -1, 1), rep(0, q - k))
 names(beta) = colnames(z1)
-y1 = rbinom(n, 1, prob = CPOP::expit(z1 \%*\% beta))
-y2 = rbinom(n, 1, prob = CPOP::expit(z2 \%*\% beta))
-y3 = rbinom(n, 1, prob = CPOP::expit(z3 \%*\% beta))
+y1 = factor(rbinom(n, 1, prob = CPOP::expit(z1 \%*\% beta)), levels = c("0", "1"))
+y2 = factor(rbinom(n, 1, prob = CPOP::expit(z2 \%*\% beta)), levels = c("0", "1"))
+y3 = factor(rbinom(n, 1, prob = CPOP::expit(z3 \%*\% beta)), levels = c("0", "1"))
 cpop_data_binary = tibble::lst(x1, x2, x3, y1, y2, y3, beta)
 usethis::use_data(cpop_data_binary)
 }
