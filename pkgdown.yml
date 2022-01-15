@@ -1,7 +1,7 @@
 pandoc: 2.7.3
 pkgdown: 2.0.1.9000
-pkgdown_sha: bbefae3575a7c2484810f9b3b60af4b1faf0d2f4
+pkgdown_sha: 6ab0c4e57f7eea0d6c76403dc2c873ab82089103
 articles:
   CPOP: CPOP.html
-last_built: 2021-12-13T11:51Z
+last_built: 2022-01-15T12:37Z
 

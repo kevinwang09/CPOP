@@ -53,29 +53,17 @@
         </td>
         <td><p>Make a simple boxplot plotting tbl</p></td>
       </tr><tr><td>
-          <p><code><a href="calcIdenDist.html">calcIdenDist()</a></code> </p>
-        </td>
-        <td><p>Identity Distance for a matrix</p></td>
-      </tr><tr><td>
           <p><code><a href="coef_repeat.html">coef_repeat()</a></code> </p>
         </td>
         <td><p>Coefficient of repeatability</p></td>
       </tr><tr><td>
-          <p><code><a href="cpop1.html">cpop1()</a></code> <code><a href="cpop1.html">cpop1_iterate()</a></code> </p>
-        </td>
-        <td><p>Step 1 of the CPOP method</p></td>
-      </tr><tr><td>
-          <p><code><a href="cpop2.html">cpop2_sign()</a></code> <code><a href="cpop2.html">cpop2_mag()</a></code> </p>
-        </td>
-        <td><p>Step 2 of the CPOP method</p></td>
-      </tr><tr><td>
-          <p><code><a href="cpop3.html">cpop3()</a></code> </p>
-        </td>
-        <td><p>Step 3 of the CPOP method</p></td>
-      </tr><tr><td>
           <p><code><a href="cpop_data_binary.html">cpop_data_binary</a></code> </p>
         </td>
         <td><p>A simulated binary data</p></td>
+      </tr><tr><td>
+          <p><code><a href="cpop_internals.html">cpop1()</a></code> <code><a href="cpop_internals.html">cpop1_iterate()</a></code> <code><a href="cpop_internals.html">cpop2_sign()</a></code> <code><a href="cpop_internals.html">cpop2_mag()</a></code> <code><a href="cpop_internals.html">cpop3()</a></code> </p>
+        </td>
+        <td><p>CPOP internal functions</p></td>
       </tr><tr><td>
           <p><code><a href="cpop_model.html">cpop_model()</a></code> </p>
         </td>
@@ -83,13 +71,13 @@
       </tr><tr><td>
           <p><code><a href="cpop_network.html">plot_lratio_network()</a></code> <code><a href="cpop_network.html">lratio_to_network()</a></code> <code><a href="cpop_network.html">mst_lratio()</a></code> </p>
         </td>
-        <td><p>Plot ratio network</p></td>
+        <td><p>Plot a ratio network</p></td>
       </tr><tr><td>
           <p><code><a href="get_lasso_coef.html">get_lasso_coef()</a></code> </p>
         </td>
         <td><p>Get cv.glmnet coefficient as a matrix or a tibble</p></td>
       </tr><tr><td>
-          <p><code><a href="identityDist.html">identityDist()</a></code> </p>
+          <p><code><a href="identity_distance.html">identity_dist()</a></code> <code><a href="identity_distance.html">identity_dist_matrix()</a></code> <code><a href="identity_distance.html">calcIdenDist()</a></code> <code><a href="identity_distance.html">identityDist()</a></code> </p>
         </td>
         <td><p>Identity distance between two vectors</p></td>
       </tr><tr><td>
@@ -107,11 +95,11 @@
       </tr><tr><td>
           <p><code><a href="pairwise_col_diff.html">pairwise_col_diff()</a></code> </p>
         </td>
-        <td><p>Compare pairwise diff</p></td>
+        <td><p>Preparation for CPOP modelling</p></td>
       </tr><tr><td>
-          <p><code><a href="penalties.html">colmeans_penalty()</a></code> <code><a href="penalties.html">p_transform()</a></code> </p>
+          <p><code><a href="penalties.html">colmeans_penalty()</a></code> <code><a href="penalties.html">p_transform()</a></code> <code><a href="penalties.html">tstat_penalty()</a></code> </p>
         </td>
-        <td><p>Compute feature-wise concordance penalty</p></td>
+        <td><p>Compute feature-wise absolute difference penalty</p></td>
       </tr><tr><td>
           <p><code><a href="plot_cpop.html">plot_cpop()</a></code> </p>
         </td>
@@ -124,6 +112,10 @@
           <p><code><a href="predict_naive_glmnet.html">predict_naive_glmnet()</a></code> </p>
         </td>
         <td><p>Prediction method for naive glmnet</p></td>
+      </tr><tr><td>
+          <p><code><a href="prep_cpop.html">prep_cpop()</a></code> </p>
+        </td>
+        <td><p>Preparation for CPOP modelling</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

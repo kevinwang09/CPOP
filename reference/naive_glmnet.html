@@ -47,7 +47,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">naive_glmnet</span><span class="op">(</span><span class="va">z1</span>, <span class="va">z2</span>, <span class="va">y1</span>, <span class="va">y2</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">naive_glmnet</span><span class="op">(</span><span class="va">z1</span>, <span class="va">z2</span>, <span class="va">y1</span>, <span class="va">y2</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span>, family <span class="op">=</span> <span class="st">"binomial"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -62,6 +62,8 @@
 <dd><p>A vector</p></dd>
 <dt>s</dt>
 <dd><p>Default to "lambda.min"</p></dd>
+<dt>family</dt>
+<dd><p>family of glmnet</p></dd>
 <dt>...</dt>
 <dd><p>Extra parameter settings for cv.glmnet</p></dd>
 </dl></div>
@@ -123,7 +125,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0   0 0 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   0 0 0</span>
 <span class="r-in"><span class="va">lasso_result</span> <span class="op">=</span> <span class="fu">naive_glmnet</span><span class="op">(</span><span class="va">z1</span>, <span class="va">z2</span>, <span class="va">y1</span>, <span class="va">y2</span>, alpha <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in storage.mode(y) &lt;- "double":</span> invalid to change the storage mode of a factor</span>
 <span class="r-in"><span class="va">cpop_result</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $glmnet1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -195,7 +196,46 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cpop" "list"</span>
 <span class="r-in"><span class="va">lasso_result</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'lasso_result' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $glmnet1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glmnet::cv.glmnet(x = z1, y = y1, family = "binomial", alpha = 1,      intercept = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Measure: Binomial Deviance </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Lambda Index Measure      SE Nonzero</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min 0.02765    54  0.7032 0.09817      14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1se 0.09267    28  0.7935 0.05895       7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $glmnet2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glmnet::cv.glmnet(x = z2, y = y2, family = "binomial", alpha = 1,      intercept = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Measure: Binomial Deviance </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Lambda Index Measure      SE Nonzero</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min 0.03627    49  0.7289 0.09643      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1se 0.09195    29  0.8213 0.07194       9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $coef_tbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $coef_tbl[[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 191 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    coef_name     coef1   coef2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> (Intercept)  0       0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> X01--X02    -<span style="color: #BB0000;">0.092</span><span style="color: #BB0000; text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.093</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> X01--X03     0       0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> X01--X04    -<span style="color: #BB0000;">0.502</span>  -<span style="color: #BB0000;">1.07</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> X01--X05    -<span style="color: #BB0000;">0.066</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> X01--X06     0      -<span style="color: #BB0000;">0.087</span><span style="color: #BB0000; text-decoration: underline;">7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> X01--X07     0       0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> X01--X08     0      -<span style="color: #BB0000;">0.311</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> X01--X09    -<span style="color: #BB0000;">0.893</span>  -<span style="color: #BB0000;">0.269</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> X01--X10    -<span style="color: #BB0000;">0.094</span><span style="color: #BB0000; text-decoration: underline;">5</span>  0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 181 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "naive_glmnet" "list"        </span>
 <span class="r-in"><span class="fu"><a href="plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-plt img"><img src="naive_glmnet-1.png" alt="" width="700" height="433"></span>
@@ -214,12 +254,24 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> X04--X12   0.353  0.431  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="plot_cpop.html">plot_cpop</a></span><span class="op">(</span><span class="va">lasso_result</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in predict(object, s = s, type = "coefficients", exact = exact,     ...):</span> object 'lasso_result' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
+<span class="r-plt img"><img src="naive_glmnet-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   coef_name   coef1   coef2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> X01--X02  -<span style="color: #BB0000;">0.092</span><span style="color: #BB0000; text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.093</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> X01--X04  -<span style="color: #BB0000;">0.502</span>  -<span style="color: #BB0000;">1.07</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> X01--X09  -<span style="color: #BB0000;">0.893</span>  -<span style="color: #BB0000;">0.269</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> X01--X11  -<span style="color: #BB0000;">0.367</span>  -<span style="color: #BB0000;">0.203</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> X01--X13  -<span style="color: #BB0000;">0.179</span>  -<span style="color: #BB0000;">0.129</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> X01--X18  -<span style="color: #BB0000;">0.277</span>  -<span style="color: #BB0000;">0.183</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newz <span class="op">=</span> <span class="va">z1</span><span class="op">)</span><span class="op">$</span><span class="va">cpop_model_avg</span>,</span>
 <span class="r-in"><span class="fu"><a href="predict_naive_glmnet.html">predict_naive_glmnet</a></span><span class="op">(</span><span class="va">lasso_result</span>, newz <span class="op">=</span> <span class="va">z1</span><span class="op">)</span><span class="op">$</span><span class="va">naive_glmnet_avg</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in predict(object = glmnet_result$glmnet1, newx = newz, s = s):</span> object 'lasso_result' not found</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0</span>, b <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...):</span> plot.new has not been called yet</span>
+<span class="r-plt img"><img src="naive_glmnet-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

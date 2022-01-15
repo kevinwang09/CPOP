@@ -22,22 +22,13 @@
     <loc>/reference/boxplot_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/calcIdenDist.html</loc>
-  </url>
-  <url>
     <loc>/reference/coef_repeat.html</loc>
   </url>
   <url>
-    <loc>/reference/cpop1.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cpop2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cpop3.html</loc>
-  </url>
-  <url>
     <loc>/reference/cpop_data_binary.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cpop_internals.html</loc>
   </url>
   <url>
     <loc>/reference/cpop_model.html</loc>
@@ -49,7 +40,7 @@
     <loc>/reference/get_lasso_coef.html</loc>
   </url>
   <url>
-    <loc>/reference/identityDist.html</loc>
+    <loc>/reference/identity_distance.html</loc>
   </url>
   <url>
     <loc>/reference/impute_cpop.html</loc>
@@ -77,5 +68,8 @@
   </url>
   <url>
     <loc>/reference/predict_naive_glmnet.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_cpop.html</loc>
   </url>
 </urlset>
