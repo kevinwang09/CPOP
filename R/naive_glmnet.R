@@ -4,6 +4,7 @@
 #' @param z2 A data matrix
 #' @param y1 A vector
 #' @param y2 A vector
+#' @param family family of glmnet
 #' @param s Default to "lambda.min"
 #' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
@@ -25,9 +26,9 @@
 #' plot(predict_cpop(cpop_result, newz = z1)$cpop_model_avg,
 #' predict_naive_glmnet(lasso_result, newz = z1)$naive_glmnet_avg)
 #' abline(a = 0, b = 1, col = "red")
-naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", ...){
-  glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, ...)
-  glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, ...)
+naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", family = "binomial", ...){
+  glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, family = "binomial", ...)
+  glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, family = "binomial", ...)
 
   result = list(glmnet1 = glmnet1,
                 glmnet2 = glmnet2)

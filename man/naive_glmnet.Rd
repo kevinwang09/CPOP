@@ -4,7 +4,7 @@
 \alias{naive_glmnet}
 \title{Naive glmnet fitting procedure}
 \usage{
-naive_glmnet(z1, z2, y1, y2, s = "lambda.min", ...)
+naive_glmnet(z1, z2, y1, y2, s = "lambda.min", family = "binomial", ...)
 }
 \arguments{
 \item{z1}{A data matrix}
@@ -16,6 +16,8 @@ naive_glmnet(z1, z2, y1, y2, s = "lambda.min", ...)
 \item{y2}{A vector}
 
 \item{s}{Default to "lambda.min"}
+
+\item{family}{family of glmnet}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }

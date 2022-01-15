@@ -1,10 +1,6 @@
-#' @title Step 2 of the CPOP method
+#' @title CPOP internal functions
 #' @description Step 2 of the CPOP method based on sign
 #' @param cpop1_features cpop1 result
-#' @param z1 A data matrix
-#' @param z2 A data matrix
-#' @param y1 A vector
-#' @param y2 A vector
 #' @param nIter Number of iterations
 #' @param s CV-Lasso lambda
 #' @param ... Extra parameter settings for cv.glmnet
@@ -12,7 +8,7 @@
 #' @param cpop2_break Should cpop2 loop be broken the first time
 #' @param intercept Intercept term
 #' differential betas are removed
-#' @rdname cpop2
+#' @rdname cpop_internals
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet
 #' @return A vector of features
@@ -68,7 +64,7 @@ cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", 
 #' @param mag a scaled threshold differential betas are removed
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet
-#' @rdname cpop2
+#' @rdname cpop_internals
 #' @export
 cpop2_mag = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
                  cpop2_break = FALSE, mag = 1, intercept, ...){

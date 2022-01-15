@@ -1,9 +1,15 @@
-#' @title Plot ratio network
+#' @title Plot a ratio network
 #' @description  Plot ratio network
 #' @param x A character vector representing edges by separating nodes with "--"
 #' i.e. in the form of "e1--e2"
 #' @param type Type of graphical visualisation, currently only support one of
-#' "visNetwork", "igraph", "ggraph"
+#' "visNetwork" (interactive graph).
+#' \itemize{
+#' \item "ggraph" (default): a non-interactive graph visualisation
+#' using the `ggraph` package.
+#' \item "igraph": a `igraph` object from the `igraph` package.
+#' \item "visNetwork": an interactive graph visualisation using the `visNetwork` package
+#' }
 #' @import dplyr
 #' @import ggraph
 #' @importFrom igraph graph_from_edgelist

@@ -18,6 +18,6 @@ Coefficient of repeatability
 set.seed(1)
 x = rnorm(100)
 y = rnorm(100)
-# identityDist(x, y)
+# identity_dist(x, y)
 coef_repeat(x, y)
 }

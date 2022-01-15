@@ -4,7 +4,7 @@
 \alias{plot_lratio_network}
 \alias{lratio_to_network}
 \alias{mst_lratio}
-\title{Plot ratio network}
+\title{Plot a ratio network}
 \usage{
 plot_lratio_network(x, type = "ggraph")
 
@@ -17,7 +17,13 @@ mst_lratio(x)
 i.e. in the form of "e1--e2"}
 
 \item{type}{Type of graphical visualisation, currently only support one of
-"visNetwork", "igraph", "ggraph"}
+"visNetwork" (interactive graph).
+\itemize{
+\item "ggraph" (default): a non-interactive graph visualisation
+using the `ggraph` package.
+\item "igraph": a `igraph` object from the `igraph` package.
+\item "visNetwork": an interactive graph visualisation using the `visNetwork` package
+}}
 }
 \description{
 Plot ratio network

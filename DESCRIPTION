@@ -28,7 +28,8 @@ Imports:
     Matrix,
     mvtnorm,
     forcats,
-    rlang
+    rlang,
+    genefilter
 Suggests: 
     BiocStyle,
     knitr,
