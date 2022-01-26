@@ -19,7 +19,8 @@ Make a simple boxplot plotting tbl
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')
-attach(cpop_data_binary)
+## Loading example matrix
+x1 = cpop_data_binary$x1
 set.seed(1)
 boxplot_tbl(x = x1, index = 1)
 boxplot_tbl(x = x1, index = 2)

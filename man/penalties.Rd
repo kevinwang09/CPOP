@@ -19,6 +19,10 @@ tstat_penalty(x1, x2, y1, y2)
 
 \item{penalty}{A vector of penalties to be transformed
 where the sum is set to the length of the vector}
+
+\item{y1}{A factor response corresponding to the columns of x1}
+
+\item{y2}{A factor response corresponding to the columns of x2}
 }
 \value{
 A vector

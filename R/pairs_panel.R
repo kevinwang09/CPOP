@@ -34,7 +34,7 @@ panel_idenDist <- function(x, y)
   graphics::par(usr = c(0, 1, 0, 1))
   cor <- stats::cor(x, y, method = "pearson")
   corTxt <- format(c(cor, 0.123456789), digits = 3)[1]
-  idenDist <- identityDist(x, y)
+  idenDist <- identity_dist(x, y)
   idenDistTxt <- format(c(idenDist, 0.123456789), digits = 3)[1]
   graphics::text(0.5, 0.5, paste0("Corr: ", corTxt, "\n iden-dist: ", idenDistTxt), cex = 2.5)
 }

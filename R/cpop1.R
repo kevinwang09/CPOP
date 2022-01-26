@@ -116,19 +116,19 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
     warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
     message("Features ever selected by both data (after all iterations) will now be pooled")
     selected_features = step_features_tbl %>%
-      dplyr::filter(feature_name != "(Intercept)") %>%
-      dplyr::select(coef_model, feature_name) %>%
-      dplyr::distinct(coef_model, feature_name) %>%
-      dplyr::group_by(feature_name) %>%
+      dplyr::filter(.data$feature_name != "(Intercept)") %>%
+      dplyr::select(coef_model, .data$feature_name) %>%
+      dplyr::distinct(.data$coef_model, .data$feature_name) %>%
+      dplyr::group_by(.data$feature_name) %>%
       dplyr::tally() %>%
       dplyr::filter(n == 2) %>%
-      dplyr::pull(feature_name)
+      dplyr::pull(.data$feature_name)
   } else if(length(selected_features) == 0 & cpop1_method == "either") {
     warning("No predictive features commonly predictive in both data (at each iteration) were found \n alternative feature set was be used")
     message("Features ever selected by either data will now be pooled")
     selected_features = step_features_tbl %>%
-      dplyr::filter(feature_name != "(Intercept)") %>%
-      dplyr::pull(feature_name) %>% unique()
+      dplyr::filter(.data$feature_name != "(Intercept)") %>%
+      dplyr::pull(.data$feature_name) %>% unique()
   }
 
   if(length(selected_features) == 0){ ## If there are no features selected, then we return NULL
@@ -139,8 +139,8 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
 
     step_features_tbl = step_features_tbl %>%
       dplyr::mutate(
-        ever_selected_features = feature_name %in% selected_features,
-        in_final_features = feature_name %in% final_features)
+        ever_selected_features = .data$feature_name %in% selected_features,
+        in_final_features = .data$feature_name %in% final_features)
 
     return(tibble::lst(final_features, step_features_tbl))
   }

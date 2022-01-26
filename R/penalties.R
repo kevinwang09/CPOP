@@ -42,6 +42,8 @@ p_transform = function(penalty){
 #' @description Compute t-stat absolute difference penalty
 #' @param x1 A data matrix
 #' @param x2 A data matrix
+#' @param y1 A factor response corresponding to the columns of x1
+#' @param y2 A factor response corresponding to the columns of x2
 #' @return A vector
 #' @importFrom genefilter colttests
 #' @importFrom assertthat assert_that

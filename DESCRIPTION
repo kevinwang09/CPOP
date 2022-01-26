@@ -8,7 +8,7 @@ Authors@R: c(
 Description: CPOP aims to construct CPOP methods. 
 License: GPL-3
 Encoding: UTF-8
-LazyData: false
+LazyData: true
 RoxygenNote: 7.1.2
 Depends: R (>= 3.6.0)
 Imports:

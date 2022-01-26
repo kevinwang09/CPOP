@@ -29,7 +29,11 @@ Naive glmnet fitting procedure
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')
-attach(cpop_data_binary)
+## Loading simulated matrices and vectors
+x1 = cpop_data_binary$x1
+x2 = cpop_data_binary$x2
+y1 = cpop_data_binary$y1
+y2 = cpop_data_binary$y2
 set.seed(1)
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)

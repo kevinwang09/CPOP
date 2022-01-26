@@ -5,14 +5,14 @@
 \alias{cpop_data_binary}
 \title{A simulated binary data}
 \format{
-A data frame with columns:
+A list with columns:
 \describe{
  \item{x1}{A matrix of size 100*20, each column has mean 1 and sd 1}
  \item{x2}{A matrix of size 100*20, each column has mean 2 and sd 1}
  \item{x3}{A matrix of size 100*20, each column has mean 3 and sd 1}
- \item{y1}{A vector of 0's and 1's, created by beta and x1}
- \item{y2}{A vector of 0's and 1's, created by beta and x2}
- \item{y3}{A vector of 0's and 1's, created by beta and x3}
+ \item{y1}{A factor vector of 0's and 1's, created by beta and x1}
+ \item{y2}{A factor vector of 0's and 1's, created by beta and x2}
+ \item{y3}{A factor vector of 0's and 1's, created by beta and x3}
  \item{beta}{A random vector with first 10 entries drawn from random unif(-1, 1), otherwise 0's.}
 }
 }
@@ -24,7 +24,13 @@ A simulated binary data
 }
 \examples{
 data(cpop_data_binary)
-attach(cpop_data_binary)
+## Loading simulated matrices and vectors
+x1 = cpop_data_binary$x1
+x2 = cpop_data_binary$x2
+x3 = cpop_data_binary$x3
+y1 = cpop_data_binary$y1
+y2 = cpop_data_binary$y2
+y3 = cpop_data_binary$y3
 \dontrun{
 set.seed(13)
 n = 100

@@ -60,7 +60,15 @@ Note: the phrase "log-ratio" is used in context where the expression values of b
 
 ```{r}
 data(cpop_data_binary, package = 'CPOP')
-attach(cpop_data_binary)
+
+names(cpop_data_binary)
+
+x1 = cpop_data_binary$x1
+x2 = cpop_data_binary$x2
+x3 = cpop_data_binary$x3
+y1 = cpop_data_binary$y1
+y2 = cpop_data_binary$y2
+y3 = cpop_data_binary$y3
 
 z1 = pairwise_col_diff(x1)
 z2 = pairwise_col_diff(x2)

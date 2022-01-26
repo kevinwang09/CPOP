@@ -64,7 +64,7 @@ coef_repeat = function(x, y){
 #' @export
 calcIdenDist = function(matrix){
   .Deprecated(new = "identity_dist_matrix")
-  proxy::dist(matrix, method = identityDist)
+  proxy::dist(matrix, method = identity_dist)
 }
 
 #' @rdname identity_distance
