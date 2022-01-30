@@ -1,0 +1,22 @@
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Article",
+         title = "{Cross-Platform Omics Prediction procedure: a statistical machine learning framework for wider implementation of precision medicine}",
+         author = c(person("Kevin", "Wang"),
+                    person("Gulietta", "Pupo"),
+                    person("Varsha", "Tembe"),
+                    person("Ellis", "Patrick"),
+                    person("Dario", "Strbenac"),
+                    person("Sarah-Jane", "Schramm"),
+                    person("John", "Thompson"),
+                    person("Richard", "Scolyer"),
+                    person("Samuel", "Muller"),
+                    person("Garth", "Tarr"),
+                    person("Graham", "Mann"),
+                    person("Jean", "Yang")
+                    ),
+         year = "2021",
+         journal = "bioRxiv preprint",
+         doi = "https://doi.org/10.1101/2020.12.09.415927",
+         url = "https://doi.org/10.1101/2020.12.09.415927",
+         header = "To cite CPOP in publications please use:")
