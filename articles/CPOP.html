@@ -196,14 +196,14 @@
 <span class="co">## <span style="color: #949494;"># A tibble: 8 × 3</span></span>
 <span class="co">##   coef_name  coef1    coef2</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> X01--X10  -<span style="color: #BB0000;">0.322</span> -<span style="color: #BB0000;">0.246</span>  </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> X09--X17   0.722  0.538  </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> X11--X14   0.130  0.003<span style="text-decoration: underline;">47</span></span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> X12--X20   0.404  0.178  </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> X01--X07  -<span style="color: #BB0000;">0.437</span> -<span style="color: #BB0000;">0.412</span>  </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> X01--X15  -<span style="color: #BB0000;">0.158</span> -<span style="color: #BB0000;">0.340</span>  </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> X01--X17  -<span style="color: #BB0000;">0.901</span> -<span style="color: #BB0000;">0.667</span>  </span>
-<span class="co">## <span style="color: #BCBCBC;">8</span> X04--X12   0.353  0.443</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;">1</span> X01--X10  -<span style="color: #BB0000;">0.322</span> -<span style="color: #BB0000;">0.245</span>  </span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> X09--X17   0.722  0.486  </span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> X11--X14   0.130  0.001<span style="text-decoration: underline;">58</span></span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> X12--X20   0.404  0.152  </span>
+<span class="co">## <span style="color: #BCBCBC;">5</span> X01--X07  -<span style="color: #BB0000;">0.437</span> -<span style="color: #BB0000;">0.400</span>  </span>
+<span class="co">## <span style="color: #BCBCBC;">6</span> X01--X15  -<span style="color: #BB0000;">0.158</span> -<span style="color: #BB0000;">0.322</span>  </span>
+<span class="co">## <span style="color: #BCBCBC;">7</span> X01--X17  -<span style="color: #BB0000;">0.901</span> -<span style="color: #BB0000;">0.599</span>  </span>
+<span class="co">## <span style="color: #BCBCBC;">8</span> X04--X12   0.353  0.406</span></code></pre>
 <p>We can see that most of the selected features had similar coefficients across the two data. This is exactly what CPOP is aiming to achieve: selecting features that are consistent within each datasets.</p>
 <p>However, each of the feature (e.g. <code>X01--X10</code>) actually corresponds to two of the original features in the raw data <code>X01</code> and <code>X10</code> in the data <code>x1</code> and <code>x2</code>. We can further visualise these features in the original features.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
@@ -215,14 +215,14 @@
 <span class="co">## <span style="color: #949494;"># A tibble: 8 × 7</span></span>
 <span class="co">##   from  to     coef1    coef2 coef_avg coef_abs sign_coef1</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> X01   X10   -<span style="color: #BB0000;">0.322</span> -<span style="color: #BB0000;">0.246</span>    -<span style="color: #BB0000;">0.284</span>    0.284  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> X09   X17    0.722  0.538     0.630    0.630  Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> X11   X14    0.130  0.003<span style="text-decoration: underline;">47</span>   0.066<span style="text-decoration: underline;">9</span>   0.066<span style="text-decoration: underline;">9</span> Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> X12   X20    0.404  0.178     0.291    0.291  Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> X01   X07   -<span style="color: #BB0000;">0.437</span> -<span style="color: #BB0000;">0.412</span>    -<span style="color: #BB0000;">0.425</span>    0.425  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> X01   X15   -<span style="color: #BB0000;">0.158</span> -<span style="color: #BB0000;">0.340</span>    -<span style="color: #BB0000;">0.249</span>    0.249  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> X01   X17   -<span style="color: #BB0000;">0.901</span> -<span style="color: #BB0000;">0.667</span>    -<span style="color: #BB0000;">0.784</span>    0.784  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;">8</span> X04   X12    0.353  0.443     0.398    0.398  Positive</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;">1</span> X01   X10   -<span style="color: #BB0000;">0.322</span> -<span style="color: #BB0000;">0.245</span>    -<span style="color: #BB0000;">0.284</span>    0.284  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> X09   X17    0.722  0.486     0.604    0.604  Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> X11   X14    0.130  0.001<span style="text-decoration: underline;">58</span>   0.066<span style="text-decoration: underline;">0</span>   0.066<span style="text-decoration: underline;">0</span> Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> X12   X20    0.404  0.152     0.278    0.278  Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;">5</span> X01   X07   -<span style="color: #BB0000;">0.437</span> -<span style="color: #BB0000;">0.400</span>    -<span style="color: #BB0000;">0.419</span>    0.419  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;">6</span> X01   X15   -<span style="color: #BB0000;">0.158</span> -<span style="color: #BB0000;">0.322</span>    -<span style="color: #BB0000;">0.240</span>    0.240  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;">7</span> X01   X17   -<span style="color: #BB0000;">0.901</span> -<span style="color: #BB0000;">0.599</span>    -<span style="color: #BB0000;">0.750</span>    0.750  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;">8</span> X04   X12    0.353  0.406     0.379    0.379  Positive</span></code></pre>
 <p>Here we see that despite the features that we have selected in terms of the ratio, in actual fact, only a handful of features are useful. In particular, <code>X01</code>, <code>X09</code> and <code>X17</code> are the main contributors.</p>
 </div>
 <div class="section level2">
@@ -236,12 +236,12 @@
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="co">##   samples cpop_model1 cpop_model2 cpop_model_avg cpop_model_avg_prob</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 1             0.465       0.162          0.313               0.577</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 2            -<span style="color: #BB0000;">1.79</span>       -<span style="color: #BB0000;">1.09</span>          -<span style="color: #BB0000;">1.44</span>                0.197</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 3             0.853       0.629          0.741               0.677</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 4            -<span style="color: #BB0000;">0.936</span>      -<span style="color: #BB0000;">0.821</span>         -<span style="color: #BB0000;">0.879</span>               0.294</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 5            -<span style="color: #BB0000;">0.424</span>      -<span style="color: #BB0000;">0.614</span>         -<span style="color: #BB0000;">0.519</span>               0.373</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 6             1.00        1.38           1.19                0.765</span>
+<span class="co">## <span style="color: #BCBCBC;">1</span> 1             0.465       0.130          0.297               0.573</span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> 2            -<span style="color: #BB0000;">1.79</span>       -<span style="color: #BB0000;">0.992</span>         -<span style="color: #BB0000;">1.39</span>                0.207</span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> 3             0.853       0.575          0.714               0.671</span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> 4            -<span style="color: #BB0000;">0.936</span>      -<span style="color: #BB0000;">0.709</span>         -<span style="color: #BB0000;">0.823</span>               0.306</span>
+<span class="co">## <span style="color: #BCBCBC;">5</span> 5            -<span style="color: #BB0000;">0.424</span>      -<span style="color: #BB0000;">0.640</span>         -<span style="color: #BB0000;">0.532</span>               0.370</span>
+<span class="co">## <span style="color: #BCBCBC;">6</span> 6             1.00        1.31           1.16                0.760</span>
 <span class="co">## <span style="color: #949494;"># … with 1 more variable: cpop_model_avg_class &lt;chr&gt;</span></span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predicted_plotdf</span> <span class="op">=</span> <span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newz <span class="op">=</span> <span class="va">z3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
