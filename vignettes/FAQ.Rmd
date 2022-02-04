@@ -1,0 +1,51 @@
+---
+title: "CPOP-FAQ"
+author:
+- name: Kevin Y.X. Wang
+  affiliation: School of Mathematics and Statistics, The University of Sydney, Australia
+output:
+  BiocStyle::html_document:
+    toc_float: true
+package: BiocStyle
+vignette: >
+  %\VignetteIndexEntry{CPOP-FAQ}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+library(CPOP)
+library(tibble)
+library(ggplot2)
+library(dplyr)
+
+theme_set(theme_bw(18))
+```
+
+1. What is CPOP trying achieve?
+
+2. What does CPOP require as inputs?
+
+CPOP typically uses **two training data** in the training steps. This is because the original motivation of CPOP is to find predictive features across different platforms. As such, having two training data of difference sources helps to recreate a practical situation where the validation data is independent of the training data. 
+
+In the past, CPOP was applied to datasets of the same disease by generated on different platforms (e.g. microarrays/RNA-Seq/targeted assays). However, this concept of finding common predictive features across multiple input data can be extended to other situations (e.g. multiple studies/batches). 
+
+3. What are the features coming out of CPOP? 
+
+CPOP uses pairwise differences between columns as features. This means that we have an input data, `x` for a predictive problem, CPOP will first construct a matrix, `z`, where each column of `z` is the difference between different columns of `x`, i.e. `z1 = x1 - x2`, `z2 = x1 - x3` and so on. 
+
+This use of features in model construction is unlike most machine learning methods out there which uses `x` directly. This is because in most omics data, the values of `x` are typically dependent on study conditions, e.g. platform/cohort/technicians. Through experimentation, we found that the columns of `z` is likely to be better preserved across these conditions. This stability is important for reproducibility and consistency in prediction values between different datasets. 
+
+4. Can CPOP handle high dimensional data? e.g. Full scale RNA-Sequencing. 
+
+
+CPOP is not intended to be used for high dimensional data (say, number of original features greater than 1000). This is because CPOP was designed as a method for clinical validation of biomarkers going towards translation/implementation work. At these stages, much of the research discovery work has already been done and a smaller set of omics features (e.g. genes) has already been curated. CPOP was designed to work with this smaller set of candidate biomarkers in order to produce predictions of higher clinical relevance and utility. 
+
+Users of CPOP are welcome to reduce their larger candidate set of features down to an appropriate size (typically, CPOP accepts features in the hundreds) through whichever appropriate method (e.g. features-wise univariate t-test).
+
+5. Why using the Lasso/Elastic Net? 
+
+
