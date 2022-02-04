@@ -43,7 +43,25 @@ Below is a schematic drawing of the CPOP procedure:
 
 5. The final selected features serve as the markers used for final model construction. Visualisation methods are provided. 
 
-# Step 1 and 2: data selection and pre-processing
+Some of the main differences between the CPOP method and other existing methods: 
+
+1. CPOP typically uses **two training data** in the training steps. This is because the original motivation of CPOP is to find predictive features across different platforms. As such, having two training data of difference sources helps to recreate a practical situation where the validation data is independent of the training data. 
+
+In the past, CPOP was applied to datasets of the same disease by generated on different platforms (e.g. microarrays/RNA-Seq/targeted assays). However, this concept of finding common predictive features across multiple input data can be extended to other situations (e.g. multiple studies/batches). 
+
+2. CPOP uses pairwise differences between columns as features. This means that we have an input data, `x` for a predictive problem, CPOP will first construct a matrix, `z`, where each column of `z` is the difference between different columns of `x`, i.e. `z1 = x1 - x2`, `z2 = x1 - x3` and so on. 
+
+This use of features in model construction is unlike most machine learning methods out there which uses `x` directly. This is because in most omics data, the values of `x` are typically dependent on study conditions, e.g. platform/cohort/technicians. Through experimentation, we found that the columns of `z` is likely to be better preserved across these conditions. This stability is important for reproducibility and consistency in prediction values between different datasets. 
+
+3. CPOP is not intended to be used for high dimensional data (say, number of original features greater than 1000). This is because CPOP was designed as a method for clinical validation of biomarkers going towards translation/implementation work. At these stages, much of the research discovery work has already been done and a smaller set of omics features (e.g. genes) has already been curated. CPOP was designed to work with this smaller set of candidate biomarkers in order to produce predictions of higher clinical relevance and utility. 
+
+Users of CPOP are welcome to reduce their larger candidate set of features down to an appropriate size (typically, CPOP accepts features in the hundreds) through whichever appropriate method (e.g. features-wise univariate t-test).
+
+
+
+# Running CPOP
+
+## Step 1 and 2 - data selection and pre-processing
 
 The CPOP package provides an example data, `cpop_data_binary`, to demonstrate how the various functions can be run.
 
@@ -78,7 +96,7 @@ boxplot(cbind(x1,x2))
 ```
 
 
-# Step 3 and 4: feature selection
+## Step 3 and 4: feature selection
 
 The `cpop_model` function is the main function of the CPOP package. The first four inputs are `z1`, `z2`, `y1` and `y2`, where `(z1, y1)` and `(z2, y2)` are the log-ratio matrix and the response variable of the first and second data, respectively. In this particular example, the response variable is binary, hence, we can also specify `family = "binomial"` (default) for this model. 
 
@@ -95,7 +113,7 @@ cpop_result = cpop_model(z1 = z1, z2 = z2,
 ```
 
 
-# Step 5: visualisation
+## Step 5: visualisation
 
 The output of the `cpop_model` function is a `cpop` object with its own defined methods. 
 
@@ -121,7 +139,7 @@ plot_cpop(cpop_result = cpop_result, type = "ggraph")
 
 Here we see that despite the features that we have selected in terms of the ratio, in actual fact, only a handful of features are useful. In particular, `X01`, `X09` and `X17` are the main contributors. 
 
-# Predictions 
+## Predictions 
 
 Another useful method on the `cpop` object is the `predict_cpop` function. This function takes the previous CPOP result and a new (log-)ratio matrix to produce predictions. 
 

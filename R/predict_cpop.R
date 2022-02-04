@@ -60,7 +60,7 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
                                type = "response")
     cpop_model_avg_prob = (as.vector(result1_prob) + as.vector(result2_prob))/2
     cpop_model_avg_class = dplyr::case_when(
-      cpop_model_avg_prob < 0.5 ~ cpop_result$family_params$factor_levels[1],
+      cpop_model_avg_prob <= 0.5 ~ cpop_result$family_params$factor_levels[1],
       cpop_model_avg_prob > 0.5 ~ cpop_result$family_params$factor_levels[2],
       TRUE ~ NA_character_)
     tib_result = dplyr::mutate(tib_result,
