@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_cpop.R
 \name{pairwise_col_diff}
 \alias{pairwise_col_diff}
-\title{Preparation for CPOP modelling}
+\title{Compute pairwise difference between matrix columns}
 \usage{
 pairwise_col_diff(x)
 }

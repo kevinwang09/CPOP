@@ -4,13 +4,19 @@
 \alias{naive_glmnet}
 \title{Naive glmnet fitting procedure}
 \usage{
-naive_glmnet(z1, z2, y1, y2, s = "lambda.min", family = "binomial", ...)
+naive_glmnet(
+  x1,
+  x2,
+  y1,
+  y2,
+  s = "lambda.min",
+  family = "binomial",
+  z1,
+  z2,
+  ...
+)
 }
 \arguments{
-\item{z1}{A data matrix}
-
-\item{z2}{A data matrix}
-
 \item{y1}{A vector}
 
 \item{y2}{A vector}
@@ -18,6 +24,10 @@ naive_glmnet(z1, z2, y1, y2, s = "lambda.min", family = "binomial", ...)
 \item{s}{Default to "lambda.min"}
 
 \item{family}{family of glmnet}
+
+\item{z1}{A data matrix}
+
+\item{z2}{A data matrix}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }
@@ -35,14 +45,14 @@ x2 = cpop_data_binary$x2
 y1 = cpop_data_binary$y1
 y2 = cpop_data_binary$y2
 set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
-lasso_result = naive_glmnet(z1, z2, y1, y2, alpha = 1, intercept = FALSE)
+cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 1, n_features = 10)
+lasso_result = naive_glmnet(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 1, intercept = FALSE)
 cpop_result
 lasso_result
 plot_cpop(cpop_result)
 plot_cpop(lasso_result)
+z1 = pairwise_col_diff(x1)
+z2 = pairwise_col_diff(x2)
 plot(predict_cpop(cpop_result, newz = z1)$cpop_model_avg,
 predict_naive_glmnet(lasso_result, newz = z1)$naive_glmnet_avg)
 abline(a = 0, b = 1, col = "red")

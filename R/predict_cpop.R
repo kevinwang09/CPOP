@@ -21,11 +21,8 @@
 #' y2 = cpop_data_binary$y2
 #' y3 = cpop_data_binary$y3
 #' set.seed(1)
-#' z1 = pairwise_col_diff(x1)
-#' z2 = pairwise_col_diff(x2)
-#' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 0.1, n_features = 10)
+#' cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 0.1, n_features = 10)
 #' cpop_result
-#' z3 = pairwise_col_diff(x3)
 #' head(predict_cpop(cpop_result, newz = z3))
 predict_cpop = function(cpop_result, newz, s = "lambda.min"){
   ## If any discovered featureset is not in newz, then stop

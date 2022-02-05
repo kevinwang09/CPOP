@@ -9,7 +9,5 @@ y2 = cpop_data_binary$y2
 y3 = cpop_data_binary$y3
 
 set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-cpop_model_result = cpop_model(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
+cpop_model_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2,
                                alpha = 1, s = "lambda.min")

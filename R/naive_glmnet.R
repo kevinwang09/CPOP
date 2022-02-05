@@ -19,20 +19,59 @@
 #' y1 = cpop_data_binary$y1
 #' y2 = cpop_data_binary$y2
 #' set.seed(1)
-#' z1 = pairwise_col_diff(x1)
-#' z2 = pairwise_col_diff(x2)
-#' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
-#' lasso_result = naive_glmnet(z1, z2, y1, y2, alpha = 1, intercept = FALSE)
+#' cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 1, n_features = 10)
+#' lasso_result = naive_glmnet(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 1, intercept = FALSE)
 #' cpop_result
 #' lasso_result
 #' plot_cpop(cpop_result)
 #' plot_cpop(lasso_result)
+#' z1 = pairwise_col_diff(x1)
+#' z2 = pairwise_col_diff(x2)
 #' plot(predict_cpop(cpop_result, newz = z1)$cpop_model_avg,
 #' predict_naive_glmnet(lasso_result, newz = z1)$naive_glmnet_avg)
 #' abline(a = 0, b = 1, col = "red")
-naive_glmnet = function(z1, z2, y1, y2, s = "lambda.min", family = "binomial", ...){
-  glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, family = "binomial", ...)
-  glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, family = "binomial", ...)
+naive_glmnet = function(x1, x2, y1, y2, s = "lambda.min", family = "binomial", z1, z2, ...){
+
+  ## Checking input models
+  if(missing(z1) | missing(z2)){
+
+    prep_result = prep_cpop(x1 = x1, x2 = x2)
+    z1 = prep_result$z1
+    z2 = prep_result$z2
+
+    assertthat::assert_that(nrow(x1) == length(y1))
+    assertthat::assert_that(nrow(x2) == length(y2))
+  }
+
+  if(missing(x1) | missing(x2)){
+
+    warning(
+      "Arguments `z1` and `z2` are deprecated. CPOP can still be performed.
+    Please use `x1` and `x2` in the future.")
+
+    assertthat::assert_that(nrow(z1) == length(y1))
+    assertthat::assert_that(nrow(z2) == length(y2))
+  }
+
+  if(any(grepl("--", colnames(x1))) | any(grepl("--", colnames(x2)))){
+    warning(
+      "The arguments of CPOP has changed significantly in v0.1.0.
+    It is likely that the inputs are still using `z1` and `z2`,
+    which are now deprecated.")
+  }
+
+  ## Checking binomial inputs
+  if(family == "binomial"){
+    assertthat::assert_that(is.factor(y1))
+    assertthat::assert_that(is.factor(y2))
+    assertthat::assert_that(identical(levels(y1), levels(y2)))
+    factor_levels = levels(y1)
+  } else {
+    factor_levels = NULL
+  }
+
+  glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, family = family, ...)
+  glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, family = family, ...)
 
   result = list(glmnet1 = glmnet1,
                 glmnet2 = glmnet2)

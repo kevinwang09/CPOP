@@ -1,5 +1,4 @@
-#' @title Preparation for CPOP modelling
-#' @description Compute pairwise difference between matrix columns
+#' @title Compute pairwise difference between matrix columns
 #' @param x A data matrix of size n times p. Where rows are observations and
 #' columns are features.
 #' @return A matrix of size n times (p choose 2), where each column is the
@@ -40,13 +39,14 @@ pairwise_col_diff = function(x){
   return(result)
 }
 
-#' @title Preparation for CPOP modelling (experimental)
-#' @description Checks before CPOP modelling
-#' @param x1 A data matrix
-#' @param x2 A data matrix
+#' @title Preparation for CPOP modelling
+#' @description Checks before CPOP modelling, and prepare the z-matrices for CPOP modelling.
+#' @param x1 A data matrix of size n times p
+#' @param x2 A data matrix of size n times p
 #' @param force If the data matrices has too many columns (p > 200), then the
 #' function will not compute output the
 #' z-matrices (pairwise column differences of x's). Default to FALSE.
+#' @rdname prep_cpop
 #' @export
 #' @examples
 #' data(cpop_data_binary, package = 'CPOP')
@@ -56,22 +56,14 @@ pairwise_col_diff = function(x){
 #' prep_cpop(x1 = x1, x2 = x2)
 prep_cpop = function(x1, x2, force = FALSE){
   assertthat::assert_that(ncol(x1) == ncol(x2))
+  assertthat::assert_that(identical(colnames(x1), colnames(x2)))
 
-  x_plotdf = tibble::tibble(
-    colnames = colnames(x1),
-    x1_colmeans = colMeans(x1),
-    x2_colmeans = colMeans(x2))
-
-  print(
-    ggplot(data = x_plotdf,
-           mapping = aes(x = x1_colmeans,
-                         y = x2_colmeans)) +
-      geom_point()
-  )
-
-  if(ncol(x1) < 200 | force){
+  if(ncol(x1) < 1000 | force){
     z1 = pairwise_col_diff(x1)
     z2 = pairwise_col_diff(x2)
     return(list(z1 = z1, z2 = z2))
+  } else {
+    stop("Number of columns in x1 and x2 is larger than 1000. CPOP could take a long time to compute.
+         \n Set `force = TRUE` to enforce computation.")
   }
 }

@@ -2,21 +2,21 @@
 % Please edit documentation in R/prep_cpop.R
 \name{prep_cpop}
 \alias{prep_cpop}
-\title{Preparation for CPOP modelling (experimental)}
+\title{Preparation for CPOP modelling}
 \usage{
 prep_cpop(x1, x2, force = FALSE)
 }
 \arguments{
-\item{x1}{A data matrix}
+\item{x1}{A data matrix of size n times p}
 
-\item{x2}{A data matrix}
+\item{x2}{A data matrix of size n times p}
 
 \item{force}{If the data matrices has too many columns (p > 200), then the
 function will not compute output the
 z-matrices (pairwise column differences of x's). Default to FALSE.}
 }
 \description{
-Checks before CPOP modelling
+Checks before CPOP modelling, and prepare the z-matrices for CPOP modelling.
 }
 \examples{
 data(cpop_data_binary, package = 'CPOP')

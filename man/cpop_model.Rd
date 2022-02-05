@@ -5,8 +5,8 @@
 \title{CPOP modelling}
 \usage{
 cpop_model(
-  z1,
-  z2,
+  x1,
+  x2,
   y1,
   y2,
   w = NULL,
@@ -20,46 +20,57 @@ cpop_model(
   cpop2_mag = 1,
   cpop1_method = "normal",
   intercept = FALSE,
+  z1,
+  z2,
   ...
 )
 }
 \arguments{
-\item{z1}{A data matrix, columns are pairwise-differences between the original data columns.}
+\item{x1}{A data matrix of size n (number of samples) times p (number of features)}
 
-\item{z2}{A data matrix, columns are pairwise-differences between the original data columns.
+\item{x2}{A data matrix of size n (number of samples) times p (number of features)
 Column names should be identical to z1.}
 
-\item{y1}{A vector of response variable. Same length as the number of rows of z1.}
+\item{y1}{A vector of response variable. Same length as the number of rows of x1.}
 
-\item{y2}{A vector of response variable. Same length as the number of rows of z2.}
+\item{y2}{A vector of response variable. Same length as the number of rows of x2.}
 
-\item{w}{A vector of weights.}
+\item{w}{A vector of weights. Default to NULL, which uses `identity_dist`.}
 
-\item{n_features}{Breaking the CPOP-Step 1 loop if a certain number of features is reached.}
+\item{n_features}{Breaking the CPOP-Step 1 loop if a certain number of features is reached. Default to 50.}
 
-\item{n_iter}{Number of iterations in Step 1 and 2.}
+\item{n_iter}{Number of iterations in Step 1 and 2. Default to 20.}
 
-\item{alpha}{The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet.}
+\item{alpha}{The alpha parameter for elastic net models. See the alpha argument in glmnet::glmnet. Default to 1.}
 
 \item{family}{family of glmnet}
 
-\item{s}{CV-Lasso lambda}
+\item{s}{CV-Lasso lambda choice. Default to "lambda.min", see cv.glmnet in the glmnet package.}
 
-\item{cpop2_break}{Should cpop2 loop be broken the first time}
+\item{cpop2_break}{Should CPOP-step2 loop be broken the first time. Default to TRUE.}
 
-\item{cpop2_type}{"sign" or "mag"}
+\item{cpop2_type}{Should CPOP-step2 select features based on sign of features of magnitude? Either "sign" (default) or "mag"..}
 
-\item{cpop2_mag}{a threshold
+\item{cpop2_mag}{a threshold for CPOP-step2 when selecting features based on coefficient difference magnitude.
 differential betas are removed}
 
-\item{cpop1_method}{See documentation on `cpop1`}
+\item{cpop1_method}{CPOP step 1 selection method. See documentations on `cpop1`. Default to "Normal".}
 
 \item{intercept}{Default to FALSE}
 
-\item{...}{Extra parameter settings for cv.glmnet in cpop1}
+\item{z1}{(Deprecated) a data matrix, columns are pairwise-differences between the original data columns.}
+
+\item{z2}{(Deprecated) a data matrix, columns are pairwise-differences between the original data columns.}
+
+\item{...}{Extra parameter settings for cv.glmnet in in the glmnet package.}
 }
 \value{
-A vector
+A CPOP object containing:
+\itemize{
+\item model: the CPOP model as a glmnet object
+\item coef_tbl: a tibble (data frame) of CPOP feature coefficients
+\item cpop1_features: a vector of CPOP
+}
 }
 \description{
 CPOP is consisted of three steps. Step 1 is to select features common to
@@ -75,8 +86,6 @@ x2 = cpop_data_binary$x2
 y1 = cpop_data_binary$y1
 y2 = cpop_data_binary$y2
 set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-cpop_result = cpop_model(z1, z2, y1, y2, alpha = 1, n_features = 10)
+cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 1, n_features = 10)
 cpop_result
 }
