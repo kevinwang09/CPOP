@@ -15,17 +15,17 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-```{r}
-library(CPOP)
-library(tibble)
-library(ggplot2)
-library(dplyr)
-
-theme_set(theme_bw(18))
-```
-
 1. What is CPOP trying achieve?
+
+Most omics measurements exhibit high variation between datasets due to batch effects, intra-platform protocol changes, or other site-specific factors, this makes the prediction challenge much harder than when using clinical variables that have clearly defined measurement units such as age, height, weight.
+
+Cross-Platform Omics Procedure (CPOP) is a new end-to-end framework that accurately predicts clinical outcomes in the presence of these between-data noises. CPOP has three distinctive innovations: 
+
+  1. Ratio-based features are constructed from the original omics data; resulting in features that are robust to inter-platform scale differences.
+  2. The CPOP feature selection process incorporates weights to stabilise feature selection across multiple datasets. 
+  3. Features from the previous step are further filtered for their consistent estimated effects across multiple datasets in the presence of data noise. 
+  
+CPOP was validated on multiple data and diseases, and it was found to have achieved stable prediction performance across multiple datasets. 
 
 2. What does CPOP require as inputs?
 
@@ -35,17 +35,23 @@ In the past, CPOP was applied to datasets of the same disease by generated on di
 
 3. What are the features coming out of CPOP? 
 
-CPOP uses pairwise differences between columns as features. This means that we have an input data, `x` for a predictive problem, CPOP will first construct a matrix, `z`, where each column of `z` is the difference between different columns of `x`, i.e. `z1 = x1 - x2`, `z2 = x1 - x3` and so on. 
+CPOP uses pairwise differences between columns as features. This means that we have an input data, `x` for a predictive problem, CPOP will first construct a matrix, `z`, where each column of `z` is the difference between different columns of `x`, i.e. `z1 = x1 - x2`, `z2 = x1 - x3` and so on. However, when using the `CPOP` package, the `cpop_model()` function handles this matrix construction step in the intermediate steps, so the users can focus on the final result. 
 
 This use of features in model construction is unlike most machine learning methods out there which uses `x` directly. This is because in most omics data, the values of `x` are typically dependent on study conditions, e.g. platform/cohort/technicians. Through experimentation, we found that the columns of `z` is likely to be better preserved across these conditions. This stability is important for reproducibility and consistency in prediction values between different datasets. 
 
 4. Can CPOP handle high dimensional data? e.g. Full scale RNA-Sequencing. 
 
+CPOP is not intended to be used for high dimensional data (say, number of original features greater than 1,000). This is because CPOP was designed as a method for clinical validation of biomarkers going towards translation/implementation work. At these stages, much of the research discovery work has already been done and a smaller set of omics features (e.g. genes) has already been curated. CPOP was designed to work with this smaller set of candidate biomarkers in order to produce predictions of higher clinical relevance and utility. 
 
-CPOP is not intended to be used for high dimensional data (say, number of original features greater than 1000). This is because CPOP was designed as a method for clinical validation of biomarkers going towards translation/implementation work. At these stages, much of the research discovery work has already been done and a smaller set of omics features (e.g. genes) has already been curated. CPOP was designed to work with this smaller set of candidate biomarkers in order to produce predictions of higher clinical relevance and utility. 
+Of course, there is nothing stopping from the CPOP package from running any of the statistical calculations with a largr number of input omics signatures. Though it is strongly adviced that users of CPOP to reduce their set of features down to an appropriate size through an appropriate method (e.g. features-wise univariate t-test when considering a binary classification problem).
 
-Users of CPOP are welcome to reduce their larger candidate set of features down to an appropriate size (typically, CPOP accepts features in the hundreds) through whichever appropriate method (e.g. features-wise univariate t-test).
+5. CPOP didn't select any features for my dataset, what happened? 
 
-5. Why using the Lasso/Elastic Net? 
+CPOP is designed to select predictive features in the input data and then look for the consensus. If a feature is not selected, then that is typically because a feature is:
 
+1. not predictive of the outcome,
+2. not selected in preference of other features
+3. selected by one data but not another one
+4. have disconcordance in sign/magnitude
 
+In almost all four cases, a good diagnostic test is to compare some measure of "signal" across the two input data. For example, when given a binary classification problem, users could consider comparing the feature-wise t-statistics across two datasets to ensure that at least some of the features will contain information about the disease of interest. 
