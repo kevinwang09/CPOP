@@ -55,7 +55,7 @@ The CPOP package provides an example data, `cpop_data_binary`, to demonstrate ho
 + `y1`, `y2`, and `y3` which are simulated binary response corresponding to the x's. 
 + `beta` which is the true coefficients of interest. 
 
-After attaching these objects, we can perform the (log-)ratio constructions using the `pairwise_col_diff` on the matrices `x1`, `x2`, and `x3`. One of the main idea behind CPOP is that, the gene expression data scale (`x1`, `x2`, and `x3`) can vary greatly between data platforms. But the relative expression between the genes (e.g. difference between gene A and gene B) are more stable. `pairwise_col_diff` is a function that computes for all pairwise differences between the columns in a given matrix, with the new output being a matrix with the columns `geneA--geneB`. 
+After attaching these objects, we can perform the feature constructions on the matrices `x1`, `x2`, and `x3`.One of the main idea behind CPOP is that, the gene expression data scale (`x1`, `x2`, and `x3`) can vary greatly between data platforms. But the relative expression between the genes (e.g. difference between gene A and gene B) are more stable. In `CPOP`, the `pairwise_col_diff` function computes all pairwise differences between the columns in a given matrix, with the new output being a matrix with the columns `geneA--geneB`. Assuming these matrices has already been logged, then the difference `geneA--geneB` is the same as `log(A/B)` in the unlogged scale. 
 
 Note: the phrase "log-ratio" is used in context where the expression values of biomarkers exhibit differences across several orders of magnitudes. This is the most common in the context of gene expression data with microarray (intensity measurements) and RNA-Sequencing (counts) data. `pairwise_col_diff` assumes that these values with large magnitude of difference has been dealt with, e.g. through the use of logarithm transformations, and thus, the act of taking difference between columns of a data matrix is similar to how one would construct a ratio (i.e. log(A/B) = log(A) - log(B)). Thus, even though we refer to these values as log-ratios, the actual data matrices that we are operating on are assuming that the columns are already on a transformed scale, such that the difference between feature values is meaningful. 
 
@@ -71,28 +71,25 @@ y1 = cpop_data_binary$y1
 y2 = cpop_data_binary$y2
 y3 = cpop_data_binary$y3
 
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-z3 = pairwise_col_diff(x3)
-
 boxplot(cbind(x1,x2))
 ```
 
 
 ## Step 3 and 4: feature selection
 
-The `cpop_model` function is the main function of the CPOP package. The first four inputs are `z1`, `z2`, `y1` and `y2`, where `(z1, y1)` and `(z2, y2)` are the log-ratio matrix and the response variable of the first and second data, respectively. In this particular example, the response variable is binary, hence, we can also specify `family = "binomial"` (default) for this model. 
+The `cpop_model` function is the main function of the CPOP package. The first four inputs are `x1`, `x2`, `y1` and `y2`, where `(x1, y1)` and `(x2, y2)` are the log-ratio matrix and the response variable of the first and second data, respectively. In this particular example, the response variable is binary, hence, we can also specify `family = "binomial"` (default) for this model. (Note: prior to version 0.1.0 of CPOP,`z1` and `z2` were the main data input of the `cpop_model` but have now been deprecated. This is an equivalent way of supporting the CPOP method, however, it would require the users to manually calculate these ratio matrice using `pairwise_col_diff`.)
 
 The `alpha` parameter is one of the penalty terms of the classic Elastic Net model, where `alpha = 1` corresponds to a Lasso model and `alpha = 0` corresponds to a Ridge model. The `cpop_model` uses `glmnet::cv.glmnet` in the backend, and so the penalty term `lambda` is automatically chosen using the default of `lambda.min`.
 
 The CPOP model iteratively selects features based on the fit of the model or, if it reaches a pre-determined number of features with the paramter `n_features` being the main control for this. Here, we arbitary set this to a small number of 10 for illustration. 
 
 ```{r}
-cpop_result = cpop_model(z1 = z1, z2 = z2, 
-                         y1 = y1, y2 = y2, 
-                         family = "binomial",
-                         alpha = 1, 
-                         n_features = 10)
+cpop_result = cpop_model(
+  x1 = x1, x2 = x2, 
+  y1 = y1, y2 = y2, 
+  family = "binomial",
+  alpha = 1, 
+  n_features = 10)
 ```
 
 
@@ -106,7 +103,7 @@ The main method for a `cpop` object is the `plot_cpop` function, which produces 
 class(cpop_result)
 ```
 
-The first plot is using the `type = "text"` option. A labelled scatter plot shows the estimated coefficients of the selected features from data1 (i.e. `(z1, y1)`, x-axis) vs the same coefficients from data2 (i.e. `(z2, y2)`, y-axis).
+The first plot is using the `type = "text"` option. A labelled scatter plot shows the estimated coefficients of the selected features from data1 (i.e. `(x1, y1)`, x-axis) vs the same coefficients from data2 (i.e. `(x2, y2)`, y-axis).
 
 ```{r}
 plot_cpop(cpop_result = cpop_result, type = "text")
@@ -131,9 +128,9 @@ The first column of the output are the sample IDs. The second and third column a
 Note that the predicted values here are on the logit scale (recall that we are performing a logistic regression on binary responses using the elastic net model in the background). We can also transform these values back to predicted probability scale using the `CPOP::expit` function. 
 
 ```{r}
-predict_cpop(cpop_result, newz = z3) %>% head()
+predict_cpop(cpop_result, newx = x3) %>% head()
 
-predicted_plotdf = predict_cpop(cpop_result, newz = z3) %>%
+predicted_plotdf = predict_cpop(cpop_result, newx = x3) %>%
   dplyr::mutate(
     cpop_model1 = expit(cpop_model1), 
     cpop_model2 = expit(cpop_model2), 

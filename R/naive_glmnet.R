@@ -1,11 +1,13 @@
 #' @title Naive glmnet fitting procedure
 #' @description Naive glmnet fitting procedure
-#' @param z1 A data matrix
-#' @param z2 A data matrix
+#' @param x1 A data matrix of size n (number of samples) times p (number of features)
+#' @param x2 A data matrix of size n (number of samples) times p (number of features)
 #' @param y1 A vector
 #' @param y2 A vector
 #' @param family family of glmnet
 #' @param s Default to "lambda.min"
+#' @param z1 (Deprecated) a data matrix, columns are pairwise-differences between the original data columns.
+#' @param z2 (Deprecated) a data matrix, columns are pairwise-differences between the original data columns.
 #' @param ... Extra parameter settings for cv.glmnet
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet

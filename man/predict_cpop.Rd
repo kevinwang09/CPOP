@@ -4,14 +4,16 @@
 \alias{predict_cpop}
 \title{Prediction function for CPOP}
 \usage{
-predict_cpop(cpop_result, newz, s = "lambda.min")
+predict_cpop(cpop_result, newx, s = "lambda.min", newz)
 }
 \arguments{
 \item{cpop_result}{cpop_model result}
 
-\item{newz}{New data}
+\item{newx}{New data, n times p, as original features,}
 
 \item{s}{CV-Lasso lambda}
+
+\item{newz}{(Deprecated) new data, n times choose(p, 2), as ratio features.}
 }
 \value{
 A vector
@@ -31,5 +33,5 @@ y3 = cpop_data_binary$y3
 set.seed(1)
 cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 0.1, n_features = 10)
 cpop_result
-head(predict_cpop(cpop_result, newz = z3))
+head(predict_cpop(cpop_result, newx = x3))
 }

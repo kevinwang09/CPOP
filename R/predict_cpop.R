@@ -1,7 +1,8 @@
 #' @title Prediction function for CPOP
 #' @description Prediction function for CPOP
 #' @param cpop_result cpop_model result
-#' @param newz New data
+#' @param newx New data, n times p, as original features,
+#' @param newz (Deprecated) new data, n times choose(p, 2), as ratio features.
 #' @param s CV-Lasso lambda
 #' @importFrom glmnet cv.glmnet
 #' @importFrom glmnet coef.glmnet
@@ -23,15 +24,24 @@
 #' set.seed(1)
 #' cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 0.1, n_features = 10)
 #' cpop_result
-#' head(predict_cpop(cpop_result, newz = z3))
-predict_cpop = function(cpop_result, newz, s = "lambda.min"){
+#' head(predict_cpop(cpop_result, newx = x3))
+predict_cpop = function(cpop_result, newx, s = "lambda.min", newz){
+  if(missing(newx)){
+    warning("The `newz` argument is now deprecated in preference for `newx`,
+    CPOP prediction can still run.")
+  }
+  if(missing(newz)){
+    newz = pairwise_col_diff(newx)
+  }
   ## If any discovered featureset is not in newz, then stop
   assertthat::assert_that(all(cpop_result$feature %in% colnames(newz)),
                           msg = "cpop_result feature must be a strict subset of colnames(newz)")
 
-  assertthat::assert_that(sum(is.na(newz)) == 0,
-                          msg = "All entries of the prediction data must be non-missing. \n
-                          You should try running an imputation method prior to calculating log-ratio matrices.")
+  assertthat::assert_that(
+    sum(is.na(newz)) == 0,
+    msg = "All entries of the prediction data must be non-missing.
+    You should try running an imputation method on the input matrix.
+    One option is to use `impute_cpop`")
 
   if(is.null(cpop_result)) return(NULL)
 
@@ -71,8 +81,8 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
 #' @title Imputing gene expression values using CPOP model
 #' @description Imputing gene expression values using CPOP model
 #' @param cpop_result cpop_model result
-#' @param x1 Original feature data matrix 1 used in the `pairwise_col_diff` function.
-#' @param x2 Original feature data matrix 2 used in the `pairwise_col_diff` function.
+#' @param x1 Original feature data matrix 1.
+#' @param x2 Original feature data matrix 2.
 #' @param newx New original feature data matrix, with missing values.
 #' @importFrom glmnet cv.glmnet
 #' @importFrom tibble as_tibble
@@ -91,25 +101,21 @@ predict_cpop = function(cpop_result, newz, s = "lambda.min"){
 #' y2 = cpop_data_binary$y2
 #' y3 = cpop_data_binary$y3
 #' set.seed(1)
-#' z1 = pairwise_col_diff(x1)
-#' z2 = pairwise_col_diff(x2)
-#' cpop_result = cpop_model(z1, z2, y1, y2, alpha = 0.1, n_features = 10)
+#' cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 0.1, n_features = 10)
 #' cpop_result
-#' z3 = pairwise_col_diff(x3)
-#' z3_pred_result = predict_cpop(cpop_result, newz = z3)
-#' head(z3_pred_result)
+#' x3_pred_result = predict_cpop(cpop_result, newx = x3)
+#' head(x3_pred_result)
 #' ## Introduce a column of missing values in a new matrix, x4.
 #' x4 = x3
 #' x4[,2] = NA
 #' ## Without imputation, the prediction function would not work properly
 #' ## This prompts the user to use an imputation on their data.
-#' ## z4 = pairwise_col_diff(x4)
-#' ## head(predict_cpop(cpop_result, newz = z4))
+#' ## head(predict_cpop(cpop_result, newx = x4))
 #' ## CPOP can perform imputation on the x4 matrix, before this matrix is converted into z4.
 #' x4_imp = impute_cpop(cpop_result, x1 = x1, x2 = x2, newx = x4)
-#' z4_pred_result = predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))
-#' head(z4_pred_result)
-#' plot(z3_pred_result$cpop_model_avg_prob, z4_pred_result$cpop_model_avg_prob)
+#' x4_pred_result = predict_cpop(cpop_result, newx = x4_imp)
+#' head(x4_pred_result)
+#' plot(x3_pred_result$cpop_model_avg_prob, x3_pred_result$cpop_model_avg_prob)
 impute_cpop = function(cpop_result, x1, x2, newx){
   cpop_lr2genes = stringr::str_split(cpop_result$feature, "--") %>% unlist %>% unique %>% sort
 

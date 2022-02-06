@@ -9,9 +9,9 @@ impute_cpop(cpop_result, x1, x2, newx)
 \arguments{
 \item{cpop_result}{cpop_model result}
 
-\item{x1}{Original feature data matrix 1 used in the `pairwise_col_diff` function.}
+\item{x1}{Original feature data matrix 1.}
 
-\item{x2}{Original feature data matrix 2 used in the `pairwise_col_diff` function.}
+\item{x2}{Original feature data matrix 2.}
 
 \item{newx}{New original feature data matrix, with missing values.}
 }
@@ -31,23 +31,19 @@ y1 = cpop_data_binary$y1
 y2 = cpop_data_binary$y2
 y3 = cpop_data_binary$y3
 set.seed(1)
-z1 = pairwise_col_diff(x1)
-z2 = pairwise_col_diff(x2)
-cpop_result = cpop_model(z1, z2, y1, y2, alpha = 0.1, n_features = 10)
+cpop_result = cpop_model(x1 = x1, x2 = x2, y1 = y1, y2 = y2, alpha = 0.1, n_features = 10)
 cpop_result
-z3 = pairwise_col_diff(x3)
-z3_pred_result = predict_cpop(cpop_result, newz = z3)
-head(z3_pred_result)
+x3_pred_result = predict_cpop(cpop_result, newx = x3)
+head(x3_pred_result)
 ## Introduce a column of missing values in a new matrix, x4.
 x4 = x3
 x4[,2] = NA
 ## Without imputation, the prediction function would not work properly
 ## This prompts the user to use an imputation on their data.
-## z4 = pairwise_col_diff(x4)
-## head(predict_cpop(cpop_result, newz = z4))
+## head(predict_cpop(cpop_result, newx = x4))
 ## CPOP can perform imputation on the x4 matrix, before this matrix is converted into z4.
 x4_imp = impute_cpop(cpop_result, x1 = x1, x2 = x2, newx = x4)
-z4_pred_result = predict_cpop(cpop_result, newz = CPOP::pairwise_col_diff(x4_imp))
-head(z4_pred_result)
-plot(z3_pred_result$cpop_model_avg_prob, z4_pred_result$cpop_model_avg_prob)
+x4_pred_result = predict_cpop(cpop_result, newx = x4_imp)
+head(x4_pred_result)
+plot(x3_pred_result$cpop_model_avg_prob, x3_pred_result$cpop_model_avg_prob)
 }

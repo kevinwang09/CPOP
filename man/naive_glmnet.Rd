@@ -17,6 +17,10 @@ naive_glmnet(
 )
 }
 \arguments{
+\item{x1}{A data matrix of size n (number of samples) times p (number of features)}
+
+\item{x2}{A data matrix of size n (number of samples) times p (number of features)}
+
 \item{y1}{A vector}
 
 \item{y2}{A vector}
@@ -25,9 +29,9 @@ naive_glmnet(
 
 \item{family}{family of glmnet}
 
-\item{z1}{A data matrix}
+\item{z1}{(Deprecated) a data matrix, columns are pairwise-differences between the original data columns.}
 
-\item{z2}{A data matrix}
+\item{z2}{(Deprecated) a data matrix, columns are pairwise-differences between the original data columns.}
 
 \item{...}{Extra parameter settings for cv.glmnet}
 }
