@@ -63,7 +63,9 @@ Compute t-stat absolute difference penalty"><!-- mathjax --><script src="https:/
 
 <span class="fu">p_transform</span><span class="op">(</span><span class="va">penalty</span><span class="op">)</span>
 
-<span class="fu">tstat_penalty</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">y1</span>, <span class="va">y2</span><span class="op">)</span></code></pre></div>
+<span class="fu">tstat_penalty</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">y1</span>, <span class="va">y2</span><span class="op">)</span>
+
+<span class="fu">ks_penalty</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, statistic <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,31 +81,41 @@ where the sum is set to the length of the vector</p></dd>
 <dd><p>A factor response corresponding to the columns of x1</p></dd>
 <dt>y2</dt>
 <dd><p>A factor response corresponding to the columns of x2</p></dd>
+<dt>statistic</dt>
+<dd><p>Should the KS-test statistic be returned (default) or the p-value should be
+returned. Logical.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A vector
-A vector</p>
+A vector
+A vector of length matching that of x1 and x2</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fl">10</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">n</span> <span class="op">=</span> <span class="fl">20</span></span>
+<span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fl">5</span></span>
 <span class="r-in"><span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">colmeans_penalty</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.8236404 1.2599340 1.3849807 1.7834853 0.6810144 0.6335384 0.6399791</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2126798 1.0025180 1.5782300</span>
-<span class="r-in"><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fl">10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0417872 1.5842330 0.6572764 0.4263294 1.2903740</span>
+<span class="r-in"><span class="va">n</span> <span class="op">=</span> <span class="fl">20</span></span>
+<span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fl">5</span></span>
 <span class="r-in"><span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">y1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">y2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">tstat_penalty</span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">x1</span>, x2 <span class="op">=</span> <span class="va">x2</span>, y1 <span class="op">=</span> <span class="va">y1</span>, y2 <span class="op">=</span> <span class="va">y2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.0477230 1.4307539 0.4106593 0.1466568 0.7676688 0.9818633 0.8596887</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 2.2778327 1.0326975 1.0444560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.53175612 0.04074133 0.47832180 1.59416583 1.35501492</span>
+<span class="r-in"><span class="va">n</span> <span class="op">=</span> <span class="fl">20</span></span>
+<span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fl">5</span></span>
+<span class="r-in"><span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">y1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">y2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ks_penalty</span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">x1</span>, x2 <span class="op">=</span> <span class="va">x2</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.55 0.25 0.70 0.35 0.55</span>
 </code></pre></div>
     </div>
   </div>
