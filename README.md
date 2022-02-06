@@ -1,4 +1,4 @@
-CPOP
+Cross Platform Omics Prediction (CPOP)
 ================
 
 [![R build
@@ -24,16 +24,16 @@ similar to a re-substituted model. The CPOP procedure also has the
 flexibility to be adapted to suit the most common clinical response
 variables, including linear response, binomial and Cox PH models.
 
-![](https://kevinwang09.github.io/CPOP/articles/1a.png)
+![](https://sydneybiox.github.io/CPOP/articles/1a.png)
 
 # Vignette
 
-See <https://kevinwang09.github.io/CPOP/articles/CPOP.html>.
+See <https://sydneybiox.github.io/CPOP/articles/CPOP.html>.
 
 # Installation
 
 ``` r
-devtools::install_github("kevinwang09/CPOP")
+devtools::install_github("sydneybiox/CPOP")
 ```
 
 # References
