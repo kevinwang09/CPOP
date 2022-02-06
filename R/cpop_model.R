@@ -68,13 +68,6 @@ cpop_model <- function(
     assertthat::assert_that(nrow(z2) == length(y2))
   }
 
-  if(any(grepl("--", colnames(x1))) | any(grepl("--", colnames(x2)))){
-    warning(
-    "The arguments of CPOP has changed significantly in v0.1.0.
-    It is likely that the inputs are still using `z1` and `z2`,
-    which are now deprecated.")
-  }
-
   ## Checking binomial inputs
   if(family == "binomial"){
     assertthat::assert_that(is.factor(y1))
