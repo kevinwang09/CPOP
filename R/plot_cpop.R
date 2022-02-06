@@ -25,9 +25,6 @@
 #' plot_cpop(cpop_result, type = "bar")
 #' plot_cpop(cpop_result, type = "ggraph")
 plot_cpop <- function(cpop_result, type = "point", s = "lambda.min"){
-  # assertthat::assert_that("cpop" %in% class(cpop_result),
-  #                         msg = "The input object must be a cpop class object")
-
   assertthat::assert_that(type %in% c("point", "text", "bar", "ggraph"),
                           msg = "Only ggraph, visNetwork and igraph visualisations are supported")
   coef1 = glmnet::coef.glmnet(cpop_result$glmnet1, s = s)
@@ -52,8 +49,10 @@ plot_cpop <- function(cpop_result, type = "point", s = "lambda.min"){
   }
 
   if(type == "bar"){
-    coef_plotdf_gather = coef_plotdf %>%
-      tidyr::gather(coef_key, coef_value, -coef_name)
+    coef_plotdf_gather = tidyr::pivot_longer(
+      data = coef_plotdf, cols = c("coef1", "coef2"),
+      names_to = "coef_key", values_to = "coef_value")
+      # tidyr::gather(coef_key, coef_value, -coef_name)
 
     p = coef_plotdf_gather %>%
       ggplot(aes(x = .data$coef_name, y = .data$coef_value,
@@ -82,7 +81,7 @@ plot_cpop <- function(cpop_result, type = "point", s = "lambda.min"){
                     coef_avg = (.data$coef1 + .data$coef2)/2,
                     coef_abs = abs(.data$coef_avg),
                     sign_coef1 = ifelse(.data$coef_avg < 0, "Negative", "Positive")) %>%
-      dplyr::filter(coef_name != "(Intercept)")
+      dplyr::filter(.data$coef_name != "(Intercept)")
 
     edges_tbl = network_tbl %>%
       tidyr::separate(col = "coef_name", into = c("from", "to"))

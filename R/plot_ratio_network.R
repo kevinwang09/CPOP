@@ -57,9 +57,9 @@ plot_lratio_network = function(x, type = "ggraph"){
 
     p = ggraph(ig, layout = "linear", circular = TRUE) +
       ggraph::geom_edge_arc(aes(
-        start_cap = label_rect(node1.name),
-        end_cap = label_rect(node2.name))) +
-      ggraph::geom_node_text(aes(label = name), size = 6)
+        start_cap = label_rect(.data$node1.name),
+        end_cap = label_rect(.data$node2.name))) +
+      ggraph::geom_node_text(aes(label = .data$name), size = 6)
 
     return(p)
   }

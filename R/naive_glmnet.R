@@ -97,7 +97,6 @@ naive_glmnet = function(x1, x2, y1, y2, s = "lambda.min", family = "binomial", z
 #' @param newz matrix
 #' @param s Default to "lambda.min"
 #' @export
-#' @import glmnet
 #' @importFrom tibble as_tibble
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr select
@@ -118,7 +117,7 @@ predict_naive_glmnet = function(glmnet_result, newz, s = "lambda.min"){
 
   tib_result = tibble::as_tibble(data.frame(result_mat))
   tib_result = dplyr::mutate(tib_result, samples = rownames(result_mat))
-  tib_result = dplyr::select(tib_result, samples, dplyr::everything())
+  tib_result = dplyr::select(tib_result, .data$samples, dplyr::everything())
 
 return(tib_result)
 }

@@ -4,8 +4,7 @@
 #' @param newx New data, n times p, as original features,
 #' @param newz (Deprecated) new data, n times choose(p, 2), as ratio features.
 #' @param s CV-Lasso lambda
-#' @importFrom glmnet cv.glmnet
-#' @importFrom glmnet coef.glmnet
+#' @importFrom glmnet cv.glmnet coef.glmnet predict.glmnet
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
@@ -74,7 +73,7 @@ predict_cpop = function(cpop_result, newx, s = "lambda.min", newz){
                        cpop_model_avg_prob = cpop_model_avg_prob,
                        cpop_model_avg_class = cpop_model_avg_class)
   }
-  tib_result = dplyr::select(tib_result, samples, dplyr::everything())
+  tib_result = dplyr::select(tib_result, .data$samples, dplyr::everything())
   return(tib_result)
 }
 

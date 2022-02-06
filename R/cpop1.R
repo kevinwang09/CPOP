@@ -117,7 +117,7 @@ cpop1 = function(z1, z2, y1, y2, w, family, n_iter = 20, alpha = 1,
     message("Features ever selected by both data (after all iterations) will now be pooled")
     selected_features = step_features_tbl %>%
       dplyr::filter(.data$feature_name != "(Intercept)") %>%
-      dplyr::select(coef_model, .data$feature_name) %>%
+      dplyr::select(.data$coef_model, .data$feature_name) %>%
       dplyr::distinct(.data$coef_model, .data$feature_name) %>%
       dplyr::group_by(.data$feature_name) %>%
       dplyr::tally() %>%
