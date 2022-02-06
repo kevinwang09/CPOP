@@ -130,14 +130,13 @@ cpop_model <- function(
                                        factor_levels = factor_levels)),
              z1 = list(z1), z2 = list(z2))
 
-  class(result) = c("cpop", class(result))
+  # class(result) = c("cpop", class(result))
+  class(result) = c("cpop")
   return(result)
 }
 
-cpop <- function(x, ...) UseMethod("cpop")
-
-print.cpop <- function(x, ...)
-{
+#' @export
+print.cpop = function(x,...){
   cat("CPOP model with ", length(x$feature), "features \n")
   print(x$coef_tbl)
 }
