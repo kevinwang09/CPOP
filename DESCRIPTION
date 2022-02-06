@@ -1,11 +1,11 @@
 Package: CPOP
 Type: Package
-Title: CPOP
-Version: 0.0.24
+Title: Cross Platform Omics Prediction
+Version: 0.1.0
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre"))
     )
-Description: CPOP aims to construct CPOP methods. 
+Description: CPOP aims to construct a model that is suitable for cross-platform prediction for omics data. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
