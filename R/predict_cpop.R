@@ -32,7 +32,7 @@ predict_cpop = function(cpop_result, newx, s = "lambda.min", newz){
   if(missing(newz)){
     newz = pairwise_col_diff(newx)
   }
-  ## If any discovered featureset is not in newz, then stop
+  ## If any discovered feature-set is not in newz, then stop
   assertthat::assert_that(all(cpop_result$feature %in% colnames(newz)),
                           msg = "cpop_result feature must be a strict subset of colnames(newz)")
 
@@ -44,10 +44,15 @@ predict_cpop = function(cpop_result, newx, s = "lambda.min", newz){
 
   if(is.null(cpop_result)) return(NULL)
 
-  result1_link = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
-                    type = "link")
-  result2_link = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
-                    type = "link")
+  if(cpop_result$cpop_mode == "glmnet"){
+    result1_link = predict(object = cpop_result$model1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                           type = "link")
+    result2_link = predict(object = cpop_result$model2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                           type = "link")
+  } else {
+    result1_link = stats::predict(object = cpop_result$model1, newx = newz[,cpop_result$feature, drop = FALSE], type = "link")
+    result2_link = stats::predict(object = cpop_result$model2, newx = newz[,cpop_result$feature, drop = FALSE], type = "link")
+  }
 
   result_mat = cbind(result1_link, result2_link, (result1_link + result2_link)/2)
   colnames(result_mat) = c("cpop_model1", "cpop_model2", "cpop_model_avg")
@@ -60,10 +65,16 @@ predict_cpop = function(cpop_result, newx, s = "lambda.min", newz){
   tib_result = dplyr::mutate(tib_result, samples = rownames(result_mat))
 
   if(cpop_result$family_params$family == "binomial"){
-    result1_prob = predict(object = cpop_result$glmnet1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
-                               type = "response")
-    result2_prob = predict(object = cpop_result$glmnet2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
-                               type = "response")
+    if(cpop_result$cpop_mode == "glmnet"){
+      result1_prob = predict(object = cpop_result$model1, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                             type = "response")
+      result2_prob = predict(object = cpop_result$model2, newx = newz[,cpop_result$feature, drop = FALSE], s = s,
+                             type = "response")
+    } else {
+      result1_prob = predict(object = cpop_result$model1, newx = newz[,cpop_result$feature, drop = FALSE], type = "response")
+      result2_prob = predict(object = cpop_result$model2, newx = newz[,cpop_result$feature, drop = FALSE], type = "response")
+    }
+
     cpop_model_avg_prob = (as.vector(result1_prob) + as.vector(result2_prob))/2
     cpop_model_avg_class = dplyr::case_when(
       cpop_model_avg_prob <= 0.5 ~ cpop_result$family_params$factor_levels[1],
@@ -141,8 +152,8 @@ impute_cpop = function(cpop_result, x1, x2, newx){
     g_x2 = glmnet::cv.glmnet(x = x2_without_miss,
                              y = x2[,this_miss_col, drop = FALSE],
                              family = "gaussian", nfolds = 5)
-    x1_pred = predict(g_x1, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
-    x2_pred = predict(g_x2, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
+    x1_pred = stats::predict(g_x1, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
+    x2_pred = stats::predict(g_x2, newx = cbind(miss_data_intersect_x1x2[,!which_col_missing, drop = FALSE]))
     miss_data_intersect_x1x2[,this_miss_col] = as.numeric(x1_pred + x2_pred)/2
   }
 

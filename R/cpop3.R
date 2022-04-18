@@ -14,7 +14,23 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, family, intercept, ...){
     intercept = TRUE
   }
 
-  glmnet1 = glmnet::cv.glmnet(
+  if(length(cpop2_result) < 2){
+
+    z1_sub = z1[,cpop2_result]
+    z2_sub = z2[,cpop2_result]
+
+    if(family == "cox"){
+      stop("Performing single-variable Cox regression is not currently supported by the cpop package.")
+    } else {
+      cpop_mode = "glm"
+      model1 = stats::glm(y1~z1_sub, family = family)
+      model2 = stats::glm(y1~z2_sub, family = family)
+    }
+
+  } else {
+
+    cpop_mode = "glmnet"
+    model1 = glmnet::cv.glmnet(
       x = z1[,cpop2_result],
       y = y1,
       family = family,
@@ -22,14 +38,18 @@ cpop3 = function(z1, z2, y1, y2, cpop2_result, family, intercept, ...){
       intercept = intercept,
       ...)
 
-  glmnet2 = glmnet::cv.glmnet(
+    model2 = glmnet::cv.glmnet(
       x = z2[,cpop2_result],
       y = y2,
       family = family,
       alpha = 0,
       intercept = intercept,
       ...)
+  }
 
-  result = list(glmnet1 = glmnet1, glmnet2 = glmnet2, feature = cpop2_result)
+  result = list(cpop_mode = cpop_mode,
+                model1 = model1,
+                model2 = model2,
+                feature = cpop2_result)
   return(result)
 }

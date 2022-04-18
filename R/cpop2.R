@@ -16,6 +16,12 @@
 cpop2_sign = function(z1, z2, y1, y2, family, cpop1_features, s = "lambda.min", nIter = 20,
                 cpop2_break = TRUE, intercept, ...){
   p = length(cpop1_features)
+
+  if(p < 2){
+    warning("Only one feature (", cpop1_features, ") can be selected by the CPOP. Classical glm results weill be given for this single feature model.")
+    return(cpop1_features)
+  }
+
   cpop2_features = cpop1_features
 
   for(j in 1:nIter){

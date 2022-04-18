@@ -27,8 +27,8 @@
 plot_cpop <- function(cpop_result, type = "point", s = "lambda.min"){
   assertthat::assert_that(type %in% c("point", "text", "bar", "ggraph"),
                           msg = "Only ggraph, visNetwork and igraph visualisations are supported")
-  coef1 = glmnet::coef.glmnet(cpop_result$glmnet1, s = s)
-  coef2 = glmnet::coef.glmnet(cpop_result$glmnet2, s = s)
+  coef1 = glmnet::coef.glmnet(cpop_result$model1, s = s)
+  coef2 = glmnet::coef.glmnet(cpop_result$model2, s = s)
 
   stopifnot(identical(rownames(coef1),
                       rownames(coef2)))

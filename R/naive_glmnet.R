@@ -72,20 +72,21 @@ naive_glmnet = function(x1, x2, y1, y2, s = "lambda.min", family = "binomial", z
     factor_levels = NULL
   }
 
-  glmnet1 = glmnet::cv.glmnet(x = z1, y = y1, family = family, ...)
-  glmnet2 = glmnet::cv.glmnet(x = z2, y = y2, family = family, ...)
+  model1 = glmnet::cv.glmnet(x = z1, y = y1, family = family, ...)
+  model2 = glmnet::cv.glmnet(x = z2, y = y2, family = family, ...)
 
-  result = list(glmnet1 = glmnet1,
-                glmnet2 = glmnet2)
+  result = list(model1 = model1,
+                model2 = model2)
 
-  coef1 = glmnet::coef.glmnet(glmnet1, s = s)
-  coef2 = glmnet::coef.glmnet(glmnet2, s = s)
+  coef1 = glmnet::coef.glmnet(model1, s = s)
+  coef2 = glmnet::coef.glmnet(model2, s = s)
   coef_tbl = tibble::tibble(coef_name = rownames(coef1),
                             coef1 = as.vector(coef1),
                             coef2 = as.vector(coef2))
 
-  result = list(glmnet1 = glmnet1,
-                glmnet2 = glmnet2,
+  result = list(cpop_mode = "glmnet",
+                model1 = model1,
+                model2 = model2,
                 coef_tbl = list(coef_tbl))
 
   class(result) = c("naive_glmnet", class(result))
@@ -103,13 +104,13 @@ naive_glmnet = function(x1, x2, y1, y2, s = "lambda.min", family = "binomial", z
 #' @importFrom dplyr mutate
 #' @importFrom dplyr everything
 predict_naive_glmnet = function(glmnet_result, newz, s = "lambda.min"){
-  result1 = predict(object = glmnet_result$glmnet1, newx = newz, s = s)
-  result2 = predict(object = glmnet_result$glmnet2, newx = newz, s = s)
+  result1 = predict(object = glmnet_result$model1, newx = newz, s = s)
+  result2 = predict(object = glmnet_result$model2, newx = newz, s = s)
 
   as.numeric((result1 + result2)/2)
 
   result_mat = cbind(result1, result2, (result1 + result2)/2)
-  colnames(result_mat) = c("naive_glmnet1", "naive_glmnet2", "naive_glmnet_avg")
+  colnames(result_mat) = c("naive_model1", "naive_model2", "naive_glmnet_avg")
 
   if(is.null(rownames(result_mat))){
     rownames(result_mat) = 1:nrow(result_mat)

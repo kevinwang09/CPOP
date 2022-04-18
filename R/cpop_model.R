@@ -109,11 +109,19 @@ cpop_model <- function(
   cpop3_result = cpop3(z1 = z1, z2 = z2, y1 = y1, y2 = y2,
                        cpop2_result = cpop2_result, family = family, intercept = intercept)
 
-  coef1 = glmnet::coef.glmnet(cpop3_result$glmnet1, s = s)
-  coef2 = glmnet::coef.glmnet(cpop3_result$glmnet2, s = s)
-  coef_tbl = tibble::tibble(coef_name = rownames(coef1),
-                               coef1 = as.vector(coef1),
-                               coef2 = as.vector(coef2))
+  if(cpop3_result$cpop_mode == "glmnet"){
+    coef1 = glmnet::coef.glmnet(cpop3_result$model1, s = s)
+    coef2 = glmnet::coef.glmnet(cpop3_result$model2, s = s)
+    coef_tbl = tibble::tibble(coef_name = rownames(coef1),
+                              coef1 = as.vector(coef1),
+                              coef2 = as.vector(coef2))
+  } else {
+    coef1 = stats::coefficients(cpop3_result$model1)
+    coef2 = stats::coefficients(cpop3_result$model2)
+    coef_tbl = tibble::tibble(coef_name = names(coef1),
+                              coef1 = as.vector(coef1),
+                              coef2 = as.vector(coef2))
+  }
 
   result = c(cpop3_result,
              coef_tbl = list(coef_tbl),
@@ -121,7 +129,8 @@ cpop_model <- function(
              step_features = list(cpop1_result$step_features),
              family_params = list(list(family = family,
                                        factor_levels = factor_levels)),
-             z1 = list(z1), z2 = list(z2))
+             z1 = list(z1),
+             z2 = list(z2))
 
   # class(result) = c("cpop", class(result))
   class(result) = c("cpop")
