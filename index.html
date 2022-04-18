@@ -46,7 +46,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,7 +72,7 @@
   <div class="contents col-md-9">
 
 <div class="section level1">
-<div class="page-header"><h1 id="cpop">CPOP<a class="anchor" aria-label="anchor" href="#cpop"></a>
+<div class="page-header"><h1 id="cross-platform-omics-prediction-cpop">Cross Platform Omics Prediction (CPOP)<a class="anchor" aria-label="anchor" href="#cross-platform-omics-prediction-cpop"></a>
 </h1></div>
 
 </div>
@@ -81,18 +81,18 @@
 </h1>
 <p>Due to data scale differences between multiple omics data, a model constructed from a training data tends to have poor prediction power on a validation data. While the usual bioinformatics approach is to re-normalise both the training and the validation data, this step may not be possible due to ethics constrains. CPOP avoids re-normalisation of additional data through the use of log-ratio features and thus also enable prediction for single omics samples.</p>
 <p>The novelty of the CPOP procedure lies in its ability to construct a <strong>transferable</strong> model across gene expression platforms and for prospective experiments. Such a transferable model can be trained to make predictions on independent validation data with an accuracy that is similar to a re-substituted model. The CPOP procedure also has the flexibility to be adapted to suit the most common clinical response variables, including linear response, binomial and Cox PH models.</p>
-<p><img src="https://kevinwang09.github.io/CPOP/articles/1a.png"></p>
+<p><img src="https://sydneybiox.github.io/CPOP/articles/1a.png"></p>
 </div>
 <div class="section level1">
 <h1 id="vignette">Vignette<a class="anchor" aria-label="anchor" href="#vignette"></a>
 </h1>
-<p>See <a href="https://kevinwang09.github.io/CPOP/articles/CPOP.html" class="external-link uri">https://kevinwang09.github.io/CPOP/articles/CPOP.html</a>.</p>
+<p>See <a href="https://sydneybiox.github.io/CPOP/articles/CPOP.html" class="external-link uri">https://sydneybiox.github.io/CPOP/articles/CPOP.html</a>.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"kevinwang09/CPOP"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"sydneybiox/CPOP"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

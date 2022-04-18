@@ -46,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -161,22 +161,15 @@
 <pre><code><span class="co">## Fitting CPOP model using alpha = 1</span></code></pre>
 <pre><code><span class="co">## Based on previous alpha, 0 features are kept</span></code></pre>
 <pre><code><span class="co">## CPOP1 - Step 01: Number of selected features: 0 out of 190</span></code></pre>
-<pre><code><span class="co">## CPOP1 - Step 02: Number of selected features: 9 out of 190</span></code></pre>
+<pre><code><span class="co">## CPOP1 - Step 02: Number of selected features: 8 out of 190</span></code></pre>
 <pre><code><span class="co">## CPOP1 - Step 03: Number of selected features: 15 out of 190</span></code></pre>
 <pre><code><span class="co">## 10 features was reached.</span></code></pre>
 <pre><code><span class="co">## A total of 15 features were selected.</span></code></pre>
 <pre><code><span class="co">## Removing sources of collinearity gives 12 features.</span></code></pre>
 <pre><code><span class="co">## 10 features was reached.</span></code></pre>
 <pre><code><span class="co">## A total of 12 features were selected.</span></code></pre>
-<pre><code><span class="co">## CPOP2 - Sign: Step 01: Number of leftover features: 10 out of 12</span></code></pre>
+<pre><code><span class="co">## CPOP2 - Sign: Step 01: Number of leftover features: 12 out of 12</span></code></pre>
 <pre><code><span class="co">## The sign matrix between the two data:</span></code></pre>
-<pre><code><span class="co">##     </span>
-<span class="co">##      -1 0 1</span>
-<span class="co">##   -1  0 0 1</span>
-<span class="co">##   0   0 0 0</span>
-<span class="co">##   1   1 0 0</span></code></pre>
-<pre><code><span class="co">## CPOP2 - Sign: Step 02: Number of leftover features: 10 out of 12</span>
-<span class="co">## The sign matrix between the two data:</span></code></pre>
 <pre><code><span class="co">##     </span>
 <span class="co">##      -1 0 1</span>
 <span class="co">##   -1  0 0 0</span>
@@ -188,50 +181,54 @@
 </h3>
 <p>The output of the <code>cpop_model</code> function is a <code>cpop</code> object with its own defined methods.</p>
 <p>The main method for a <code>cpop</code> object is the <code>plot_cpop</code> function, which produces several useful plot to understand what the CPOP methodology has done or performed.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">cpop_result</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] "cpop"</span></code></pre>
 <p>The first plot is using the <code>type = "text"</code> option. A labelled scatter plot shows the estimated coefficients of the selected features from data1 (i.e. <code>(x1, y1)</code>, x-axis) vs the same coefficients from data2 (i.e. <code>(x2, y2)</code>, y-axis).</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span>cpop_result <span class="op">=</span> <span class="va">cpop_result</span>, type <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## $plot</span></code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <pre><code><span class="co">## </span>
 <span class="co">## $data</span>
-<span class="co">## <span style="color: #949494;"># A tibble: 10 × 3</span></span>
+<span class="co">## <span style="color: #949494;"># A tibble: 12 × 3</span></span>
 <span class="co">##    coef_name   coef1   coef2</span>
 <span class="co">##    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> X01--X10  -<span style="color: #BB0000;">0.311</span>  -<span style="color: #BB0000;">0.275</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> X05--X06  -<span style="color: #BB0000;">0.049</span><span style="color: #BB0000; text-decoration: underline;">6</span> -<span style="color: #BB0000;">0.136</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> X05--X09   0.155  -<span style="color: #BB0000;">0.047</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> X09--X17   0.795   0.428 </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> X11--X14   0.131   0.023<span style="text-decoration: underline;">3</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> X12--X20   0.403   0.111 </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> X01--X07  -<span style="color: #BB0000;">0.428</span>  -<span style="color: #BB0000;">0.381</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> X01--X15  -<span style="color: #BB0000;">0.147</span>  -<span style="color: #BB0000;">0.306</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> X01--X17  -<span style="color: #BB0000;">0.939</span>  -<span style="color: #BB0000;">0.548</span> </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> X04--X12   0.344   0.374</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;"> 1</span> X01--X10  -<span style="color: #BB0000;">0.310</span>  -<span style="color: #BB0000;">0.285</span> </span>
+<span class="co">## <span style="color: #BCBCBC;"> 2</span> X05--X06  -<span style="color: #BB0000;">0.041</span><span style="color: #BB0000; text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.141</span> </span>
+<span class="co">## <span style="color: #BCBCBC;"> 3</span> X09--X17   0.780   0.434 </span>
+<span class="co">## <span style="color: #BCBCBC;"> 4</span> X12--X20   0.388   0.130 </span>
+<span class="co">## <span style="color: #BCBCBC;"> 5</span> X13--X14   0.068<span style="text-decoration: underline;">1</span>  0.063<span style="text-decoration: underline;">8</span></span>
+<span class="co">## <span style="color: #BCBCBC;"> 6</span> X16--X19  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.137</span> </span>
+<span class="co">## <span style="color: #BCBCBC;"> 7</span> X01--X07  -<span style="color: #BB0000;">0.445</span>  -<span style="color: #BB0000;">0.385</span> </span>
+<span class="co">## <span style="color: #BCBCBC;"> 8</span> X01--X15  -<span style="color: #BB0000;">0.136</span>  -<span style="color: #BB0000;">0.309</span> </span>
+<span class="co">## <span style="color: #BCBCBC;"> 9</span> X01--X17  -<span style="color: #BB0000;">0.928</span>  -<span style="color: #BB0000;">0.546</span> </span>
+<span class="co">## <span style="color: #BCBCBC;">10</span> X04--X12   0.328   0.357 </span>
+<span class="co">## <span style="color: #BCBCBC;">11</span> X05--X09   0.183  -<span style="color: #BB0000;">0.047</span><span style="color: #BB0000; text-decoration: underline;">8</span></span>
+<span class="co">## <span style="color: #BCBCBC;">12</span> X08--X19   0.037<span style="text-decoration: underline;">9</span>  0.115</span></code></pre>
 <p>We can see that most of the selected features had similar coefficients across the two data. This is exactly what CPOP is aiming to achieve: selecting features that are consistent within each datasets.</p>
 <p>However, each of the feature (e.g. <code>X01--X10</code>) actually corresponds to two of the original features in the raw data <code>X01</code> and <code>X10</code> in the data <code>x1</code> and <code>x2</code>. We can further visualise these features in the original features.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_cpop.html">plot_cpop</a></span><span class="op">(</span>cpop_result <span class="op">=</span> <span class="va">cpop_result</span>, type <span class="op">=</span> <span class="st">"ggraph"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## $plot</span></code></pre>
 <p><img src="CPOP_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <pre><code><span class="co">## </span>
 <span class="co">## $data</span>
-<span class="co">## <span style="color: #949494;"># A tibble: 10 × 7</span></span>
+<span class="co">## <span style="color: #949494;"># A tibble: 12 × 7</span></span>
 <span class="co">##    from  to      coef1   coef2 coef_avg coef_abs sign_coef1</span>
 <span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> X01   X10   -<span style="color: #BB0000;">0.311</span>  -<span style="color: #BB0000;">0.275</span>   -<span style="color: #BB0000;">0.293</span>    0.293  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> X05   X06   -<span style="color: #BB0000;">0.049</span><span style="color: #BB0000; text-decoration: underline;">6</span> -<span style="color: #BB0000;">0.136</span>   -<span style="color: #BB0000;">0.092</span><span style="color: #BB0000; text-decoration: underline;">5</span>   0.092<span style="text-decoration: underline;">5</span> Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> X05   X09    0.155  -<span style="color: #BB0000;">0.047</span><span style="color: #BB0000; text-decoration: underline;">0</span>   0.054<span style="text-decoration: underline;">1</span>   0.054<span style="text-decoration: underline;">1</span> Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> X09   X17    0.795   0.428    0.611    0.611  Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> X11   X14    0.131   0.023<span style="text-decoration: underline;">3</span>   0.077<span style="text-decoration: underline;">1</span>   0.077<span style="text-decoration: underline;">1</span> Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> X12   X20    0.403   0.111    0.257    0.257  Positive  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> X01   X07   -<span style="color: #BB0000;">0.428</span>  -<span style="color: #BB0000;">0.381</span>   -<span style="color: #BB0000;">0.405</span>    0.405  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> X01   X15   -<span style="color: #BB0000;">0.147</span>  -<span style="color: #BB0000;">0.306</span>   -<span style="color: #BB0000;">0.227</span>    0.227  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> X01   X17   -<span style="color: #BB0000;">0.939</span>  -<span style="color: #BB0000;">0.548</span>   -<span style="color: #BB0000;">0.743</span>    0.743  Negative  </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> X04   X12    0.344   0.374    0.359    0.359  Positive</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;"> 1</span> X01   X10   -<span style="color: #BB0000;">0.310</span>  -<span style="color: #BB0000;">0.285</span>   -<span style="color: #BB0000;">0.298</span>    0.298  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 2</span> X05   X06   -<span style="color: #BB0000;">0.041</span><span style="color: #BB0000; text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.141</span>   -<span style="color: #BB0000;">0.091</span><span style="color: #BB0000; text-decoration: underline;">2</span>   0.091<span style="text-decoration: underline;">2</span> Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 3</span> X09   X17    0.780   0.434    0.607    0.607  Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 4</span> X12   X20    0.388   0.130    0.259    0.259  Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 5</span> X13   X14    0.068<span style="text-decoration: underline;">1</span>  0.063<span style="text-decoration: underline;">8</span>   0.065<span style="text-decoration: underline;">9</span>   0.065<span style="text-decoration: underline;">9</span> Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 6</span> X16   X19   -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.137</span>   -<span style="color: #BB0000;">0.095</span><span style="color: #BB0000; text-decoration: underline;">3</span>   0.095<span style="text-decoration: underline;">3</span> Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 7</span> X01   X07   -<span style="color: #BB0000;">0.445</span>  -<span style="color: #BB0000;">0.385</span>   -<span style="color: #BB0000;">0.415</span>    0.415  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 8</span> X01   X15   -<span style="color: #BB0000;">0.136</span>  -<span style="color: #BB0000;">0.309</span>   -<span style="color: #BB0000;">0.223</span>    0.223  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 9</span> X01   X17   -<span style="color: #BB0000;">0.928</span>  -<span style="color: #BB0000;">0.546</span>   -<span style="color: #BB0000;">0.737</span>    0.737  Negative  </span>
+<span class="co">## <span style="color: #BCBCBC;">10</span> X04   X12    0.328   0.357    0.342    0.342  Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;">11</span> X05   X09    0.183  -<span style="color: #BB0000;">0.047</span><span style="color: #BB0000; text-decoration: underline;">8</span>   0.067<span style="text-decoration: underline;">6</span>   0.067<span style="text-decoration: underline;">6</span> Positive  </span>
+<span class="co">## <span style="color: #BCBCBC;">12</span> X08   X19    0.037<span style="text-decoration: underline;">9</span>  0.115    0.076<span style="text-decoration: underline;">7</span>   0.076<span style="text-decoration: underline;">7</span> Positive</span></code></pre>
 <p>Here we see that despite the features that we have selected in terms of the ratio, in actual fact, only a handful of features are useful. In particular, <code>X01</code>, <code>X09</code> and <code>X17</code> are the main contributors.</p>
 </div>
 <div class="section level3">
@@ -240,19 +237,19 @@
 <p>Another useful method on the <code>cpop</code> object is the <code>predict_cpop</code> function. This function takes the previous CPOP result and a new (log-)ratio matrix to produce predictions.</p>
 <p>The first column of the output are the sample IDs. The second and third column are prediction results from data1 and data2 respectively. Since we have done the previous diagnostic test that the coefficient size between the two data are very similar, we do expect that these values to be very highly correlated. The last column is <code>cpop_model_avg</code>, which is a simple average between the two predicted values.</p>
 <p>Note that the predicted values here are on the logit scale (recall that we are performing a logistic regression on binary responses using the elastic net model in the background). We can also transform these values back to predicted probability scale using the <code><a href="../reference/logit-expit.html">CPOP::expit</a></code> function.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newx <span class="op">=</span> <span class="va">x3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="co">##   samples cpop_model1 cpop_model2 cpop_model_avg cpop_model_avg_prob</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 1             0.586      -<span style="color: #BB0000;">0.162</span>          0.212               0.551</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 2            -<span style="color: #BB0000;">1.80</span>       -<span style="color: #BB0000;">0.752</span>         -<span style="color: #BB0000;">1.28</span>                0.231</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 3             0.937       0.233          0.585               0.638</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 4            -<span style="color: #BB0000;">0.899</span>      -<span style="color: #BB0000;">0.475</span>         -<span style="color: #BB0000;">0.687</span>               0.336</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 5            -<span style="color: #BB0000;">0.479</span>      -<span style="color: #BB0000;">0.188</span>         -<span style="color: #BB0000;">0.334</span>               0.418</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 6             0.945       1.35           1.15                0.757</span>
+<span class="co">## <span style="color: #BCBCBC;">1</span> 1             0.500      -<span style="color: #BB0000;">0.169</span>          0.165               0.540</span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> 2            -<span style="color: #BB0000;">1.76</span>       -<span style="color: #BB0000;">0.896</span>         -<span style="color: #BB0000;">1.33</span>                0.218</span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> 3             0.750       0.127          0.439               0.605</span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> 4            -<span style="color: #BB0000;">1.09</span>       -<span style="color: #BB0000;">0.748</span>         -<span style="color: #BB0000;">0.918</span>               0.287</span>
+<span class="co">## <span style="color: #BCBCBC;">5</span> 5            -<span style="color: #BB0000;">0.414</span>       0.102         -<span style="color: #BB0000;">0.156</span>               0.462</span>
+<span class="co">## <span style="color: #BCBCBC;">6</span> 6             0.997       1.41           1.20                0.767</span>
 <span class="co">## <span style="color: #949494;"># … with 1 more variable: cpop_model_avg_class &lt;chr&gt;</span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predicted_plotdf</span> <span class="op">=</span> <span class="fu"><a href="../reference/predict_cpop.html">predict_cpop</a></span><span class="op">(</span><span class="va">cpop_result</span>, newx <span class="op">=</span> <span class="va">x3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
     cpop_model1 <span class="op">=</span> <span class="fu"><a href="../reference/logit-expit.html">expit</a></span><span class="op">(</span><span class="va">cpop_model1</span><span class="op">)</span>, 
